@@ -1,0 +1,3 @@
+# judo-meta-rdbms
+
+RDBMS meta data. It is used to map PSM models to relational databases.
