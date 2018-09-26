@@ -2,6 +2,7 @@ package hu.blackbelt.judo.meta.rdbms;
 
 import hu.blackbelt.judo.meta.rdbms.util.RdbmsResourceFactoryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -38,4 +39,10 @@ public class RdbmsMetaModelRegistration implements RdbmsMetaModel {
     public Resource.Factory getFactory() {
         return factory;
     }
+
+    @Override
+    public void registerRdbmsMetamodel(ResourceSet resourceSet) {
+        resourceSet.getPackageRegistry().put(RdbmsPackage.eINSTANCE.getNsURI(), RdbmsPackage.eINSTANCE);
+    }
+
 }
