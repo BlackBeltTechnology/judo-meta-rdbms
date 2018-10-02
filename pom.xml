@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-    
+
     <groupId>hu.blackbelt.judo.meta</groupId>
 	<artifactId>judo-meta-rdbms</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
@@ -84,11 +84,13 @@
 				<configuration>
 					<obrRepository>NONE</obrRepository>
 					<instructions>
+                        <Import-Package>
+                            !lombok, *
+                        </Import-Package>
 						<Export-Package>
                             meta/rdbms;version=${project.version},
                             hu.blackbelt.judo.meta.rdbms.*;version=${project.version}
                         </Export-Package>
-						<Judo-Tatami-Meta-Model-Paths>meta/rdbms/rdbms.ecore</Judo-Tatami-Meta-Model-Paths>
 						<Include-Resource>{maven-resources},meta/rdbms=model</Include-Resource>
 					</instructions>
 				</configuration>
@@ -137,6 +139,18 @@
             <version>6.0.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>hu.blackbelt.osgi.utils</groupId>
+            <artifactId>osgi-api</artifactId>
+            <version>1.0.6</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.0</version>
+        </dependency>
+
     </dependencies>
     <profiles>
         <profile>
