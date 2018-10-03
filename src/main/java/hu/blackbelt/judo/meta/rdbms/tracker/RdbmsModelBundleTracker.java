@@ -44,9 +44,9 @@ public class RdbmsModelBundleTracker {
     @Activate
     public void activate(final ComponentContext componentContext) {
         bundleTrackerManager.registerBundleCallback(this.getClass().getName(),
-                new PsmRegisterCallback(componentContext.getBundleContext()),
-                new PsmUnregisterCallback(componentContext.getBundleContext()),
-                new PsmBundlePredicate());
+                new RdbmsRegisterCallback(componentContext.getBundleContext()),
+                new RdbmsUnregisterCallback(componentContext.getBundleContext()),
+                new RdbmsBundlePredicate());
     }
 
     @Deactivate
@@ -54,22 +54,18 @@ public class RdbmsModelBundleTracker {
         bundleTrackerManager.unregisterBundleCallback(this.getClass().getName());
     }
 
-    private static class PsmBundlePredicate implements Predicate<Bundle> {
+    private static class RdbmsBundlePredicate implements Predicate<Bundle> {
         @Override
-        public boolean test(Bundle bundle) {
-            List<Map<String, String>> entries = BundleUtil.getHeaderEntries(bundle, RDBMS_MODELS);
-            if (entries == null) {
-                return false;
-            }
-            return true;
+        public boolean test(Bundle trackedBundle) {
+            return  BundleUtil.hasHeader(trackedBundle, RDBMS_MODELS);
         }
     }
 
-    private class PsmRegisterCallback implements BundleCallback {
+    private class RdbmsRegisterCallback implements BundleCallback {
 
         BundleContext bundleContext;
 
-        public PsmRegisterCallback(BundleContext bundleContext) {
+        public RdbmsRegisterCallback(BundleContext bundleContext) {
             this.bundleContext = bundleContext;
         }
 
@@ -116,10 +112,10 @@ public class RdbmsModelBundleTracker {
         }
     }
 
-    private class PsmUnregisterCallback implements BundleCallback {
+    private class RdbmsUnregisterCallback implements BundleCallback {
         BundleContext bundleContext;
 
-        public PsmUnregisterCallback(BundleContext bundleContext) {
+        public RdbmsUnregisterCallback(BundleContext bundleContext) {
             this.bundleContext = bundleContext;
         }
 
