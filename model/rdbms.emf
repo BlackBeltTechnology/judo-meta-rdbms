@@ -19,7 +19,7 @@ class RdbmsTable extends RdbmsElement {
   val RdbmsUniqueConstraint[*]#table uniqueConstraints;
   ref RdbmsIdentifierField[1] primaryKey;
   val RdbmsIndex[*]#table indexes;
-  ref RdbmsTable parent;
+  ref RdbmsTable[*] parent;
 }
 
 abstract class RdbmsField extends RdbmsElement {

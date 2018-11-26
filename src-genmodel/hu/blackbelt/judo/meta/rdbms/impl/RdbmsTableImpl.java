@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link hu.blackbelt.judo.meta.rdbms.impl.RdbmsTableImpl#getUniqueConstraints <em>Unique Constraints</em>}</li>
  *   <li>{@link hu.blackbelt.judo.meta.rdbms.impl.RdbmsTableImpl#getPrimaryKey <em>Primary Key</em>}</li>
  *   <li>{@link hu.blackbelt.judo.meta.rdbms.impl.RdbmsTableImpl#getIndexes <em>Indexes</em>}</li>
- *   <li>{@link hu.blackbelt.judo.meta.rdbms.impl.RdbmsTableImpl#getParent <em>Parent</em>}</li>
+ *   <li>{@link hu.blackbelt.judo.meta.rdbms.impl.RdbmsTableImpl#getParents <em>Parents</em>}</li>
  * </ul>
  *
  * @generated
@@ -119,26 +119,9 @@ public class RdbmsTableImpl extends RdbmsElementImpl implements RdbmsTable {
      * <!-- end-user-doc -->
      * @generated
      */
-    public RdbmsTable getParent() {
-        return (RdbmsTable)eDynamicGet(RdbmsPackage.RDBMS_TABLE__PARENT, RdbmsPackage.Literals.RDBMS_TABLE__PARENT, true, true);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public RdbmsTable basicGetParent() {
-        return (RdbmsTable)eDynamicGet(RdbmsPackage.RDBMS_TABLE__PARENT, RdbmsPackage.Literals.RDBMS_TABLE__PARENT, false, true);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setParent(RdbmsTable newParent) {
-        eDynamicSet(RdbmsPackage.RDBMS_TABLE__PARENT, RdbmsPackage.Literals.RDBMS_TABLE__PARENT, newParent);
+    @SuppressWarnings("unchecked")
+    public EList<RdbmsTable> getParents() {
+        return (EList<RdbmsTable>)eDynamicGet(RdbmsPackage.RDBMS_TABLE__PARENTS, RdbmsPackage.Literals.RDBMS_TABLE__PARENTS, true, true);
     }
 
     /**
@@ -195,9 +178,8 @@ public class RdbmsTableImpl extends RdbmsElementImpl implements RdbmsTable {
                 return basicGetPrimaryKey();
             case RdbmsPackage.RDBMS_TABLE__INDEXES:
                 return getIndexes();
-            case RdbmsPackage.RDBMS_TABLE__PARENT:
-                if (resolve) return getParent();
-                return basicGetParent();
+            case RdbmsPackage.RDBMS_TABLE__PARENTS:
+                return getParents();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -226,8 +208,9 @@ public class RdbmsTableImpl extends RdbmsElementImpl implements RdbmsTable {
                 getIndexes().clear();
                 getIndexes().addAll((Collection<? extends RdbmsIndex>)newValue);
                 return;
-            case RdbmsPackage.RDBMS_TABLE__PARENT:
-                setParent((RdbmsTable)newValue);
+            case RdbmsPackage.RDBMS_TABLE__PARENTS:
+                getParents().clear();
+                getParents().addAll((Collection<? extends RdbmsTable>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -253,8 +236,8 @@ public class RdbmsTableImpl extends RdbmsElementImpl implements RdbmsTable {
             case RdbmsPackage.RDBMS_TABLE__INDEXES:
                 getIndexes().clear();
                 return;
-            case RdbmsPackage.RDBMS_TABLE__PARENT:
-                setParent((RdbmsTable)null);
+            case RdbmsPackage.RDBMS_TABLE__PARENTS:
+                getParents().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -276,8 +259,8 @@ public class RdbmsTableImpl extends RdbmsElementImpl implements RdbmsTable {
                 return basicGetPrimaryKey() != null;
             case RdbmsPackage.RDBMS_TABLE__INDEXES:
                 return !getIndexes().isEmpty();
-            case RdbmsPackage.RDBMS_TABLE__PARENT:
-                return basicGetParent() != null;
+            case RdbmsPackage.RDBMS_TABLE__PARENTS:
+                return !getParents().isEmpty();
         }
         return super.eIsSet(featureID);
     }

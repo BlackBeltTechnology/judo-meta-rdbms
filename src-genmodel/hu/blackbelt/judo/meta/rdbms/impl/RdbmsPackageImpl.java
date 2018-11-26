@@ -512,7 +512,7 @@ public class RdbmsPackageImpl extends EPackageImpl implements RdbmsPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getRdbmsTable_Parent() {
+    public EReference getRdbmsTable_Parents() {
         return (EReference)rdbmsTableEClass.getEStructuralFeatures().get(4);
     }
 
@@ -1657,7 +1657,7 @@ public class RdbmsPackageImpl extends EPackageImpl implements RdbmsPackage {
         createEReference(rdbmsTableEClass, RDBMS_TABLE__UNIQUE_CONSTRAINTS);
         createEReference(rdbmsTableEClass, RDBMS_TABLE__PRIMARY_KEY);
         createEReference(rdbmsTableEClass, RDBMS_TABLE__INDEXES);
-        createEReference(rdbmsTableEClass, RDBMS_TABLE__PARENT);
+        createEReference(rdbmsTableEClass, RDBMS_TABLE__PARENTS);
 
         rdbmsFieldEClass = createEClass(RDBMS_FIELD);
         createEReference(rdbmsFieldEClass, RDBMS_FIELD__TABLE);
@@ -1893,7 +1893,7 @@ public class RdbmsPackageImpl extends EPackageImpl implements RdbmsPackage {
         initEReference(getRdbmsTable_UniqueConstraints(), this.getRdbmsUniqueConstraint(), this.getRdbmsUniqueConstraint_Table(), "uniqueConstraints", null, 0, -1, RdbmsTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getRdbmsTable_PrimaryKey(), this.getRdbmsIdentifierField(), null, "primaryKey", null, 1, 1, RdbmsTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getRdbmsTable_Indexes(), this.getRdbmsIndex(), this.getRdbmsIndex_Table(), "indexes", null, 0, -1, RdbmsTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getRdbmsTable_Parent(), this.getRdbmsTable(), null, "parent", null, 0, 1, RdbmsTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getRdbmsTable_Parents(), this.getRdbmsTable(), null, "parents", null, 0, -1, RdbmsTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(rdbmsFieldEClass, RdbmsField.class, "RdbmsField", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getRdbmsField_Table(), this.getRdbmsTable(), this.getRdbmsTable_Fields(), "table", null, 1, 1, RdbmsField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -17,7 +17,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link hu.blackbelt.judo.meta.rdbms.RdbmsTable#getUniqueConstraints <em>Unique Constraints</em>}</li>
  *   <li>{@link hu.blackbelt.judo.meta.rdbms.RdbmsTable#getPrimaryKey <em>Primary Key</em>}</li>
  *   <li>{@link hu.blackbelt.judo.meta.rdbms.RdbmsTable#getIndexes <em>Indexes</em>}</li>
- *   <li>{@link hu.blackbelt.judo.meta.rdbms.RdbmsTable#getParent <em>Parent</em>}</li>
+ *   <li>{@link hu.blackbelt.judo.meta.rdbms.RdbmsTable#getParents <em>Parents</em>}</li>
  * </ul>
  *
  * @see hu.blackbelt.judo.meta.rdbms.RdbmsPackage#getRdbmsTable()
@@ -106,29 +106,19 @@ public interface RdbmsTable extends RdbmsElement {
     EList<RdbmsIndex> getIndexes();
 
     /**
-     * Returns the value of the '<em><b>Parent</b></em>' reference.
+     * Returns the value of the '<em><b>Parents</b></em>' reference list.
+     * The list contents are of type {@link hu.blackbelt.judo.meta.rdbms.RdbmsTable}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Parent</em>' reference isn't clear,
+     * If the meaning of the '<em>Parents</em>' reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Parent</em>' reference.
-     * @see #setParent(RdbmsTable)
-     * @see hu.blackbelt.judo.meta.rdbms.RdbmsPackage#getRdbmsTable_Parent()
+     * @return the value of the '<em>Parents</em>' reference list.
+     * @see hu.blackbelt.judo.meta.rdbms.RdbmsPackage#getRdbmsTable_Parents()
      * @model
      * @generated
      */
-    RdbmsTable getParent();
-
-    /**
-     * Sets the value of the '{@link hu.blackbelt.judo.meta.rdbms.RdbmsTable#getParent <em>Parent</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Parent</em>' reference.
-     * @see #getParent()
-     * @generated
-     */
-    void setParent(RdbmsTable value);
+    EList<RdbmsTable> getParents();
 
 } // RdbmsTable

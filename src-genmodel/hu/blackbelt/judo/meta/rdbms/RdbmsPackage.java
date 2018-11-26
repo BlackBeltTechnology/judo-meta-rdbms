@@ -275,13 +275,13 @@ public interface RdbmsPackage extends EPackage {
     int RDBMS_TABLE__INDEXES = RDBMS_ELEMENT_FEATURE_COUNT + 3;
 
     /**
-     * The feature id for the '<em><b>Parent</b></em>' reference.
+     * The feature id for the '<em><b>Parents</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int RDBMS_TABLE__PARENT = RDBMS_ELEMENT_FEATURE_COUNT + 4;
+    int RDBMS_TABLE__PARENTS = RDBMS_ELEMENT_FEATURE_COUNT + 4;
 
     /**
      * The number of structural features of the '<em>Table</em>' class.
@@ -1126,13 +1126,13 @@ public interface RdbmsPackage extends EPackage {
     int RDBMS_JUNCTION_TABLE__INDEXES = RDBMS_TABLE__INDEXES;
 
     /**
-     * The feature id for the '<em><b>Parent</b></em>' reference.
+     * The feature id for the '<em><b>Parents</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int RDBMS_JUNCTION_TABLE__PARENT = RDBMS_TABLE__PARENT;
+    int RDBMS_JUNCTION_TABLE__PARENTS = RDBMS_TABLE__PARENTS;
 
     /**
      * The feature id for the '<em><b>Field1</b></em>' reference.
@@ -4729,15 +4729,15 @@ public interface RdbmsPackage extends EPackage {
     EReference getRdbmsTable_Indexes();
 
     /**
-     * Returns the meta object for the reference '{@link hu.blackbelt.judo.meta.rdbms.RdbmsTable#getParent <em>Parent</em>}'.
+     * Returns the meta object for the reference list '{@link hu.blackbelt.judo.meta.rdbms.RdbmsTable#getParents <em>Parents</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Parent</em>'.
-     * @see hu.blackbelt.judo.meta.rdbms.RdbmsTable#getParent()
+     * @return the meta object for the reference list '<em>Parents</em>'.
+     * @see hu.blackbelt.judo.meta.rdbms.RdbmsTable#getParents()
      * @see #getRdbmsTable()
      * @generated
      */
-    EReference getRdbmsTable_Parent();
+    EReference getRdbmsTable_Parents();
 
     /**
      * Returns the meta object for class '{@link hu.blackbelt.judo.meta.rdbms.RdbmsField <em>Field</em>}'.
@@ -6186,12 +6186,12 @@ public interface RdbmsPackage extends EPackage {
         EReference RDBMS_TABLE__INDEXES = eINSTANCE.getRdbmsTable_Indexes();
 
         /**
-         * The meta object literal for the '<em><b>Parent</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Parents</b></em>' reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference RDBMS_TABLE__PARENT = eINSTANCE.getRdbmsTable_Parent();
+        EReference RDBMS_TABLE__PARENTS = eINSTANCE.getRdbmsTable_Parents();
 
         /**
          * The meta object literal for the '{@link hu.blackbelt.judo.meta.rdbms.impl.RdbmsFieldImpl <em>Field</em>}' class.
