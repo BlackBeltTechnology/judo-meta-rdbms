@@ -19,12 +19,11 @@ class RdbmsTable extends RdbmsElement {
   val RdbmsUniqueConstraint[*]#table uniqueConstraints;
   ref RdbmsIdentifierField[1] primaryKey;
   val RdbmsIndex[*]#table indexes;
-  ref RdbmsTable[*] parent;
+  ref RdbmsTable[*] parents;
 }
 
 abstract class RdbmsField extends RdbmsElement {
   ref RdbmsTable[1]#fields table;
-  ref RdbmsFieldType type;
   attr boolean[1] mandatory;
   attr String rdbmsTypeName;
   attr int size;
@@ -82,19 +81,7 @@ abstract class RdbmsExpression extends RdbmsElement {
   attr String expression;
 }
 
-class RdbmsFieldType {
-  attr String name;
-  attr String rdbmsTypeName;
-  attr String uuid;
-  attr String description;
-  attr int size;
-  attr int precision;
-  attr int scale;
-  attr int storageByte;
-}
-
 class RdbmsModel {
-  val RdbmsFieldType[*] rdbmsFieldTypes;
   val RdbmsTable[*] rdbmsTables;
   val RdbmsView[*] rdbmsViews;
   val RdbmsConfiguration[1] configuration;
