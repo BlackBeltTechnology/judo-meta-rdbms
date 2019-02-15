@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>hu.blackbelt.judo.meta</groupId>
+        <artifactId>judo-meta-rdbms-parent</artifactId>
+        <version>1.0.1-SNAPSHOT</version>
+        <relativePath>..</relativePath>
+    </parent>
+
+	<artifactId>judo-meta-rdbms-runtime</artifactId>
+    <packaging>bundle</packaging>
+
+	<name>Judo RDBMS LSM Specific Metamodel runtime</name>
+	<description>Judo RDBMS Layer Specific Metamodel Runtime</description>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+                    <execution>
+                        <id>add-model-gen-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src-genmodel</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+
+					<execution>
+						<id>attach-artifacts</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attach-artifact</goal>
+						</goals>
+						<configuration>
+							<artifacts>
+								<artifact>
+                                    <file>../model/model/rdbms.ecore</file>
+									<type>ecore</type>
+									<classifier>rdbms</classifier>
+								</artifact>
+							</artifacts>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>3.3.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<obrRepository>NONE</obrRepository>
+					<instructions>
+                        <Import-Package>
+                            !lombok, *
+                        </Import-Package>
+						<Export-Package>
+                            meta/rdbms;version=${project.version},
+                            hu.blackbelt.judo.meta.rdbms.*;version=${project.version}
+                        </Export-Package>
+						<Include-Resource>{maven-resources},meta/rdbms=../model/model</Include-Resource>
+					</instructions>
+				</configuration>
+			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+	</build>
+    <dependencies>
+        <dependency>
+            <groupId>hu.blackbelt.judo.meta</groupId>
+            <artifactId>judo-meta-rdbms-model</artifactId>
+        </dependency>
+    </dependencies>
+</project>
