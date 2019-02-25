@@ -23,19 +23,6 @@
 				<artifactId>build-helper-maven-plugin</artifactId>
 				<version>3.0.0</version>
 				<executions>
-                    <execution>
-                        <id>add-model-gen-source</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>src-genmodel</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-
 					<execution>
 						<id>attach-artifacts</id>
 						<phase>package</phase>
