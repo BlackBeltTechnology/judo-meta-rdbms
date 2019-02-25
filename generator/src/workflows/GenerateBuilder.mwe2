@@ -1,0 +1,8 @@
+module RdbmsBuilder
+
+Workflow {	
+	component = hu.blackbelt.emfbuildergenerator.EMFBuilderGenerator {
+		ecoreURI = "platform:/resource/judo-meta-rdbms-model/model/rdbms.ecore"
+		genModelUri = "platform:/resource/judo-meta-rdbms-model/model/rdbms.genmodel"
+	}
+}

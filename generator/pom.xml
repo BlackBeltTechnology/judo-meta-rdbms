@@ -11,7 +11,7 @@
         <relativePath>..</relativePath>
     </parent>
     <artifactId>judo-meta-rdbms-generator</artifactId>
-    <packaging>pom</packaging>
+    <packaging>eclipse-plugin</packaging>
     
     <name>Judo RDBMS LSM Specific Metamodel eclipse generator</name>
     <description>Judo RDBMS Layer Specific Metamodel Eclipse Generator</description>
@@ -69,6 +69,13 @@
                         <phase>generate-sources</phase>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.fornax.toolsupport</groupId>
+                <artifactId>fornax-oaw-m2-plugin</artifactId>
+                <configuration>
+                    <workflowDescriptor>src/workflows/GenerateBuilder.mwe2</workflowDescriptor>
+                </configuration>
             </plugin>
         </plugins>
     </build>
