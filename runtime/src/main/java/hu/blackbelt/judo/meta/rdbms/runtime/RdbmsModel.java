@@ -16,7 +16,7 @@ public class RdbmsModel {
     public static final String NAME = "name";
     public static final String VERSION = "version";
     public static final String CHECKSUM = "checksum";
-    public static final String META_VERSION_RANGE = "meta-version-version-range";
+    public static final String META_VERSION_RANGE = "meta-version-range";
     public static final String URI = "uri";
     public static final String RESOURCE = "resource";
 

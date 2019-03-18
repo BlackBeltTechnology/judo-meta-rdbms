@@ -27,7 +27,7 @@ import static hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModelLoader.loadRdbmsMod
 @Slf4j
 public class RdbmsModelBundleTracker {
 
-    public static final String PSM_MODELS = "Rdbms-Models";
+    public static final String RDBMS_MODELS = "Rdbms-Models";
 
     @Reference
     BundleTrackerManager bundleTrackerManager;
@@ -52,7 +52,7 @@ public class RdbmsModelBundleTracker {
     private static class RdbmsBundlePredicate implements Predicate<Bundle> {
         @Override
         public boolean test(Bundle trackedBundle) {
-            return BundleUtil.hasHeader(trackedBundle, PSM_MODELS);
+            return BundleUtil.hasHeader(trackedBundle, RDBMS_MODELS);
         }
     }
 
@@ -66,7 +66,7 @@ public class RdbmsModelBundleTracker {
 
         @Override
         public void accept(Bundle trackedBundle) {
-            List<Map<String, String>> entries = BundleUtil.getHeaderEntries(trackedBundle, PSM_MODELS);
+            List<Map<String, String>> entries = BundleUtil.getHeaderEntries(trackedBundle, RDBMS_MODELS);
 
 
             for (Map<String, String> params : entries) {
@@ -122,7 +122,7 @@ public class RdbmsModelBundleTracker {
 
         @Override
         public void accept(Bundle trackedBundle) {
-            List<Map<String, String>> entries = BundleUtil.getHeaderEntries(trackedBundle, PSM_MODELS);
+            List<Map<String, String>> entries = BundleUtil.getHeaderEntries(trackedBundle, RDBMS_MODELS);
             for (Map<String, String> params : entries) {
                 String key = params.get(RdbmsModel.NAME);
 
