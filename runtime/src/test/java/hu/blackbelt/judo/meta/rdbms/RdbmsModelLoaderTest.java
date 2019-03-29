@@ -18,12 +18,12 @@ class RdbmsModelLoaderTest {
 
     @Test
     void loadRdbmsModel() throws IOException {
-        RdbmsModel psmModel = RdbmsModelLoader.loadRdbmsModel(
+        RdbmsModel rdbmsModel = RdbmsModelLoader.loadRdbmsModel(
                 URI.createURI(new File(srcDir(), "test/models/northwind-rdbms.model").getAbsolutePath()),
                 "test",
                 "1.0.0");
 
-        for (Iterator<EObject> i = psmModel.getResource().getAllContents(); i.hasNext(); ) {
+        for (Iterator<EObject> i = rdbmsModel.getResourceSet().getResource(rdbmsModel.getUri(), false).getAllContents(); i.hasNext(); ) {
             log.info(i.next().toString());
         }
     }
