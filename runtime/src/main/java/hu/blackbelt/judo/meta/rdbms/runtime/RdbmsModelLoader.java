@@ -156,8 +156,6 @@ public class RdbmsModelLoader {
 
     public static void saveRdbmssModel(RdbmsModel rdbmsModel) throws IOException {
         rdbmsModel.getResourceSet().getResource(rdbmsModel.getUri(), false).save(getRdbmsModelDefaultSaveOptions());
-        rdbmsModel.getResourceSet().getResource(rdbmsModel.getUri(), false).save(getRdbmsModelDefaultSaveOptions());
-
     }
 
 }
