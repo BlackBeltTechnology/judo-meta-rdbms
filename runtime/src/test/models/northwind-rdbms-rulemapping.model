@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdbmsRules="http://blackbelt.hu/judo/meta/rdbms/rules">
+  <rdbmsRules:Rules xmi:id="_NYo2EHHPEemysv7KL8kB2Q">
+    <rules xmi:id="_NYuVoHHPEemysv7KL8kB2Q" symbol="&lt;--0..*-----------" upper="-1" oppositeLower="-2" oppositeUpper="-2" first="true" joinTable="true"/>
+    <rules xmi:id="_NY4GoHHPEemysv7KL8kB2Q" symbol="&lt;--1..*-----------" lower="1" upper="-1" oppositeLower="-2" oppositeUpper="-2" first="true" rangeConstraint="true" joinTable="true"/>
+    <rules xmi:id="_NZGwIHHPEemysv7KL8kB2Q" symbol="&lt;--0..1-----------" upper="1" oppositeLower="-2" oppositeUpper="-2" first="true" foreignKey="true"/>
+    <rules xmi:id="_NZOE4HHPEemysv7KL8kB2Q" symbol="&lt;--1..1-----------" lower="1" upper="1" oppositeLower="-2" oppositeUpper="-2" first="true" foreignKey="true" mandatory="true"/>
+    <rules xmi:id="_NZaSIHHPEemysv7KL8kB2Q" symbol="&lt;--0..*----------@" upper="-1" oppositeLower="-2" oppositeUpper="-2" containment="true" first="true" inverseForeignKey="true" readOnly="true" mandatory="true"/>
+    <rules xmi:id="_NZg_0HHPEemysv7KL8kB2Q" symbol="&lt;--1..*----------@" lower="1" upper="-1" oppositeLower="-2" oppositeUpper="-2" containment="true" first="true" inverseForeignKey="true" readOnly="true" mandatory="true" rangeConstraint="true"/>
+    <rules xmi:id="_NZl4UHHPEemysv7KL8kB2Q" symbol="&lt;--0..1----------@" upper="1" oppositeLower="-2" oppositeUpper="-2" containment="true" first="true" inverseForeignKey="true" readOnly="true" mandatory="true"/>
+    <rules xmi:id="_NZzTsHHPEemysv7KL8kB2Q" symbol="&lt;--1..1----------@" lower="1" upper="1" oppositeLower="-2" oppositeUpper="-2" containment="true" first="true" inverseForeignKey="true" readOnly="true" mandatory="true"/>
+    <rules xmi:id="_NZ4MMHHPEemysv7KL8kB2Q" symbol="&lt;--0..*----0..*-->" upper="-1" opposite="true" oppositeUpper="-1" joinTable="true"/>
+    <rules xmi:id="_NZ-S0HHPEemysv7KL8kB2Q" symbol="&lt;--0..*----0..*-->" upper="-1" opposite="true" oppositeUpper="-1" first="true" joinTable="true"/>
+    <rules xmi:id="_NaGOoHHPEemysv7KL8kB2Q" symbol="&lt;--1..*----0..*-->" lower="1" upper="-1" opposite="true" oppositeUpper="-1" rangeConstraint="true" joinTable="true"/>
+    <rules xmi:id="_NaLHIHHPEemysv7KL8kB2Q" symbol="&lt;--1..*----0..*-->" lower="1" upper="-1" opposite="true" oppositeUpper="-1" first="true" rangeConstraint="true" joinTable="true"/>
+    <rules xmi:id="_NaPYkHHPEemysv7KL8kB2Q" symbol="&lt;--0..*----1..*-->" upper="-1" opposite="true" oppositeLower="1" oppositeUpper="-1" inverseRangeConstraint="true" joinTable="true"/>
+    <rules xmi:id="_NaU4IHHPEemysv7KL8kB2Q" symbol="&lt;--0..*----1..*-->" upper="-1" opposite="true" oppositeLower="1" oppositeUpper="-1" first="true" inverseRangeConstraint="true" joinTable="true"/>
+    <rules xmi:id="_NaX7cHHPEemysv7KL8kB2Q" symbol="&lt;--1..*----1..*-->" lower="1" upper="-1" opposite="true" oppositeLower="1" oppositeUpper="-1" rangeConstraint="true" inverseRangeConstraint="true" joinTable="true"/>
+    <rules xmi:id="_NaiTgHHPEemysv7KL8kB2Q" symbol="&lt;--1..*----1..*-->" lower="1" upper="-1" opposite="true" oppositeLower="1" oppositeUpper="-1" first="true" rangeConstraint="true" inverseRangeConstraint="true" joinTable="true"/>
+    <rules xmi:id="_NanMAHHPEemysv7KL8kB2Q" symbol="&lt;--0..*----0..1-->" upper="-1" opposite="true" oppositeUpper="1"/>
+    <rules xmi:id="_NardcHHPEemysv7KL8kB2Q" symbol="&lt;--0..*----0..1-->" upper="-1" opposite="true" oppositeUpper="1" first="true"/>
+    <rules xmi:id="_Navu4HHPEemysv7KL8kB2Q" symbol="&lt;--0..*----1..1-->" upper="-1" opposite="true" oppositeLower="1" oppositeUpper="1"/>
+    <rules xmi:id="_NazZQHHPEemysv7KL8kB2Q" symbol="&lt;--0..*----1..1-->" upper="-1" opposite="true" oppositeLower="1" oppositeUpper="1" first="true"/>
+    <rules xmi:id="_Na2ckHHPEemysv7KL8kB2Q" symbol="&lt;--1..*----0..1-->" lower="1" upper="-1" opposite="true" oppositeUpper="1" rangeConstraint="true"/>
+    <rules xmi:id="_Na440HHPEemysv7KL8kB2Q" symbol="&lt;--1..*----0..1-->" lower="1" upper="-1" opposite="true" oppositeUpper="1" first="true" rangeConstraint="true"/>
+    <rules xmi:id="_Na78IHHPEemysv7KL8kB2Q" symbol="&lt;--1..*----1..1-->" lower="1" upper="-1" opposite="true" oppositeLower="1" oppositeUpper="1" rangeConstraint="true"/>
+    <rules xmi:id="_Na-_cHHPEemysv7KL8kB2Q" symbol="&lt;--1..*----1..1-->" lower="1" upper="-1" opposite="true" oppositeLower="1" oppositeUpper="1" first="true" rangeConstraint="true"/>
+    <rules xmi:id="_NbCCwHHPEemysv7KL8kB2Q" symbol="&lt;--0..1----0..*-->" upper="1" opposite="true" oppositeUpper="-1" foreignKey="true"/>
+    <rules xmi:id="_NbFGEHHPEemysv7KL8kB2Q" symbol="&lt;--0..1----0..*-->" upper="1" opposite="true" oppositeUpper="-1" first="true" foreignKey="true"/>
+    <rules xmi:id="_NbHiUHHPEemysv7KL8kB2Q" symbol="&lt;--0..1----1..*-->" upper="1" opposite="true" oppositeLower="1" oppositeUpper="-1" foreignKey="true" inverseRangeConstraint="true"/>
+    <rules xmi:id="_NbMa0HHPEemysv7KL8kB2Q" symbol="&lt;--0..1----1..*-->" upper="1" opposite="true" oppositeLower="1" oppositeUpper="-1" first="true" foreignKey="true" inverseRangeConstraint="true"/>
+    <rules xmi:id="_NbU9sHHPEemysv7KL8kB2Q" symbol="&lt;--0..1----0..1-->" upper="1" opposite="true" oppositeUpper="1"/>
+    <rules xmi:id="_NbYBAHHPEemysv7KL8kB2Q" symbol="&lt;--0..1----0..1-->" upper="1" opposite="true" oppositeUpper="1" first="true" foreignKey="true"/>
+    <rules xmi:id="_NbbrYHHPEemysv7KL8kB2Q" symbol="&lt;--0..1----1..1-->" upper="1" opposite="true" oppositeLower="1" oppositeUpper="1"/>
+    <rules xmi:id="_NbeHoHHPEemysv7KL8kB2Q" symbol="&lt;--0..1----1..1-->" upper="1" opposite="true" oppositeLower="1" oppositeUpper="1" first="true"/>
+    <rules xmi:id="_NbiZEHHPEemysv7KL8kB2Q" symbol="&lt;--1..1----0..*-->" lower="1" upper="1" opposite="true" oppositeUpper="-1" foreignKey="true" mandatory="true"/>
+    <rules xmi:id="_Nbk1UHHPEemysv7KL8kB2Q" symbol="&lt;--1..1----0..*-->" lower="1" upper="1" opposite="true" oppositeUpper="-1" first="true" foreignKey="true" mandatory="true"/>
+    <rules xmi:id="_NbofsHHPEemysv7KL8kB2Q" symbol="&lt;--1..1----1..*-->" lower="1" upper="1" opposite="true" oppositeLower="1" oppositeUpper="-1" foreignKey="true" mandatory="true" inverseRangeConstraint="true"/>
+    <rules xmi:id="_Nbq78HHPEemysv7KL8kB2Q" symbol="&lt;--1..1----1..*-->" lower="1" upper="1" opposite="true" oppositeLower="1" oppositeUpper="-1" first="true" foreignKey="true" mandatory="true" inverseRangeConstraint="true"/>
+    <rules xmi:id="_NbsxIHHPEemysv7KL8kB2Q" symbol="&lt;--1..1----0..1-->" lower="1" upper="1" opposite="true" oppositeUpper="1" foreignKey="true" mandatory="true"/>
+    <rules xmi:id="_NbumUHHPEemysv7KL8kB2Q" symbol="&lt;--1..1----0..1-->" lower="1" upper="1" opposite="true" oppositeUpper="1" first="true" foreignKey="true" mandatory="true"/>
+    <rules xmi:id="_NbxCkHHPEemysv7KL8kB2Q" symbol="&lt;--1..1----1..1-->" lower="1" upper="1" opposite="true" oppositeLower="1" oppositeUpper="1" foreignKey="true" mandatory="true"/>
+    <rules xmi:id="_Nbze0HHPEemysv7KL8kB2Q" symbol="&lt;--1..1----1..1-->" lower="1" upper="1" opposite="true" oppositeLower="1" oppositeUpper="1" first="true"/>
+  </rdbmsRules:Rules>
+</xmi:XMI>
