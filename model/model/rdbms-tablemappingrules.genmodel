@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/model/src-genmodel" modelPluginID="judo-meta-rdbms-tablemappingrules"
+    modelName="RdbmsTableMappingRules" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" featureDelegation="Dynamic" complianceLevel="8.0"
+    copyrightFields="false" operationReflection="true" importOrganizing="true" oSGiCompatible="true">
+  <foreignModel>rdbms-tablemappingrules.ecore</foreignModel>
+  <genPackages prefix="RdbmsRules" basePackage="hu.blackbelt.judo.meta" resource="XMI"
+      disposableProviderFactory="true" extensibleProviderFactory="true" childCreationExtenders="true"
+      fileExtensions="judo-meta-rdbms-tabslemappingrules" ecorePackage="rdbms-tablemappingrules.ecore#/">
+    <genClasses ecoreClass="rdbms-tablemappingrules.ecore#//Rules">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdbms-tablemappingrules.ecore#//Rules/rules"/>
+    </genClasses>
+    <genClasses ecoreClass="rdbms-tablemappingrules.ecore#//Rule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/symbol"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/lower"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/upper"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/oposite"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/oppositeLower"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/oppositeUpper"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/container"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/first"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/foreignKey"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/inverseForeignKey"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/readOnly"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/cascade"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/mandatory"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/rangeConstraint"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/invRangeConstraint"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/joinTable"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

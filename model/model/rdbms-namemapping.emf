@@ -1,0 +1,15 @@
+@namespace(uri="http://blackbelt.hu/judo/meta/asm2rdbms/datatypes", prefix="rdbmsNameMapping")
+package rdbmsNameMapping;
+
+import "http://blackbelt.hu/judo/meta/psm/rdbms";
+import "http://www.eclipse.org/emf/2002/Ecore";
+
+class NameMappings {
+  val NameMapping[*] nameMappings;
+}
+
+class NameMapping {
+  attr ecore.EString[1] fullyQualifiedName;
+  attr ecore.EString[1] rdbmsName;
+}
+

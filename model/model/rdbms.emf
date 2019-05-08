@@ -90,7 +90,6 @@ class RdbmsModel {
   val RdbmsViewRecord[*] viewRecords;
 }
 
-@"http://www.obeo.fr/dsl/dnc/archetype"(archetype="MomentInterval")
 class RdbmsValueField extends RdbmsField {
   attr boolean technical = false;
 }

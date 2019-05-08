@@ -108,9 +108,6 @@
         eType="#//RdbmsViewRecord" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RdbmsValueField" eSuperTypes="#//RdbmsField">
-    <eAnnotations source="http://www.obeo.fr/dsl/dnc/archetype">
-      <details key="archetype" value="MomentInterval"/>
-    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="technical" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="false"/>
   </eClassifiers>

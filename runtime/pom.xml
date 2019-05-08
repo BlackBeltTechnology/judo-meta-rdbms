@@ -36,7 +36,26 @@
 									<type>ecore</type>
 									<classifier>rdbms</classifier>
 								</artifact>
-							</artifacts>
+
+                                <artifact>
+                                    <file>../model/model/rdbms-datatypes.ecore</file>
+                                    <type>ecore</type>
+                                    <classifier>rdbms-datatypes</classifier>
+                                </artifact>
+
+                                <artifact>
+                                    <file>../model/model/rdbms-namemapping.ecore</file>
+                                    <type>ecore</type>
+                                    <classifier>rdbms-namemapping</classifier>
+                                </artifact>
+
+                                <artifact>
+                                    <file>../model/model/rdbms-tablemappingrules.ecore</file>
+                                    <type>ecore</type>
+                                    <classifier>rdbms-tablemappingrules</classifier>
+                                </artifact>
+
+                            </artifacts>
 						</configuration>
 					</execution>
 				</executions>
@@ -57,7 +76,7 @@
                         </Import-Package>
 						<Export-Package>
                             meta/rdbms;version=${project.version},
-                            hu.blackbelt.judo.meta.rdbms.*;version=${project.version}
+                            hu.blackbelt.judo.meta.rdbms*;version=${project.version},
                         </Export-Package>
 						<Include-Resource>{maven-resources},meta/rdbms=../model/model</Include-Resource>
 					</instructions>

@@ -22,4 +22,43 @@
             type="judo-meta-rdbms"
             class="hu.blackbelt.judo.meta.rdbms.util.RdbmsResourceFactoryImpl"/>
    </extension>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated rdbms-datatypes -->
+      <package
+            uri="http://blackbelt.hu/judo/meta/asm2rdbms/datatypes"
+            class="hu.blackbelt.judo.meta.rdbmsDataTypes.RdbmsDataTypesPackage"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated rdbms-datatypes -->
+      <parser
+            type="judo-meta-rdbms-datatypes"
+            class="hu.blackbelt.judo.meta.rdbmsDataTypes.util.RdbmsDataTypesResourceFactoryImpl"/>
+   </extension>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated rdbms-namemapping -->
+      <package
+            uri="http://blackbelt.hu/judo/meta/asm2rdbms/datatypes"
+            class="hu.blackbelt.judo.meta.rdbmsNameMapping.RdbmsNameMappingPackage"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated rdbms-namemapping -->
+      <parser
+            type="judo-meta-rdbms-namemapping"
+            class="hu.blackbelt.judo.meta.rdbmsNameMapping.util.RdbmsNameMappingResourceFactoryImpl"/>
+   </extension>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated rdbms-tablemappingrules -->
+      <package
+            uri="http://blackbelt.hu/judo/meta/asm2rdbms/datatypes"
+            class="hu.blackbelt.judo.meta.rdbmsRules.RdbmsRulesPackage"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated rdbms-tablemappingrules -->
+      <parser
+            type="judo-meta-rdbms-tabslemappingrules"
+            class="hu.blackbelt.judo.meta.rdbmsRules.util.RdbmsRulesResourceFactoryImpl"/>
+   </extension>
 </plugin>

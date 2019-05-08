@@ -1,0 +1,29 @@
+@namespace(uri="http://blackbelt.hu/judo/meta/asm2rdbms/datatypes", prefix="rdbmsRules")
+package rdbmsRules;
+
+import "http://blackbelt.hu/judo/meta/psm/rdbms";
+import "http://www.eclipse.org/emf/2002/Ecore";
+
+class Rules {
+  val Rule[*] rules;
+}
+
+class Rule {
+ attr ecore.EString symbol;
+ attr int[1] lower;
+ attr int[1] upper;
+ attr boolean[1] oposite;
+ attr int oppositeLower;
+ attr int oppositeUpper;
+ attr boolean[1] container;
+ attr boolean[1] first;
+ attr boolean[1] foreignKey;
+ attr boolean[1] inverseForeignKey;
+ attr boolean readOnly;
+ attr boolean cascade;
+ attr boolean mandatory;
+ attr boolean[1] rangeConstraint;
+ attr boolean[1] invRangeConstraint;
+ attr boolean[1] joinTable;
+}
+
