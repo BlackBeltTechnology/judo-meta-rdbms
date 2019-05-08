@@ -15,9 +15,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/symbol"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/lower"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/upper"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/oposite"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/opposite"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/oppositeLower"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/oppositeUpper"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/containment"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/container"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/first"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/foreignKey"/>
@@ -26,7 +27,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/cascade"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/mandatory"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/rangeConstraint"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/invRangeConstraint"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/inverseRangeConstraint"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-tablemappingrules.ecore#//Rule/joinTable"/>
     </genClasses>
   </genPackages>

@@ -2,13 +2,17 @@ package hu.blackbelt.judo.meta.rdbms.runtime;
 
 import hu.blackbelt.judo.meta.rdbms.RdbmsPackage;
 import hu.blackbelt.judo.meta.rdbms.util.RdbmsResourceFactoryImpl;
+import hu.blackbelt.judo.meta.rdbms.util.RdbmsResourceImpl;
 import hu.blackbelt.judo.meta.rdbmsDataTypes.RdbmsDataTypesPackage;
 import hu.blackbelt.judo.meta.rdbmsNameMapping.RdbmsNameMappingPackage;
 import hu.blackbelt.judo.meta.rdbmsRules.RdbmsRulesPackage;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.ContentHandler;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
+import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceFactoryRegistryImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
@@ -29,7 +33,18 @@ public class RdbmsModelLoader {
 
 
     public static Resource.Factory getRdbmsFactory() {
-        return new RdbmsResourceFactoryImpl();
+        return new RdbmsResourceFactoryImpl() {
+            @Override
+            public Resource createResource(URI uri) {
+                Resource result = new RdbmsResourceImpl(uri) {
+                    @Override
+                    protected boolean useUUIDs() {
+                        return true;
+                    }
+                };
+                return result;
+            }
+        };
     }
 
     public static ResourceSet createRdbmsResourceSet() {
@@ -44,6 +59,45 @@ public class RdbmsModelLoader {
             resourceSet.getURIConverter().getURIHandlers().add(0, uriHandler);
         }
         return resourceSet;
+    }
+
+    public static void setupRelativeUriRoot(ResourceSet resourceSet, URI uri) {
+        EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
+        EList<ContentHandler> contentHandlers = resourceSet.getURIConverter().getContentHandlers();
+
+        // Set custom URI handler where URL without base part replaced with the base URI
+        resourceSet.setURIConverter(new ExtensibleURIConverterImpl() {
+            @Override
+            public URI normalize(URI uriPar) {
+
+                String fragment = uriPar.fragment();
+                String query = uriPar.query();
+                URI trimmedURI = uriPar.trimFragment().trimQuery();
+                URI result = getInternalURIMap().getURI(trimmedURI);
+                String scheme = result.scheme();
+                if (scheme == null) {
+                    result = uri;
+                }
+
+                if (result == trimmedURI) {
+                    return uriPar;
+                }
+
+                if (query != null) {
+                    result = result.appendQuery(query);
+                }
+                if (fragment != null) {
+                    result = result.appendFragment(fragment);
+                }
+                return normalize(result);
+            }
+        });
+
+        resourceSet.getURIConverter().getURIHandlers().clear();
+        resourceSet.getURIConverter().getURIHandlers().addAll(uriHandlers);
+        resourceSet.getURIConverter().getContentHandlers().clear();
+        resourceSet.getURIConverter().getContentHandlers().addAll(contentHandlers);
+
     }
 
 
@@ -102,6 +156,8 @@ public class RdbmsModelLoader {
 
     public static void saveRdbmssModel(RdbmsModel rdbmsModel) throws IOException {
         rdbmsModel.getResourceSet().getResource(rdbmsModel.getUri(), false).save(getRdbmsModelDefaultSaveOptions());
+        rdbmsModel.getResourceSet().getResource(rdbmsModel.getUri(), false).save(getRdbmsModelDefaultSaveOptions());
+
     }
 
 }

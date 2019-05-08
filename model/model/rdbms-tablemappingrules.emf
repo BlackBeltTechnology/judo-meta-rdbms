@@ -12,9 +12,10 @@ class Rule {
  attr ecore.EString symbol;
  attr int[1] lower;
  attr int[1] upper;
- attr boolean[1] oposite;
+ attr boolean[1] opposite;
  attr int oppositeLower;
  attr int oppositeUpper;
+ attr boolean[1] containment;
  attr boolean[1] container;
  attr boolean[1] first;
  attr boolean[1] foreignKey;
@@ -23,7 +24,7 @@ class Rule {
  attr boolean cascade;
  attr boolean mandatory;
  attr boolean[1] rangeConstraint;
- attr boolean[1] invRangeConstraint;
+ attr boolean[1] inverseRangeConstraint;
  attr boolean[1] joinTable;
 }
 
