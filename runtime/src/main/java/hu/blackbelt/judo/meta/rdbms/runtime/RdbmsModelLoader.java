@@ -2,6 +2,9 @@ package hu.blackbelt.judo.meta.rdbms.runtime;
 
 import hu.blackbelt.judo.meta.rdbms.RdbmsPackage;
 import hu.blackbelt.judo.meta.rdbms.util.RdbmsResourceFactoryImpl;
+import hu.blackbelt.judo.meta.rdbmsDataTypes.RdbmsDataTypesPackage;
+import hu.blackbelt.judo.meta.rdbmsNameMapping.RdbmsNameMappingPackage;
+import hu.blackbelt.judo.meta.rdbmsRules.RdbmsRulesPackage;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -19,6 +22,9 @@ public class RdbmsModelLoader {
 
     public static void registerRdbmsMetamodel(ResourceSet resourceSet) {
         resourceSet.getPackageRegistry().put(RdbmsPackage.eINSTANCE.getNsURI(), RdbmsPackage.eINSTANCE);
+        resourceSet.getPackageRegistry().put(RdbmsDataTypesPackage.eINSTANCE.getNsURI(), RdbmsDataTypesPackage.eINSTANCE);
+        resourceSet.getPackageRegistry().put(RdbmsNameMappingPackage.eINSTANCE.getNsURI(), RdbmsNameMappingPackage.eINSTANCE);
+        resourceSet.getPackageRegistry().put(RdbmsRulesPackage.eINSTANCE.getNsURI(), RdbmsRulesPackage.eINSTANCE);
     }
 
 

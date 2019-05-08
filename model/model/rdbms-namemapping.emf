@@ -1,4 +1,4 @@
-@namespace(uri="http://blackbelt.hu/judo/meta/asm2rdbms/datatypes", prefix="rdbmsNameMapping")
+@namespace(uri="http://blackbelt.hu/judo/meta/rdbms/namemapping", prefix="rdbmsNameMapping")
 package rdbmsNameMapping;
 
 import "http://blackbelt.hu/judo/meta/psm/rdbms";
