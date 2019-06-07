@@ -1,0 +1,70 @@
+module RdbmsBuilder
+
+import org.eclipse.emf.mwe.utils.*
+
+var rootPath = "."
+
+Workflow {
+
+    bean = org.eclipse.emf.mwe.utils.StandaloneSetup {
+	   platformUri = "${rootPath}"
+    }
+     
+    component = org.eclipse.emf.mwe.utils.DirectoryCleaner {
+        directory = "${rootPath}/src-genmodel"
+    }
+     
+    component = org.eclipse.emf.mwe2.ecore.EcoreGenerator {
+        generateCustomClasses = false
+        genModel = "platform:/resource/judo-meta-rdbms-model/model/rdbms.genmodel"
+        srcPath = "platform:/resource/judo-meta-rdbms-model/src-genmodel"   
+    }
+
+    component = org.eclipse.emf.mwe2.ecore.EcoreGenerator {
+        generateCustomClasses = false
+        genModel = "platform:/resource/judo-meta-rdbms-model/model/rdbms-datatypes.genmodel"
+        srcPath = "platform:/resource/judo-meta-rdbms-model/src-genmodel"   
+    }
+
+    component = org.eclipse.emf.mwe2.ecore.EcoreGenerator {
+        generateCustomClasses = false
+        genModel = "platform:/resource/judo-meta-rdbms-model/model/rdbms-namemapping.genmodel"
+        srcPath = "platform:/resource/judo-meta-rdbms-model/src-genmodel"   
+    }
+
+    component = org.eclipse.emf.mwe2.ecore.EcoreGenerator {
+        generateCustomClasses = false
+        genModel = "platform:/resource/judo-meta-rdbms-model/model/rdbms-tablemappingrules.genmodel"
+        srcPath = "platform:/resource/judo-meta-rdbms-model/src-genmodel"   
+    }
+
+
+    component = hu.blackbelt.emfbuildergenerator.EMFBuilderGenerator {
+	   platformUri = "${rootPath}"
+        outputPath = "${rootPath}/src-genmodel"
+  	   ecoreURI = "platform:/resource/judo-meta-rdbms-model/model/rdbms.ecore"
+        genModelUri = "platform:/resource/judo-meta-rdbms-model/model/rdbms.genmodel"
+    }
+
+    component = hu.blackbelt.emfbuildergenerator.EMFBuilderGenerator {
+	   platformUri = "${rootPath}"
+        outputPath = "${rootPath}/src-genmodel"
+  	   ecoreURI = "platform:/resource/judo-meta-rdbms-model/model/rdbms-datatypes.ecore"
+        genModelUri = "platform:/resource/judo-meta-rdbms-model/model/rdbms-datatypes.genmodel"
+    }
+    
+    component = hu.blackbelt.emfbuildergenerator.EMFBuilderGenerator {
+	   platformUri = "${rootPath}"
+        outputPath = "${rootPath}/src-genmodel"
+  	   ecoreURI = "platform:/resource/judo-meta-rdbms-model/model/rdbms-namemapping.ecore"
+        genModelUri = "platform:/resource/judo-meta-rdbms-model/model/rdbms-namemapping.genmodel"
+    }
+
+    component = hu.blackbelt.emfbuildergenerator.EMFBuilderGenerator {
+	   platformUri = "${rootPath}"
+        outputPath = "${rootPath}/src-genmodel"
+  	   ecoreURI = "platform:/resource/judo-meta-rdbms-model/model/rdbms-tablemappingrules.ecore"
+        genModelUri = "platform:/resource/judo-meta-rdbms-model/model/rdbms-tablemappingrules.genmodel"
+    }
+
+}

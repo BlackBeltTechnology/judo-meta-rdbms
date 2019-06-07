@@ -13,7 +13,8 @@
       <!-- @generated rdbms -->
       <package
             uri="http://blackbelt.hu/judo/meta/psm/rdbms"
-            class="hu.blackbelt.judo.meta.rdbms.RdbmsPackage"/>
+            class="hu.blackbelt.judo.meta.rdbms.RdbmsPackage"
+            genModel="model/rdbms.genmodel"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.extension_parser">
@@ -26,7 +27,8 @@
       <!-- @generated rdbms-datatypes -->
       <package
             uri="http://blackbelt.hu/judo/meta/rdbms/datatypes"
-            class="hu.blackbelt.judo.meta.rdbmsDataTypes.RdbmsDataTypesPackage"/>
+            class="hu.blackbelt.judo.meta.rdbmsDataTypes.RdbmsDataTypesPackage"
+            genModel="model/rdbms-datatypes.genmodel"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.extension_parser">
@@ -39,7 +41,8 @@
       <!-- @generated rdbms-namemapping -->
       <package
             uri="http://blackbelt.hu/judo/meta/rdbms/namemapping"
-            class="hu.blackbelt.judo.meta.rdbmsNameMapping.RdbmsNameMappingPackage"/>
+            class="hu.blackbelt.judo.meta.rdbmsNameMapping.RdbmsNameMappingPackage"
+            genModel="model/rdbms-namemapping.genmodel"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.extension_parser">
@@ -52,7 +55,8 @@
       <!-- @generated rdbms-tablemappingrules -->
       <package
             uri="http://blackbelt.hu/judo/meta/rdbms/rules"
-            class="hu.blackbelt.judo.meta.rdbmsRules.RdbmsRulesPackage"/>
+            class="hu.blackbelt.judo.meta.rdbmsRules.RdbmsRulesPackage"
+            genModel="model/rdbms-tablemappingrules.genmodel"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.extension_parser">
