@@ -8,7 +8,7 @@
   <foreignModel>rdbms-namemapping.ecore</foreignModel>
   <genPackages prefix="RdbmsNameMapping" basePackage="hu.blackbelt.judo.meta" resource="XMI"
       disposableProviderFactory="true" extensibleProviderFactory="true" childCreationExtenders="true"
-      fileExtensions="judo-meta-rdbms-namemapping" ecorePackage="rdbms-namemapping.ecore#/">
+      fileExtensions="judo-meta-rdbms-namemappins" ecorePackage="rdbms-namemapping.ecore#/">
     <genClasses ecoreClass="rdbms-namemapping.ecore#//NameMappings">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdbms-namemapping.ecore#//NameMappings/nameMappings"/>
     </genClasses>

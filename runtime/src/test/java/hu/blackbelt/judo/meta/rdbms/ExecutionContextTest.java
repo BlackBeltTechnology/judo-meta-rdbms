@@ -1,26 +1,27 @@
 package hu.blackbelt.judo.meta.rdbms;
 
 import com.google.common.collect.ImmutableList;
+import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel;
+import hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
-import static hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModelLoader.createRdbmsResourceSet;
+import static hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport.rdbmsModelResourceSupportBuilder;
 import static hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsBuilders.*;
 
 class ExecutionContextTest {
 
     @Test
+    @DisplayName("Create model with builder pattern")
     void testReflectiveCreated() throws Exception {
 
 
         String createdSourceModelName = "urn:rdbms.judo-meta-rdbms";
 
-        ResourceSet executionResourceSet = createRdbmsResourceSet();
-        Resource rdbmsResource = executionResourceSet.createResource(
+        RdbmsModelResourceSupport rdbmsModelSupport = rdbmsModelResourceSupportBuilder().build();
+        Resource rdbmsResource = rdbmsModelSupport.getResourceSet().createResource(
                 URI.createURI(createdSourceModelName));
 
         RdbmsIdentifierField test1primarykey = newRdbmsIdentifierFieldBuilder()
@@ -30,7 +31,7 @@ class ExecutionContextTest {
                 .withRdbmsTypeName("INT")
                 .build();
 
-        hu.blackbelt.judo.meta.rdbms.RdbmsModel model = newRdbmsModelBuilder()
+        RdbmsModel model = newRdbmsModelBuilder()
                 .withRdbmsTables(newRdbmsTableBuilder()
                         .withFields(ImmutableList.of(test1primarykey,
                                 newRdbmsValueFieldBuilder()
@@ -47,14 +48,4 @@ class ExecutionContextTest {
         rdbmsResource.getContents().add(model);
 
     }
-
-    public File scriptDir(){
-        String relPath = getClass().getProtectionDomain().getCodeSource().getLocation().getFile();
-        File targetDir = new File(relPath+"../../src/main");
-        if(!targetDir.exists()) {
-            targetDir.mkdir();
-        }
-        return targetDir;
-    }
-
 }

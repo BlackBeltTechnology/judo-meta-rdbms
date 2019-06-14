@@ -48,9 +48,10 @@
    <extension point="org.eclipse.emf.ecore.extension_parser">
       <!-- @generated rdbms-namemapping -->
       <parser
-            type="judo-meta-rdbms-namemapping"
+            type="judo-meta-rdbms-namemappins"
             class="hu.blackbelt.judo.meta.rdbmsNameMapping.util.RdbmsNameMappingResourceFactoryImpl"/>
    </extension>
+
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated rdbms-tablemappingrules -->
       <package

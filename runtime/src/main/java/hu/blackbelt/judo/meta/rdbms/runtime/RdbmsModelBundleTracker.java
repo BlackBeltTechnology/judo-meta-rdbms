@@ -1,27 +1,28 @@
 package hu.blackbelt.judo.meta.rdbms.runtime;
 
+import hu.blackbelt.epsilon.runtime.osgi.BundleURIHandler;
 import hu.blackbelt.osgi.utils.osgi.api.BundleCallback;
 import hu.blackbelt.osgi.utils.osgi.api.BundleTrackerManager;
 import hu.blackbelt.osgi.utils.osgi.api.BundleUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.osgi.framework.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.framework.VersionRange;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
-
-import static hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModelLoader.loadRdbmsModel;
 
 @Component(immediate = true)
 @Slf4j
@@ -79,18 +80,16 @@ public class RdbmsModelBundleTracker {
                         if (versionRange.includes(bundleContext.getBundle().getVersion())) {
                             // Unpack model
                             try {
-                                File file = BundleUtil.copyBundleFileToPersistentStorage(trackedBundle, key + ".judo-meta-rdbms", params.get("file"));
-                                Version version = bundleContext.getBundle().getVersion();
-
-                                // TODO: JNG-55 Copy mapping XLSX
-
-                                RdbmsModel rdbmsModel = loadRdbmsModel(
-                                        new ResourceSetImpl(),
-                                        URI.createURI(file.getAbsolutePath()),
-                                        params.get(RdbmsModel.NAME),
-                                        version.toString(),
-                                        params.get(RdbmsModel.CHECKSUM),
-                                        versionRange.toString());
+                                RdbmsModel rdbmsModel = RdbmsModel.loadRdbmsModel(
+                                        RdbmsModel.LoadArguments.loadArgumentsBuilder()
+                                                .uriHandler(Optional.of(new BundleURIHandler("urn", "", trackedBundle)))
+                                                .uri(URI.createURI(params.get("file")))
+                                                .name(params.get(RdbmsModel.NAME))
+                                                .version(Optional.of(trackedBundle.getVersion().toString()))
+                                                .checksum(Optional.ofNullable(params.get(RdbmsModel.CHECKSUM)))
+                                                .acceptedMetaVersionRange(Optional.of(versionRange.toString()))
+                                                .build()
+                                );
 
                                 log.info("Registering model: " + rdbmsModel);
 

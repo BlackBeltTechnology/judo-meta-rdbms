@@ -1,3 +1,38 @@
 # judo-meta-rdbms
 
-RDBMS meta data. It is used to map PSM models to relational databases.
+It contains relational database meta model.
+
+It acts as an eclipse plugin with features and sites, can be used standalone and in standarsd OSGi (without eclipse).
+
+Modules:
+
+- model - eclipse plugin. It contains the model and ecore generated java classes. 
+          Builder and Helpers added with MWE2 workflow.
+          
+- runtime - OSGi bundle. It repackages model and add extra information / services to able to use for transformation pipeline and standalone.
+
+- feature - Eclipse feature repository - to be able to use for eclipse installation
+
+- site - Eclipse Update Site - all builded version compiled as an update site.
+
+All built artifact are tagged in git:
+
+https://github.com/BlackBeltTechnology/judo-meta-rdbms/releases
+
+You can download the ZIP release of site and add to eclipse, or
+you can add to your eclipse as Install new software and add URL from P2 Update site of the required version.
+
+All commit is build by wercker, you can access it:
+
+https://app.wercker.com/BlackbeltTechnology/judo-meta-rdbms/runs
+
+
+To compile the project in Maven the minimum version of requidred maven is 3.5.4.
+
+To compile run:   
+    
+    mvn clean install
+
+
+To run code generation inside eclipse, run as MWE2 Workflow:
+   judo-meta-rdbms-model project src/workflow/generateRdbmsModel.mwe2

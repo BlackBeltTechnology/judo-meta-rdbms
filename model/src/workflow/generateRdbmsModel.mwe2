@@ -1,73 +1,105 @@
 module RdbmsBuilder
 
 import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.mwe2.ecore.*
+import hu.blackbelt.emfbuildergenerator.*
+import hu.blackbelt.eclipse.emf.genmodel.generator.helper.*
 
 var rootPath = "."
 
 var modelDir = "model"
-var javaPath = "src"
 var javaGenPath = "src-genmodel"
+var platformUri = "platform:/resource/judo-meta-rdbms-model"
 
 
 Workflow {
 
-    bean = org.eclipse.emf.mwe.utils.StandaloneSetup {
+    bean = StandaloneSetup {
 	   platformUri = "${rootPath}"
     }
-    component = org.eclipse.emf.mwe.utils.DirectoryCleaner {
+    component = DirectoryCleaner {
         directory = "${rootPath}/${javaGenPath}"
     }
      
-    component = org.eclipse.emf.mwe2.ecore.EcoreGenerator {
+    component = EcoreGenerator {
         generateCustomClasses = false
-        genModel = "platform:/resource/judo-meta-rdbms-model/model/rdbms.genmodel"
-        srcPath = "platform:/resource/judo-meta-rdbms-model/${javaGenPath}"   
+        genModel = "${platformUri}/${modelDir}/rdbms.genmodel"
+        srcPath = "${platformUri}/${javaGenPath}"   
     }
 
-    component = org.eclipse.emf.mwe2.ecore.EcoreGenerator {
+    component = EcoreGenerator {
         generateCustomClasses = false
-        genModel = "platform:/resource/judo-meta-rdbms-model/model/rdbms-datatypes.genmodel"
-        srcPath = "platform:/resource/judo-meta-rdbms-model/${javaGenPath}"   
+        genModel = "${platformUri}/${modelDir}/rdbms-datatypes.genmodel"
+        srcPath = "${platformUri}/${javaGenPath}"   
     }
 
-    component = org.eclipse.emf.mwe2.ecore.EcoreGenerator {
+    component = EcoreGenerator {
         generateCustomClasses = false
-        genModel = "platform:/resource/judo-meta-rdbms-model/model/rdbms-namemapping.genmodel"
-        srcPath = "platform:/resource/judo-meta-rdbms-model/${javaGenPath}"   
+        genModel = "${platformUri}/${modelDir}/rdbms-namemapping.genmodel"
+        srcPath = "${platformUri}/${javaGenPath}"   
     }
 
-    component = org.eclipse.emf.mwe2.ecore.EcoreGenerator {
+    component = EcoreGenerator {
         generateCustomClasses = false
-        genModel = "platform:/resource/judo-meta-rdbms-model/model/rdbms-tablemappingrules.genmodel"
-        srcPath = "platform:/resource/judo-meta-rdbms-model/${javaGenPath}"   
+        genModel = "${platformUri}/${modelDir}/rdbms-tablemappingrules.genmodel"
+        srcPath = "${platformUri}/${javaGenPath}"   
     }
 
 
-    component = hu.blackbelt.emfbuildergenerator.EMFBuilderGenerator {
-	   platformUri = "${rootPath}"
+    component = EMFBuilderGenerator {
+	    platformUri = "${rootPath}"
         outputPath = "${rootPath}/${javaGenPath}"
-  	   ecoreURI = "platform:/resource/judo-meta-rdbms-model/model/rdbms.ecore"
-        genModelUri = "platform:/resource/judo-meta-rdbms-model/model/rdbms.genmodel"
+  	    ecoreURI = "${platformUri}/${modelDir}/rdbms.ecore"
+        genModelUri = "${platformUri}/${modelDir}/rdbms.genmodel"
     }
 
-    component = hu.blackbelt.emfbuildergenerator.EMFBuilderGenerator {
-	   platformUri = "${rootPath}"
+    component = EMFBuilderGenerator {
+	    platformUri = "${rootPath}"
         outputPath = "${rootPath}/${javaGenPath}"
-  	   ecoreURI = "platform:/resource/judo-meta-rdbms-model/model/rdbms-datatypes.ecore"
-        genModelUri = "platform:/resource/judo-meta-rdbms-model/model/rdbms-datatypes.genmodel"
+  	    ecoreURI = "${platformUri}/${modelDir}/rdbms-datatypes.ecore"
+        genModelUri = "${platformUri}/${modelDir}/rdbms-datatypes.genmodel"
     }
     
-    component = hu.blackbelt.emfbuildergenerator.EMFBuilderGenerator {
-	   platformUri = "${rootPath}"
+    component = EMFBuilderGenerator {
+	    platformUri = "${rootPath}"
         outputPath = "${rootPath}/${javaGenPath}"
-  	   ecoreURI = "platform:/resource/judo-meta-rdbms-model/model/rdbms-namemapping.ecore"
-        genModelUri = "platform:/resource/judo-meta-rdbms-model/model/rdbms-namemapping.genmodel"
+  	    ecoreURI = "${platformUri}/${modelDir}/rdbms-namemapping.ecore"
+        genModelUri = "${platformUri}/${modelDir}/rdbms-namemapping.genmodel"
     }
 
-    component = hu.blackbelt.emfbuildergenerator.EMFBuilderGenerator {
-	   platformUri = "${rootPath}"
+    component = EMFBuilderGenerator {
+	    platformUri = "${rootPath}"
         outputPath = "${rootPath}/${javaGenPath}"
-  	   ecoreURI = "platform:/resource/judo-meta-rdbms-model/model/rdbms-tablemappingrules.ecore"
-        genModelUri = "platform:/resource/judo-meta-rdbms-model/model/rdbms-tablemappingrules.genmodel"
+  	    ecoreURI = "${platformUri}/${modelDir}/rdbms-tablemappingrules.ecore"
+        genModelUri = "${platformUri}/${modelDir}/rdbms-tablemappingrules.genmodel"
     }
+
+
+	bean = engine.ModelHelperGeneratorStandaloneSetup : genModelSetup {
+			config = {
+				javaGenPath = "${rootPath}/${javaGenPath}"
+			}
+			doInit = true
+		}
+
+	component = org.eclipse.xtext.mwe.Reader {
+		path = "${rootPath}/${modelDir}"
+		register = genModelSetup
+		loadResource = {
+			slot = "model"
+		}
+	}
+	
+	component = org.eclipse.xtext.generator.GeneratorComponent {
+		register = genModelSetup
+        slot = 'model'
+        outlet = {
+            path = "${rootPath}/${javaGenPath}"
+        }
+//        outlet = {
+//        	outletName = "gen-once"
+//            path = javaPath
+//        }
+    }	
+
 }
