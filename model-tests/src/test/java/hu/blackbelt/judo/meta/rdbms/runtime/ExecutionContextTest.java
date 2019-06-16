@@ -1,7 +1,8 @@
-package hu.blackbelt.judo.meta.rdbms;
+package hu.blackbelt.judo.meta.rdbms.runtime;
 
 import com.google.common.collect.ImmutableList;
-import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel;
+import hu.blackbelt.judo.meta.rdbms.RdbmsIdentifierField;
+import hu.blackbelt.judo.meta.rdbms.RdbmsModel;
 import hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -22,7 +23,7 @@ class ExecutionContextTest {
 
         RdbmsModelResourceSupport rdbmsModelSupport = rdbmsModelResourceSupportBuilder().build();
         Resource rdbmsResource = rdbmsModelSupport.getResourceSet().createResource(
-                URI.createURI(createdSourceModelName));
+                URI.createFileURI(createdSourceModelName));
 
         RdbmsIdentifierField test1primarykey = newRdbmsIdentifierFieldBuilder()
                 .withName("Id")

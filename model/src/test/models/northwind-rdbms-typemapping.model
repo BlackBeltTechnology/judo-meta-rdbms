@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdbmsDataTypes="http://blackbelt.hu/judo/meta/rdbms/datatypes">
+  <rdbmsDataTypes:TypeMappings xmi:id="_9Ehh0HHjEemUZoLvmanUeA">
+    <typeMappings xmi:id="_9EjXAHHjEemUZoLvmanUeA" rdbmsType="DATE" rdbmsSize="-1" rdbmsPrecision="-1" rdbmsScale="-1">
+      <asmType href="http://blackbelt.hu/judo/asm/types#//JDate"/>
+    </typeMappings>
+    <typeMappings xmi:id="_9Ej-EHHjEemUZoLvmanUeA" rdbmsType="TIMESTAMP" rdbmsSize="-1" rdbmsPrecision="-1" rdbmsScale="-1">
+      <asmType href="http://blackbelt.hu/judo/asm/types#//JTimestamp"/>
+    </typeMappings>
+    <typeMappings xmi:id="_9Ej-EXHjEemUZoLvmanUeA" rdbmsType="INTEGER" rdbmsSize="-1" rdbmsPrecision="-1" rdbmsScale="-1">
+      <asmType href="http://blackbelt.hu/judo/asm/types#//JInteger"/>
+    </typeMappings>
+    <typeMappings xmi:id="_9Ej-EnHjEemUZoLvmanUeA" rdbmsType="BIGINT" rdbmsSize="-1" rdbmsPrecision="-1" rdbmsScale="-1">
+      <asmType href="http://blackbelt.hu/judo/asm/types#//JLong"/>
+    </typeMappings>
+    <typeMappings xmi:id="_9EklIHHjEemUZoLvmanUeA" rdbmsType="DECIMAL" rdbmsSize="-1" rdbmsPrecision="0" rdbmsScale="0">
+      <asmType href="http://blackbelt.hu/judo/asm/types#//JBigInteger"/>
+    </typeMappings>
+    <typeMappings xmi:id="_9EklIXHjEemUZoLvmanUeA" rdbmsType="FLOAT" rdbmsSize="-1" rdbmsPrecision="-1" rdbmsScale="-1">
+      <asmType href="http://blackbelt.hu/judo/asm/types#//JFloat"/>
+    </typeMappings>
+    <typeMappings xmi:id="_9EklInHjEemUZoLvmanUeA" rdbmsType="DOUBLE" rdbmsSize="-1" rdbmsPrecision="-1" rdbmsScale="-1">
+      <asmType href="http://blackbelt.hu/judo/asm/types#//JDouble"/>
+    </typeMappings>
+    <typeMappings xmi:id="_9ElMMHHjEemUZoLvmanUeA" rdbmsType="DECIMAL" rdbmsSize="-1" rdbmsPrecision="0" rdbmsScale="0">
+      <asmType href="http://blackbelt.hu/judo/asm/types#//JBigDecimal"/>
+    </typeMappings>
+    <typeMappings xmi:id="_9ElMMXHjEemUZoLvmanUeA" rdbmsType="VARCHAR" rdbmsSize="255" rdbmsPrecision="-1" rdbmsScale="-1">
+      <asmType href="http://blackbelt.hu/judo/asm/types#//JString"/>
+    </typeMappings>
+    <typeMappings xmi:id="_9ElMMnHjEemUZoLvmanUeA" rdbmsType="BOOLEAN" rdbmsSize="-1" rdbmsPrecision="-1" rdbmsScale="-1">
+      <asmType href="http://blackbelt.hu/judo/asm/types#//JBoolean"/>
+    </typeMappings>
+    <typeMappings xmi:id="_9ElzQHHjEemUZoLvmanUeA" rdbmsType="BLOB" rdbmsSize="64" rdbmsPrecision="-1" rdbmsScale="-1">
+      <asmType href="http://blackbelt.hu/judo/asm/types#//JByteArray"/>
+    </typeMappings>
+    <typeMappings xmi:id="_9ElzQXHjEemUZoLvmanUeA" rdbmsType="CLOB" rdbmsSize="-1" rdbmsPrecision="-1" rdbmsScale="-1">
+      <asmType href="http://blackbelt.hu/judo/asm/types#//JObject"/>
+    </typeMappings>
+    <typeMappings xmi:id="_9EmaUHHjEemUZoLvmanUeA" rdbmsType="BINARY" rdbmsSize="16" rdbmsPrecision="-1" rdbmsScale="-1">
+      <asmType href="http://blackbelt.hu/judo/asm/types#//JUUID"/>
+    </typeMappings>
+  </rdbmsDataTypes:TypeMappings>  
+</xmi:XMI>

@@ -14,4 +14,22 @@ Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: judo-meta-rdbms-model
 Export-Package: hu.blackbelt.judo.meta.rdbms,
  hu.blackbelt.judo.meta.rdbms.impl,
- hu.blackbelt.judo.meta.rdbms.util
+ hu.blackbelt.judo.meta.rdbms.runtime,
+ hu.blackbelt.judo.meta.rdbms.support,
+ hu.blackbelt.judo.meta.rdbms.util,
+ hu.blackbelt.judo.meta.rdbms.util.builder,
+ hu.blackbelt.judo.meta.rdbmsDataTypes,
+ hu.blackbelt.judo.meta.rdbmsDataTypes.impl,
+ hu.blackbelt.judo.meta.rdbmsDataTypes.support,
+ hu.blackbelt.judo.meta.rdbmsDataTypes.util,
+ hu.blackbelt.judo.meta.rdbmsDataTypes.util.builder,
+ hu.blackbelt.judo.meta.rdbmsNameMapping,
+ hu.blackbelt.judo.meta.rdbmsNameMapping.impl,
+ hu.blackbelt.judo.meta.rdbmsNameMapping.support,
+ hu.blackbelt.judo.meta.rdbmsNameMapping.util,
+ hu.blackbelt.judo.meta.rdbmsNameMapping.util.builder,
+ hu.blackbelt.judo.meta.rdbmsRules,
+ hu.blackbelt.judo.meta.rdbmsRules.impl,
+ hu.blackbelt.judo.meta.rdbmsRules.support,
+ hu.blackbelt.judo.meta.rdbmsRules.util,
+ hu.blackbelt.judo.meta.rdbmsRules.util.builder

@@ -15,32 +15,16 @@
     
     <name>Judo RDBMS LSM Specific Metamodel eclipse plugin</name>
     <description>Judo RDBMS LSM Specific Metamodel Eclipse plugin</description>
-    
-    <dependencies>
-        <dependency>
-            <groupId>org.eclipse.xtext</groupId>
-            <artifactId>org.eclipse.xtext.xbase.lib</artifactId>
-            <version>${xtext-version}</version>
-        </dependency>
-    </dependencies>
-    
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>2.6.1</version>
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <excludes>
-                                <exclude>.dummy.txt</exclude>
-                            </excludes>
-                            <directory>src-genmodel</directory>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>
 
+
+    <properties>
+        <src.dir>src/main/java</src.dir>
+    </properties>
+
+    <build>
+        <sourceDirectory>${src.dir}</sourceDirectory>
+
+        <plugins>
              <!-- Generates the Ecore model via MWE2 -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -65,45 +49,6 @@
                             <cleanupDaemonThreads>false</cleanupDaemonThreads><!-- see https://bugs.eclipse.org/bugs/show_bug.cgi?id=475098#c3 -->
                         </configuration>
                     </execution>
-
-<!--
-                    <execution>
-                        <id>mwe2Launcher-helper</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                        <configuration>
-                            <mainClass>org.eclipse.emf.mwe2.launch.runtime.Mwe2Launcher</mainClass>
-                            <arguments>
-                                <argument>${project.basedir}/src/workflow/generateRdbmsModelHelper.mwe2</argument>
-                                <argument>-p</argument>
-                                <argument>rootPath=${project.basedir}</argument>
-                            </arguments>
-                            <classpathScope>compile</classpathScope>
-                            <includePluginDependencies>true</includePluginDependencies>
-                            <cleanupDaemonThreads>false</cleanupDaemonThreads#<#!#-#- see https://bugs.eclipse.org/bugs/show_bug.cgi?id=475098#c3 #-#-#>
-                        </configuration>
-                    </execution>
-                    -->
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok-maven-plugin</artifactId>
-                <version>1.18.4.0</version>
-                <executions>
-                    <execution>
-                        <id>delombok</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>delombok</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${basedir}/src/main/java</outputDirectory>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
 
@@ -114,7 +59,7 @@
                 <executions>
                     <!-- Adds the generated sources to the compiler input -->
                     <execution>
-                        <id>add-source</id>
+                        <id>add-genmodel-source</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>add-source</goal>
@@ -127,31 +72,43 @@
                             </sources>
                         </configuration>
                     </execution>
-
-
-                    <execution>
-                        <id>attach-artifacts</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>attach-artifact</goal>
-                        </goals>
-                        <configuration>
-                            <artifacts>
-                                <artifact>
-                                    <file>model/rdbms.ecore</file>
-                                    <type>ecore</type>
-                                    <classifier>rdbms</classifier>
-                                </artifact>
-                                <artifact>
-                                    <file>model/rdbms.genmodel</file>
-                                    <type>genmodel</type>
-                                    <classifier>rdbms</classifier>
-                                </artifact>
-                            </artifacts>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
         </plugins>
-    </build>    
+    </build>
+
+    <profiles>
+        <profile>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <id>delombok-sources</id>
+
+            <properties>
+                <src.dir>${basedir}/src/main/lombok</src.dir>
+            </properties>
+
+            <build>
+                <plugins>
+                    <!-- Lombok is not supported by tycho -->
+                    <plugin>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok-maven-plugin</artifactId>
+                        <version>1.18.6.0</version>
+                        <executions>
+                            <execution>
+                                <configuration>
+                                    <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+                                </configuration>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>delombok</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

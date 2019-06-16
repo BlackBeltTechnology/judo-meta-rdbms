@@ -4,7 +4,7 @@ It contains relational database meta model.
 
 It acts as an eclipse plugin with features and sites, can be used standalone and in standarsd OSGi (without eclipse).
 
-Modules:
+== Modules:
 
 - model - eclipse plugin. It contains the model and ecore generated java classes. 
           Builder and Helpers added with MWE2 workflow.
@@ -13,7 +13,18 @@ Modules:
 
 - feature - Eclipse feature repository - to be able to use for eclipse installation
 
-- site - Eclipse Update Site - all builded version compiled as an update site.
+- site - Eclipse Update Site - all built version compiled as an update site.
+
+== Version policy
+
+Two worlds collides in this project. The Maven and the Eclipse have different view about versions. While maven using SNAPSHOT
+versions eclipse using .quialifier in the qualifier part of semantic version.
+
+Which means: 1.0.0.qualifier is eqivalent of maven 1.0.0-SNAPSHOT
+To address this tycho versions plugin used to replace qualifier and maven versions for a technical version
+in every build.
+
+== CI build
 
 All built artifact are tagged in git:
 
@@ -26,13 +37,64 @@ All commit is build by wercker, you can access it:
 
 https://app.wercker.com/BlackbeltTechnology/judo-meta-rdbms/runs
 
+When a commit arrives the base part of version is used and the current branch name and commut number. It helps
+to determinate what is the branch which was used to built.
 
-To compile the project in Maven the minimum version of requidred maven is 3.5.4.
+For example:
 
-To compile run:   
-    
+When the version in the pom.xml is *1.0.1-SNAPSHOT* and the branch name is develop and it is the 40th commit on the branch
+the version number will be *1.0.1.develop_40*
+
+The CI set the pom versions and eclipse versions also before the build.
+
+== Installation
+
+On eclipse P2 site can be installed.
+Intall new software and add the URL of site listed on github or the uncompressed ZIP folder. It contains metamodel
+and UI provided for default editor.
+
+
+== Compilation
+
+
+=== Compilation in maven
+
+To compile the project in Maven the minimum version of required maven is 3.5.4.
+
+
     mvn clean install
 
+If no maven is installed mven wrapper can be used.
 
+    ./mvnw clean install
+
+The maven using tycho to make eclipse build.
+
+=== Code generation in eclipse
 To run code generation inside eclipse, run as MWE2 Workflow:
    judo-meta-rdbms-model project src/workflow/generateRdbmsModel.mwe2
+
+
+== Release
+
+The release made by CI. Normally every commit make a version based on the name of the branch. If a version is
+OK to release there is a wercker stop to RELEASE. It will make the version without SNAPSHOT and build it. After increase
+the minor number. While a release is running all commits have to be forbidden.
+
+== Problems
+
+=== Run JUnit tests in eclipse
+There is a problem on eclipse and tycho. The classpath does not contain JUnit.
+
+   <classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+
+Now Required-Bundle added to Manifest which is not the tycho recommended way.
+
+https://bugs.eclipse.org/bugs/show_bug.cgi?id=534587
+
+=== Problem with lombok:
+
+Tycho does not support lombok generation directly as mentioned in https://github.com/rzwitserloot/lombok/issues/285 .
+This will be fixed in later version. Now the lombok version of code is presented in src/main/lombok which is generated
+when maven profile 'delombok-sources' activated.
+
