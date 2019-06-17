@@ -202,11 +202,6 @@
 							<version>3.10.300</version>
 						</dependency>
 						<dependency>
-							<groupId>hu.blackbelt.eclipse</groupId>
-							<artifactId>emfbuildergenerator-core</artifactId>
-							<version>${emf-builder-generator-version}</version>
-						</dependency>
-						<dependency>
 							<groupId>org.eclipse.emf</groupId>
 							<artifactId>org.eclipse.emf.mwe2.launch</artifactId>
 							<version>${emf-mwe2-launch-version}</version>
@@ -698,6 +693,12 @@
 			<groupId>hu.blackbelt.judo</groupId>
 			<artifactId>hu.blackbelt.judo.eclipse.emf.genmodel.generator.runtimemodel</artifactId>
 			<version>${judo-genmodel-generator-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>hu.blackbelt.eclipse</groupId>
+			<artifactId>emfbuildergenerator-core</artifactId>
+			<version>${emf-builder-generator-version}</version>
 		</dependency>
 
 	</dependencies>
