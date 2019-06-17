@@ -101,7 +101,7 @@ Workflow {
     }	
 
     // RuntimeModel
-	bean = hu.blackbelt.judo.eclipse.emf.genmodel.runtimemodel.generator.engine.RuntimeModelGeneratorStandaloneSetup : genRuntimeModelSetup {
+	bean = hu.blackbelt.judo.eclipse.emf.genmodel.generator.runtimemodel.engine.RuntimeModelGeneratorStandaloneSetup : genRuntimeModelSetup {
 			config = {
 				javaGenPath = "${rootPath}/${javaGenPath}"
 			}
