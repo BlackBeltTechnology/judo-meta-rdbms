@@ -2,16 +2,15 @@ package hu.blackbelt.judo.meta.rdbms.runtime;
 
 import hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport;
 import lombok.AllArgsConstructor;
-import lombok.ToString;
-import lombok.Getter;
 import lombok.Builder;
-
+import lombok.Getter;
+import lombok.ToString;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Map;
@@ -65,9 +64,9 @@ public class RdbmsModel {
                         .rootUri(loadArguments.rootUri)
                         .uriHandler(loadArguments.uriHandler)
                         .build()
-        );
+                );
 
-        RdbmsModel.RdbmsModelBuilder b = RdbmsModel.buildRdbmsModel();
+        RdbmsModelBuilder b = RdbmsModel.buildRdbmsModel();
 
         b.name(loadArguments.name)
                 .version(loadArguments.version.orElse("1.0.0"))
@@ -81,10 +80,35 @@ public class RdbmsModel {
         return rdbmsModel;
     }
 
-    public void saveRdbmssModel() throws IOException {
+    public void saveRdbmsModel() throws IOException {
         getResourceSet()
                 .getResource(getUri(), false)
                 .save(RdbmsModelResourceSupport.getRdbmsModelDefaultSaveOptions());
+    }
+
+    public void saveRdbmsModel(SaveArguments saveArguments) throws IOException {
+        try {
+            OutputStream outputStream = saveArguments.outputStream
+                    .orElseGet(() -> saveArguments.file.map(f -> {
+                        try {
+                            return new FileOutputStream(f);
+                        } catch (FileNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }).orElse(null));
+
+            getResourceSet()
+                    .getResource(getUri(), false)
+                    .save(outputStream, saveArguments.saveOptions
+                            .orElseGet(() -> RdbmsModelResourceSupport.getRdbmsModelDefaultSaveOptions()));
+
+        } catch (RuntimeException e) {
+            if (e.getCause() instanceof IOException) {
+                throw (IOException) e.getCause();
+            } else  {
+                throw e;
+            }
+        }
     }
 
 
@@ -118,6 +142,20 @@ public class RdbmsModel {
 
         @Builder.Default
         Map<Object, Object> loadOptions = RdbmsModelResourceSupport.getRdbmsModelDefaultLoadOptions();
+    }
+
+
+    @Builder(builderMethodName = "saveArgumentsBuilder")
+    @AllArgsConstructor
+    public static class SaveArguments {
+        @Builder.Default
+        Optional<OutputStream> outputStream = Optional.empty();
+
+        @Builder.Default
+        Optional<File> file = Optional.empty();
+
+        @Builder.Default
+        Optional<Map<Object, Object>> saveOptions = Optional.empty();
     }
 
 }
