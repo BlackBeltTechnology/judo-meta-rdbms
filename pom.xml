@@ -82,6 +82,7 @@
 		<eclipse-p2-base>http://download.eclipse.org/releases/2019-03</eclipse-p2-base>
 		<emf-builder-generator-version>1.0.0.develop_57</emf-builder-generator-version>
 		<emf-genmodel-generator-version>1.0.0-SNAPSHOT</emf-genmodel-generator-version>
+		<judo-genmodel-runtimemodel-generator-version>1.0.0-SNAPSHOT</judo-genmodel-runtimemodel-generator-version>
 
 		<!-- Xtend / Xcore -->
 		<emf-version>2.15.0</emf-version>
@@ -215,6 +216,12 @@
 							<artifactId>hu.blackbelt.eclipse.emf.genmodel.generator.helper</artifactId>
 							<version>${emf-genmodel-generator-version}</version>
 						</dependency>
+						<dependency>
+							<groupId>hu.blackbelt.judo</groupId>
+							<artifactId>hu.blackbelt.judo.eclipse.emf.genmodel.runtimemodel.generator.runtimemodelgenerator</artifactId>
+							<version>${judo-genmodel-runtimemodel-generator-version}</version>
+						</dependency>
+
 						<dependency>
 							<groupId>org.eclipse.emf</groupId>
 							<artifactId>org.eclipse.emf.mwe2.launch</artifactId>

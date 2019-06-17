@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdbmsNameMapping="http://blackbelt.hu/judo/meta/rdbms/namemapping">
-  <rdbmsNameMapping:NameMappings xmi:id="_NTDygHHPEemysv7KL8kB2Q">
-    <nameMappings xmi:id="_NTJ5IHHPEemysv7KL8kB2Q" fullyQualifiedName="northwind.entities.City" rdbmsName="CITY"/>
-    <nameMappings xmi:id="_NTKgMHHPEemysv7KL8kB2Q" fullyQualifiedName="northwind.entities.Territory#shipper" rdbmsName="ID_SHIPPER"/>
-    <nameMappings xmi:id="_NTKgMXHPEemysv7KL8kB2Q" fullyQualifiedName="northwind.entities.Person#firstName" rdbmsName="FIRST_NAME"/>
-  </rdbmsNameMapping:NameMappings>
-</xmi:XMI>
