@@ -839,13 +839,13 @@
                             <commitish>${env.WERCKER_GIT_COMMIT}</commitish>
                             <fileSets>
                                 <fileSet>
-                                    <directory>${basedir}/core/target</directory>
+                                    <directory>${basedir}/model/target</directory>
                                     <includes>
                                         <include>*.jar</include>
                                     </includes>
                                 </fileSet>
                                 <fileSet>
-                                    <directory>${basedir}/helper/target</directory>
+                                    <directory>${basedir}/runtime/target</directory>
                                     <includes>
                                         <include>*.jar</include>
                                     </includes>
