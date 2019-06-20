@@ -831,7 +831,13 @@
                                     </includes>
                                 </fileSet>
                                 <fileSet>
-                                    <directory>${basedir}/runtime/target</directory>
+                                    <directory>${basedir}/model-test/target</directory>
+                                    <includes>
+                                        <include>*.jar</include>
+                                    </includes>
+                                </fileSet>
+                                <fileSet>
+                                    <directory>${basedir}/osgi/target</directory>
                                     <includes>
                                         <include>*.jar</include>
                                     </includes>
