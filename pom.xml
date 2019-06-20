@@ -1,16 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>hu.blackbelt.judo.meta</groupId>
-	<artifactId>judo-meta-rdbms-parent</artifactId>
+    <groupId>hu.blackbelt.judo.meta</groupId>
+    <artifactId>hu.blackbelt.judo.meta.rdbms</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
 
-	<name>Judo RDBMS LSM Specific Metamodel parent</name>
-	<description>Judo RDBMS LSM Specific Metamodel Parent</description>
+	<name>Judo :: Rdbms :: Model</name>
+
+	<description>Judo Rdbms Model Parent</description>
 
 	<url>http://github.com/${project-repositoryId}</url>
 
@@ -73,7 +71,8 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<tycho-version>1.4.0</tycho-version>
 		<eclipse-p2-base>http://download.eclipse.org/releases/2019-03</eclipse-p2-base>
-		<emf-builder-generator-version>1.0.0.develop_57</emf-builder-generator-version>
+
+        <emf-builder-generator-version>1.0.0.develop_57</emf-builder-generator-version>
 		<emf-genmodel-generator-version>1.0.0.develop_6</emf-genmodel-generator-version>
 		<judo-genmodel-generator-version>1.0.0.develop_2</judo-genmodel-generator-version>
 
@@ -387,7 +386,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore></ignore>
+										<ignore />
 									</action>
 								</pluginExecution>
 								<pluginExecution>
@@ -405,7 +404,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore></ignore>
+										<ignore />
 									</action>
 								</pluginExecution>
 								<pluginExecution>
@@ -427,7 +426,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore></ignore>
+										<ignore />
 									</action>
 								</pluginExecution>
 								<pluginExecution>
@@ -446,7 +445,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore></ignore>
+										<ignore />
 									</action>
 								</pluginExecution>
 								<pluginExecution>
@@ -465,7 +464,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore></ignore>
+										<ignore />
 									</action>
 								</pluginExecution>
 								<pluginExecution>
@@ -484,7 +483,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore></ignore>
+										<ignore />
 									</action>
 								</pluginExecution>
 								<pluginExecution>
@@ -503,7 +502,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore></ignore>
+										<ignore />
 									</action>
 								</pluginExecution>
 								<pluginExecution>
@@ -522,7 +521,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore></ignore>
+										<ignore />
 									</action>
 								</pluginExecution>
 							</pluginExecutions>
@@ -564,8 +563,8 @@
 		<dependencies>
 			<dependency>
 				<groupId>hu.blackbelt.judo.meta</groupId>
-				<artifactId>judo-meta-rdbms-model</artifactId>
-				<version>1.0.1-SNAPSHOT</version>
+				<artifactId>hu.blackbelt.judo.meta.rdbms.model</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -695,8 +694,8 @@
             </activation>
             <modules>
                 <module>model</module>
-                <module>model-tests</module>
-                <module>runtime</module>
+                <module>model-test</module>
+                <module>osgi</module>
                 <module>feature</module>
                 <module>site</module>
             </modules>

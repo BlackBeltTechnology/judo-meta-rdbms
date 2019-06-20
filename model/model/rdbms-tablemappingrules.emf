@@ -1,7 +1,7 @@
 @namespace(uri="http://blackbelt.hu/judo/meta/rdbms/rules", prefix="rdbmsRules")
 package rdbmsRules;
 
-import "http://blackbelt.hu/judo/meta/psm/rdbms";
+import "http://blackbelt.hu/judo/meta/rdbms";
 import "http://www.eclipse.org/emf/2002/Ecore";
 
 class Rules {

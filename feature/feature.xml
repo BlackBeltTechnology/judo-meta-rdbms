@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="judo-meta-rdbms-feature"
-      label="Judo Meta Rdbms Feature"
-      version="1.0.1.qualifier"
+      id="hu.blackbelt.judo.meta.rdbms.feature"
+      label="Judo Rdbms Model Feature"
+      version="1.0.0.qualifier"
       provider-name="BlackBelt Technology">
 
-   <description url="http://blackbelt.hu">
+   <description url="http://www.blackbelt.hu">
       %description
    </description>
 
@@ -43,7 +43,7 @@
    </requires>
 
    <plugin
-         id="judo-meta-rdbms-model"
+         id="hu.blackbelt.judo.meta.rdbms.model"
          download-size="0"
          install-size="0"
          version="0.0.0"/>

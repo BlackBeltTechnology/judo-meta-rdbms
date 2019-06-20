@@ -1,6 +1,6 @@
-# judo-meta-rdbms
+# rdbms
 
-It contains relational database meta model.
+It contains rdbms meta model.
 
 It acts as an eclipse plugin with features and sites, can be used standalone and in standarsd OSGi (without eclipse).
 
@@ -151,7 +151,7 @@ The credentials have to be defined in settings.xml
 
 === Code generation in eclipse
 To run code generation inside eclipse, run as MWE2 Workflow:
-   judo-meta-rdbms-model project src/workflow/generateRdbmsModel.mwe2
+   hu.blackbelt.judo.meta.rdbms.model project src/workflow/generateModel.mwe2
 
 
 == Generate PGP keys

@@ -3,18 +3,17 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>hu.blackbelt.judo.meta</groupId>
-        <artifactId>judo-meta-rdbms-parent</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
-        <relativePath>..</relativePath>
-    </parent>
+	<parent>
+		<groupId>hu.blackbelt.judo.meta</groupId>
+		<artifactId>hu.blackbelt.judo.meta.rdbms</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../</relativePath>
+	</parent>
+	<artifactId>hu.blackbelt.judo.meta.rdbms.osgi</artifactId>
+	<packaging>bundle</packaging>
 
-	<artifactId>judo-meta-rdbms-runtime</artifactId>
-    <packaging>bundle</packaging>
-
-	<name>Judo RDBMS LSM Specific Metamodel runtime</name>
-	<description>Judo RDBMS Layer Specific Metamodel Runtime</description>
+	<name>Judo :: Rdbms :: Model :: OSGi</name>
+	<description>Judo Rdbms Model OSGI Runtime</description>
 
 	<build>
 		<plugins>
@@ -31,7 +30,7 @@
 							*
 						</Import-Package>
 						<Export-Package>
-                            meta/rdbms;version=${project.version},
+                            meta/${mdoelName};version=${project.version},
                             hu.blackbelt.judo.meta.rdbms*;version=${project.version},
                         </Export-Package>
 						<Include-Resource>{maven-resources},meta/rdbms=../model/model</Include-Resource>
@@ -43,7 +42,7 @@
     <dependencies>
         <dependency>
             <groupId>hu.blackbelt.judo.meta</groupId>
-            <artifactId>judo-meta-rdbms-model</artifactId>
+            <artifactId>hu.blackbelt.judo.meta.rdbms.model</artifactId>
         </dependency>
 
 		<dependency>

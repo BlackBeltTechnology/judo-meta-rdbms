@@ -6,14 +6,14 @@
 
 	<parent>
 		<groupId>hu.blackbelt.judo.meta</groupId>
-		<artifactId>judo-meta-rdbms-parent</artifactId>
-		<version>1.0.1-SNAPSHOT</version>
-		<relativePath>..</relativePath>
+		<artifactId>hu.blackbelt.judo.meta.rdbms</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../</relativePath>
 	</parent>
-	<artifactId>judo-meta-rdbms-model-tests</artifactId>
+	<artifactId>hu.blackbelt.judo.meta.rdbms.model.test</artifactId>
 	<packaging>eclipse-test-plugin</packaging>
 
-	<name>Judo RDBMS LSM Specific Metamodel eclipse test plugin</name>
-	<description>Judo RDBMS LSM Specific Metamodel Eclipse Test plugin</description>
+	<name>Judo :: Rdbms :: Model :: Eclipse test plugin</name>
+	<description>Judo Rdbms Model eclipse test plugin</description>
 
 </project>

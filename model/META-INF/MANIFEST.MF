@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
-Bundle-SymbolicName: judo-meta-rdbms-model;singleton:=true
-Bundle-Version: 1.0.1.qualifier
+Bundle-SymbolicName: hu.blackbelt.judo.meta.rdbms.model;singleton:=true
+Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -10,26 +10,11 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport
-Bundle-ActivationPolicy: lazy
-Automatic-Module-Name: judo-meta-rdbms-model
 Export-Package: hu.blackbelt.judo.meta.rdbms,
  hu.blackbelt.judo.meta.rdbms.impl,
  hu.blackbelt.judo.meta.rdbms.runtime,
  hu.blackbelt.judo.meta.rdbms.support,
  hu.blackbelt.judo.meta.rdbms.util,
- hu.blackbelt.judo.meta.rdbms.util.builder,
- hu.blackbelt.judo.meta.rdbmsDataTypes,
- hu.blackbelt.judo.meta.rdbmsDataTypes.impl,
- hu.blackbelt.judo.meta.rdbmsDataTypes.support,
- hu.blackbelt.judo.meta.rdbmsDataTypes.util,
- hu.blackbelt.judo.meta.rdbmsDataTypes.util.builder,
- hu.blackbelt.judo.meta.rdbmsNameMapping,
- hu.blackbelt.judo.meta.rdbmsNameMapping.impl,
- hu.blackbelt.judo.meta.rdbmsNameMapping.support,
- hu.blackbelt.judo.meta.rdbmsNameMapping.util,
- hu.blackbelt.judo.meta.rdbmsNameMapping.util.builder,
- hu.blackbelt.judo.meta.rdbmsRules,
- hu.blackbelt.judo.meta.rdbmsRules.impl,
- hu.blackbelt.judo.meta.rdbmsRules.support,
- hu.blackbelt.judo.meta.rdbmsRules.util,
- hu.blackbelt.judo.meta.rdbmsRules.util.builder
+ hu.blackbelt.judo.meta.rdbms.util.builder
+Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: hu.blackbelt.judo.meta.rdbms.model

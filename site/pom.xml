@@ -3,16 +3,15 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    
     <parent>
         <groupId>hu.blackbelt.judo.meta</groupId>
-        <artifactId>judo-meta-rdbms-parent</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
-        <relativePath>..</relativePath>
+        <artifactId>hu.blackbelt.judo.meta.rdbms</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../</relativePath>
     </parent>
-    <artifactId>judo-meta-rdbms-site</artifactId>
+
+    <artifactId>hu.blackbelt.judo.meta.rdbms.site</artifactId>
     <packaging>eclipse-repository</packaging>
-    
-    <name>Judo RDBMS LSM Specific Metamodel update site</name>
-    <description>Judo RDBMS Layer Specific Metamodel Update Site</description>
+    <name>Judo :: Rdbms :: Model :: Eclipse update site</name>
+    <description>Judo Rdbms model Update Site</description>
 </project>
