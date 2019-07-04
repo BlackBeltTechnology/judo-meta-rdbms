@@ -13,7 +13,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdbms-datatypes.ecore#//TypeMappings/typeMappings"/>
     </genClasses>
     <genClasses ecoreClass="rdbms-datatypes.ecore#//TypeMapping">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdbms-datatypes.ecore#//TypeMapping/asmType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-datatypes.ecore#//TypeMapping/asmType"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-datatypes.ecore#//TypeMapping/rdbmsType"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-datatypes.ecore#//TypeMapping/rdbmsSize"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-datatypes.ecore#//TypeMapping/rdbmsPrecision"/>

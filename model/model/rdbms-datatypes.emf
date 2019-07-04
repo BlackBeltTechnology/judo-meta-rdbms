@@ -8,7 +8,7 @@ class TypeMappings {
 }
 
 class TypeMapping {
-  ref ecore.EDataType[1] asmType;
+  attr ecore.EString[1] asmType;
   attr ecore.EString[1] rdbmsType;
   attr Integer rdbmsSize;
   attr Integer rdbmsPrecision;
