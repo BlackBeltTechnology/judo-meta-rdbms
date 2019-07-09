@@ -42,7 +42,7 @@ public class RdbmsModelBundleTracker {
     public void activate(final ComponentContext componentContext) {
         bundleTrackerManager.registerBundleCallback(this.getClass().getName(),
                 new RdbmsRegisterCallback(componentContext.getBundleContext()),
-                new RdbmsUnregisterCallback(componentContext.getBundleContext()),
+                new RdbmsUnregisterCallback(),
                 new RdbmsBundlePredicate());
     }
 
@@ -114,11 +114,6 @@ public class RdbmsModelBundleTracker {
     }
 
     private class RdbmsUnregisterCallback implements BundleCallback {
-        BundleContext bundleContext;
-
-        public RdbmsUnregisterCallback(BundleContext bundleContext) {
-            this.bundleContext = bundleContext;
-        }
 
         @Override
         public void accept(Bundle trackedBundle) {

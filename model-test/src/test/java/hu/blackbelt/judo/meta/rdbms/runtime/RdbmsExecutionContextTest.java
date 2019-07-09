@@ -1,15 +1,14 @@
 package hu.blackbelt.judo.meta.rdbms.runtime;
 
-import com.google.common.collect.ImmutableList;
-import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel;
 import hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport;
+import hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsBuilders;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport.rdbmsModelResourceSupportBuilder;
-import static hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsBuilders.*;
 
 class ExecutionContextTest {
 
@@ -25,5 +24,6 @@ class ExecutionContextTest {
                 URI.createFileURI(createdSourceModelName));
 
         // Build model here
+        rdbmsResource.getContents().add(RdbmsBuilders.newRdbmsTableBuilder().withFullName("TEST").build());
     }
 }
