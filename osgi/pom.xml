@@ -33,7 +33,11 @@
                             meta/${mdoelName};version=${project.version},
                             hu.blackbelt.judo.meta.rdbms*;version=${project.version},
                         </Export-Package>
-						<Include-Resource>{maven-resources},meta/rdbms=../model/model</Include-Resource>
+						<Include-Resource>
+                            {maven-resources},
+                            meta/rdbms=../model/model,
+                            validations=../model/src/main/epsilon/validations
+                        </Include-Resource>
 					</instructions>
 				</configuration>
 			</plugin>
