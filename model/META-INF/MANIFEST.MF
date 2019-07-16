@@ -7,9 +7,13 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Activator: hu.blackbelt.judo.meta.rdbms.runtime.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
- org.eclipse.emf.ecore.xmi;visibility:=reexport
+ org.eclipse.emf.ecore.xmi;visibility:=reexport,
+ org.eclipse.ui,
+ org.eclipse.epsilon.evl.emf.validation,
+ org.eclipse.ui.ide
 Export-Package: hu.blackbelt.judo.meta.rdbms,
  hu.blackbelt.judo.meta.rdbms.impl,
  hu.blackbelt.judo.meta.rdbms.runtime,
@@ -36,3 +40,4 @@ Export-Package: hu.blackbelt.judo.meta.rdbms,
  hu.blackbelt.judo.meta.rdbmsRules.util.builder
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: hu.blackbelt.judo.meta.rdbms.model
+Import-Package: org.slf4j;version="1.7.2"

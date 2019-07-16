@@ -6,46 +6,44 @@ import org.eclipse.emf.mwe2.ecore.*
 var rootPath = "."
 
 var modelDir = "model"
-var javaGenPath = "src-genmodel"
+var javaGenPath = "src-gen"
 var platformUri = "platform:/resource/hu.blackbelt.judo.meta.rdbms.model"
 
 
 Workflow {
+
+	bean = StandaloneSetup {
+		platformUri = "${rootPath}"
+	}
 
 	// Clean generated sources
 	component = DirectoryCleaner {
 		directory = "${rootPath}/${javaGenPath}"
 	}
 
-
 	// Generate standard EMF sources from GenModel
-    // For EcoreGenerator need to register platormURI
-	bean = StandaloneSetup {
-		platformUri = "${rootPath}"
-	}
-	
 	component = EcoreGenerator {
 		generateCustomClasses = false
 		genModel = "${platformUri}/${modelDir}/rdbms.genmodel"
-		srcPath = "${platformUri}/${javaGenPath}"   
+		srcPath = "${platformUri}/src/main/java"   
 	}
 
 	component = EcoreGenerator {
 		generateCustomClasses = false
 		genModel = "${platformUri}/${modelDir}/rdbms-tablemappingrules.genmodel"
-		srcPath = "${platformUri}/${javaGenPath}"   
+		srcPath = "${platformUri}/src/main/java"   
 	}
 
 	component = EcoreGenerator {
 		generateCustomClasses = false
 		genModel = "${platformUri}/${modelDir}/rdbms-namemapping.genmodel"
-		srcPath = "${platformUri}/${javaGenPath}"   
+		srcPath = "${platformUri}/src/main/java"   
 	}
 
 	component = EcoreGenerator {
 		generateCustomClasses = false
 		genModel = "${platformUri}/${modelDir}/rdbms-datatypes.genmodel"
-		srcPath = "${platformUri}/${javaGenPath}"   
+		srcPath = "${platformUri}/src/main/java"   
 	}
 
 	// Helper for model
@@ -60,9 +58,9 @@ Workflow {
 		javaGenPath = "${rootPath}/${javaGenPath}"
 	}	
 
-	// RuntimeModel for model
+	// Judo RuntimeModel for model
 	component = hu.blackbelt.judo.eclipse.emf.genmodel.generator.runtimemodel.RuntimeModelGeneratorWorkflow {
 		modelDir = "${rootPath}/${modelDir}"
 		javaGenPath = "${rootPath}/${javaGenPath}"
-	}	
+	}
 }
