@@ -5,6 +5,9 @@ It contains rdbms meta model.
 It acts as an eclipse plugin with features and sites, can be used standalone and in standarsd OSGi (without eclipse).
 
 == Modules:
+- targetdefinition - Eclipse target definition defines the P2 repsoitories for all of required MANFIEST feature. When the artifacts are compiled the 
+Judo based P2 respository URL and versions replaced with the maven defined one. When version definitions are changed first build updates target 
+definition version but the second build will use it. The reason of that tycho target resolution executed before version replace.
 
 - model - eclipse plugin. It contains the model and ecore generated java classes. 
           Builder and Helpers added with MWE2 workflow.
@@ -15,6 +18,10 @@ in other platforms.
 - feature - Eclipse feature repository - to be able to use for eclipse installation
 
 - site - Eclipse Update Site - all built version compiled as an update site.
+
+IMPORTANT: There are two paralel dependency mechanism in play.The maven tycho plugin help to resolve it,
+but it cannot handle the eclipse side of resolution, because eclipse can resolve artifacts from P2 repository 
+only. 
 
 == Version policy
 
