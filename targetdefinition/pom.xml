@@ -11,8 +11,8 @@
     <artifactId>hu.blackbelt.judo.meta.rdbms.targetdefinition</artifactId>
     <packaging>eclipse-target-definition</packaging>
 
-    <name>Judo :: Openapi :: Model :: Eclipse plugin</name>
-    <description>Judo Openapi model eclipse plugin</description>
+    <name>Judo :: Rdbms :: Model :: Eclipse plugin</name>
+    <description>Judo Rdbms model eclipse plugin</description>
     
     <build>
         <plugins>
