@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import static hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport.rdbmsModelResourceSupportBuilder;
 
-class ExecutionContextTest {
+class RdbmsExecutionContextTest {
 
     @Test
     @DisplayName("Create Rdbms model with builder pattern")
@@ -24,6 +24,8 @@ class ExecutionContextTest {
                 URI.createFileURI(createdSourceModelName));
 
         // Build model here
-        rdbmsResource.getContents().add(RdbmsBuilders.newRdbmsTableBuilder().withFullName("TEST").build());
+        rdbmsResource.getContents()
+                .add(RdbmsBuilders.newRdbmsTableBuilder()
+                        .withFullName("TEST").build());
     }
 }

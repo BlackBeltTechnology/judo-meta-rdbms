@@ -82,15 +82,13 @@ public class RdbmsModelBundleTracker {
                             // Unpack model
                             try {
                                         RdbmsModel rdbmsModel = RdbmsModel.loadRdbmsModel(
-                                        RdbmsModel.LoadArguments.loadArgumentsBuilder()
-                                                .uriHandler(Optional.of(new BundleURIHandler("urn", "", trackedBundle)))
-                                                .uri(URI.createURI(params.get("file")))
+                                        RdbmsModel.LoadArguments.rdbmsLoadArgumentsBuilder()
+                                                .uriHandler(new BundleURIHandler(trackedBundle.getSymbolicName(), "", trackedBundle))
+                                                .uri(URI.createURI(trackedBundle.getSymbolicName() + ":" + params.get("file")))
                                                 .name(params.get(RdbmsModel.NAME))
-                                                .version(Optional.of(trackedBundle.getVersion().toString()))
-                                                .checksum(Optional.ofNullable(params.get(RdbmsModel.CHECKSUM)))
-                                                .acceptedMetaVersionRange(Optional.of(versionRange.toString()))
-                                                .build()
-                                );
+                                                .version(trackedBundle.getVersion().toString())
+                                                .checksum(Optional.ofNullable(params.get(RdbmsModel.CHECKSUM)).orElse("notset"))
+                                                .acceptedMetaVersionRange(Optional.of(versionRange.toString()).orElse("[0,99)")));
 
                                 log.info("Registering Rdbms model: " + rdbmsModel);
 

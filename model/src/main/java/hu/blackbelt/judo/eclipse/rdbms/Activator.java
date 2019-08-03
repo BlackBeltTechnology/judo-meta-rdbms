@@ -1,4 +1,4 @@
-package hu.blackbelt.judo.meta.rdbms.runtime;
+package hu.blackbelt.judo.eclipse.rdbms;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;

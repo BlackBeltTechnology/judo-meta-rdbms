@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Optional;
 
-import static hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel.LoadArguments.loadArgumentsBuilder;
+import static hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel.LoadArguments.rdbmsLoadArgumentsBuilder;
 
 public class RdbmsModelLoaderTest {
 
@@ -26,11 +26,10 @@ public class RdbmsModelLoaderTest {
     void loadRdbmsModel() throws IOException {
         ResourceSet rdbmsResourceSet = RdbmsModelResourceSupport.createRdbmsResourceSet();
 
-        RdbmsModel rdbmsModel = RdbmsModel.loadRdbmsModel(loadArgumentsBuilder()
-                .resourceSet(Optional.of(rdbmsResourceSet))
+        RdbmsModel rdbmsModel = RdbmsModel.loadRdbmsModel(rdbmsLoadArgumentsBuilder()
+                .resourceSet(rdbmsResourceSet)
                 .uri(URI.createFileURI(new File("src/test/model/test.rdbms").getAbsolutePath()))
-                .name("test")
-                .build());
+                .name("test"));
 
         for (Iterator<EObject> i = rdbmsModel.getResourceSet().getResource(rdbmsModel.getUri(), false).getAllContents(); i.hasNext(); ) {
             log.info(i.next().toString());
