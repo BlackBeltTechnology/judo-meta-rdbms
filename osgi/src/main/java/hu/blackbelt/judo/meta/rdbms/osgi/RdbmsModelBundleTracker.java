@@ -98,8 +98,9 @@ public class RdbmsModelBundleTracker {
 
                             } catch (IOException e) {
                                 log.error("Could not load Rdbms model: " + params.get(RdbmsModel.NAME) + " from bundle: " + trackedBundle.getBundleId());
-                            }
-                        }
+                            } catch (RdbmsModel.RdbmsValidationException e) {
+                                log.error("Could not load Rdbms model: " + params.get(RdbmsModel.NAME) + " from bundle: " + trackedBundle.getBundleId(), e);
+                            }                        }
                     }
                 }
             }

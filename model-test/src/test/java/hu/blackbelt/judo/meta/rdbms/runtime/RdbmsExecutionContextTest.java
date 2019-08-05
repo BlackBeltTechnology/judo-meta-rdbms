@@ -15,17 +15,17 @@ class RdbmsExecutionContextTest {
     @Test
     @DisplayName("Create Rdbms model with builder pattern")
     void testRdbmsReflectiveCreated() throws Exception {
-
-
         String createdSourceModelName = "urn:rdbms.judo-meta-rdbms";
 
-        RdbmsModelResourceSupport rdbmsModelSupport = rdbmsModelResourceSupportBuilder().build();
-        Resource rdbmsResource = rdbmsModelSupport.getResourceSet().createResource(
-                URI.createFileURI(createdSourceModelName));
+        RdbmsModelResourceSupport rdbmsModelSupport = rdbmsModelResourceSupportBuilder()
+                .uri(URI.createFileURI(createdSourceModelName))
+                .build();
 
         // Build model here
-        rdbmsResource.getContents()
-                .add(RdbmsBuilders.newRdbmsTableBuilder()
-                        .withFullName("TEST").build());
+        rdbmsModelSupport.addContent(RdbmsBuilders
+                .newRdbmsTableBuilder()
+                .withFullName("TEST").build());
+
+        System.out.println(rdbmsModelSupport.asString());
     }
 }

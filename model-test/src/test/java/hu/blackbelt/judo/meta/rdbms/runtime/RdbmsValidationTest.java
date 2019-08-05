@@ -38,9 +38,10 @@ public class RdbmsValidationTest {
     @BeforeEach
     void setUp() {
 
-        rdbmsModelSupport = rdbmsModelResourceSupportBuilder().build();
-        rdbmsResource = rdbmsModelSupport.getResourceSet().createResource(
-                URI.createFileURI(createdSourceModelName));
+        rdbmsModelSupport = rdbmsModelResourceSupportBuilder()
+                .uri(URI.createFileURI(createdSourceModelName))
+                .build();
+        rdbmsResource = rdbmsModelSupport.getResource();
 
         Log log = new Slf4jLog();
 

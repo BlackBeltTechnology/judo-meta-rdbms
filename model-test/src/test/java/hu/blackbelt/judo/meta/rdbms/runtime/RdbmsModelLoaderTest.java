@@ -23,7 +23,7 @@ public class RdbmsModelLoaderTest {
 	
     @Test
     @DisplayName("Load Rdbms Model")
-    void loadRdbmsModel() throws IOException {
+    void loadRdbmsModel() throws IOException, RdbmsModel.RdbmsValidationException {
         ResourceSet rdbmsResourceSet = RdbmsModelResourceSupport.createRdbmsResourceSet();
 
         RdbmsModel rdbmsModel = RdbmsModel.loadRdbmsModel(rdbmsLoadArgumentsBuilder()
