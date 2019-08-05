@@ -6,48 +6,33 @@
     
     <parent>
         <groupId>hu.blackbelt.judo.meta</groupId>
-        <artifactId>judo-meta-rdbms-parent</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
-        <relativePath>..</relativePath>
+        <artifactId>hu.blackbelt.judo.meta.rdbms</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../</relativePath>
     </parent>
-    <artifactId>judo-meta-rdbms-model</artifactId>
+    <artifactId>hu.blackbelt.judo.meta.rdbms.model</artifactId>
     <packaging>eclipse-plugin</packaging>
     
-    <name>Judo RDBMS LSM Specific Metamodel eclipse plugin</name>
-    <description>Judo RDBMS LSM Specific Metamodel Eclipse plugin</description>
-    
-    <dependencies>
-        <dependency>
-            <groupId>org.eclipse.xtext</groupId>
-            <artifactId>org.eclipse.xtext.xbase.lib</artifactId>
-            <version>${xtext-version}</version>
-        </dependency>
-    </dependencies>
-    
+    <name>Judo :: Rdbms :: Model :: Eclipse plugin</name>
+    <description>Judo Rdbms model eclipse plugin</description>
+
+
+    <properties>
+        <src.dir>src/main/java</src.dir>
+    </properties>
+
     <build>
+        <sourceDirectory>${src.dir}</sourceDirectory>
+
         <plugins>
-            <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>2.6.1</version>
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <excludes>
-                                <exclude>.dummy.txt</exclude>
-                            </excludes>
-                            <directory>src-genmodel</directory>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>
-            
-            <!-- Generates the Ecore model via MWE2 -->
+             <!-- Generates the Ecore model via MWE2 -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <executions>
+
                     <execution>
-                        <id>mwe2Launcher</id>
+                        <id>mwe2Launcher-builder</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>java</goal>
@@ -55,7 +40,7 @@
                         <configuration>
                             <mainClass>org.eclipse.emf.mwe2.launch.runtime.Mwe2Launcher</mainClass>
                             <arguments>
-                                <argument>${project.basedir}/src/workflow/generateRdbmsModel.mwe2</argument>
+                                <argument>${project.basedir}/src/workflow/generateModel.mwe2</argument>
                                 <argument>-p</argument>
                                 <argument>rootPath=${project.basedir}</argument>
                             </arguments>
@@ -66,6 +51,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
@@ -73,7 +59,7 @@
                 <executions>
                     <!-- Adds the generated sources to the compiler input -->
                     <execution>
-                        <id>add-source</id>
+                        <id>add-genmodel-source</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>add-source</goal>
@@ -82,36 +68,19 @@
                             <!-- This should be in sync with xtext-maven-plugin//source-roots,
                              except for /model directory -->
                             <sources>
-                                <source>${basedir}/src-genmodel</source>
+                                <source>${project.basedir}/src-gen</source>
                             </sources>
-                        </configuration>
-                    </execution>
-
-
-                    <execution>
-                        <id>attach-artifacts</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>attach-artifact</goal>
-                        </goals>
-                        <configuration>
-                            <artifacts>
-                                <artifact>
-                                    <file>model/rdbms.ecore</file>
-                                    <type>ecore</type>
-                                    <classifier>rdbms</classifier>
-                                </artifact>
-                                <artifact>
-                                    <file>model/rdbms.genmodel</file>
-                                    <type>genmodel</type>
-                                    <classifier>rdbms</classifier>
-                                </artifact>
-                            </artifacts>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
-    
+    <dependencies>
+        <dependency>
+            <groupId>org.eclipse.ui</groupId>
+            <artifactId>workbench</artifactId>
+            <version>3.3.0-I20070608-1100</version>
+        </dependency>
+    </dependencies>
 </project>

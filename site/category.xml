@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-	<description>To install these features, point Eclipse at this site.</description>
-	<category-def label="Judo Rdbms Metamodel Update Site" name="site">
-		<description>Judo Rdbms Metamodel Update Site: contains all features in this build.</description>
-	</category-def>
-	<feature id="judo-meta-rdbms-feature"><category name="site" /></feature>
+   <description>
+      To install these features, point Eclipse at this site.
+   </description>
+   <feature id="hu.blackbelt.judo.meta.rdbms.feature">
+      <category name="site"/>
+   </feature>
+   <category-def name="site" label="Judo Rdbms Model Update Site">
+      <description>
+         Judo Rdbms Model Update Site: contains all features in this build.
+      </description>
+   </category-def>
 </site>

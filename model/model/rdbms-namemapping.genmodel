@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/judo-meta-rdbms-model/src-genmodel" modelPluginID="judo-meta-rdbms-model"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/hu.blackbelt.judo.meta.rdbms.model/src-gen" modelPluginID="hu.blackbelt.judo.meta.rdbms.model"
     modelName="RdbmsNameMapping" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     testsDirectory="" importerID="org.eclipse.emf.importer.ecore" featureDelegation="Dynamic"
     complianceLevel="8.0" copyrightFields="false" operationReflection="true" importOrganizing="true"
@@ -8,7 +8,7 @@
   <foreignModel>rdbms-namemapping.ecore</foreignModel>
   <genPackages prefix="RdbmsNameMapping" basePackage="hu.blackbelt.judo.meta" resource="XMI"
       disposableProviderFactory="true" extensibleProviderFactory="true" childCreationExtenders="true"
-      fileExtensions="judo-meta-rdbms-namemapping" ecorePackage="rdbms-namemapping.ecore#/">
+      fileExtensions="rdbms-namemapping" ecorePackage="rdbms-namemapping.ecore#/">
     <genClasses ecoreClass="rdbms-namemapping.ecore#//NameMappings">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdbms-namemapping.ecore#//NameMappings/nameMappings"/>
     </genClasses>

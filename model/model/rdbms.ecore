@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="rdbms" nsURI="http://blackbelt.hu/judo/meta/psm/rdbms" nsPrefix="rdbms">
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="rdbms" nsURI="http://blackbelt.hu/judo/meta/rdbms" nsPrefix="rdbms">
   <eClassifiers xsi:type="ecore:EClass" name="RdbmsElement" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uuid" unique="false" lowerBound="1"
@@ -92,7 +92,7 @@
         upperBound="-1" eType="#//RdbmsDeleteFieldOperation" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="previousTable" lowerBound="1"
         eType="#//RdbmsTable"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nameChanged" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nameChanged" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RdbmsFieldOperation" abstract="true"
       eSuperTypes="#//RdbmsElement">
@@ -108,12 +108,12 @@
         defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="previousField" lowerBound="1"
         eType="#//RdbmsField"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sizeChanged" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nameChanged" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sizeChanged" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nameChanged" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="changedValueFieldToForeignKey"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"/>
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="changedForeignKeyToValueField"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"/>
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RdbmsDeleteFieldOperation" eSuperTypes="#//RdbmsFieldOperation"/>
   <eClassifiers xsi:type="ecore:EClass" name="RdbmsIndex" eSuperTypes="#//RdbmsElement">

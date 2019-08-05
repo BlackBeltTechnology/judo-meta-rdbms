@@ -1,4 +1,4 @@
-@namespace(uri="http://blackbelt.hu/judo/meta/psm/rdbms", prefix="rdbms")
+@namespace(uri="http://blackbelt.hu/judo/meta/rdbms", prefix="rdbms")
 package rdbms;
 
 import "http://www.eclipse.org/emf/2003/XMLType";

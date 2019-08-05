@@ -6,14 +6,15 @@
     
     <parent>
         <groupId>hu.blackbelt.judo.meta</groupId>
-        <artifactId>judo-meta-rdbms-parent</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
-        <relativePath>..</relativePath>
+        <artifactId>hu.blackbelt.judo.meta.rdbms</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../</relativePath>
     </parent>
-    <artifactId>judo-meta-rdbms-feature</artifactId>
-    <packaging>eclipse-feature</packaging>
     
-    <name>Judo RDBMS LSM Specific Metamodel feature</name>
-    <description>Judo RDBMS Layer Specific Metamodel Feature</description>
+    <artifactId>hu.blackbelt.judo.meta.rdbms.feature</artifactId>
+    <packaging>eclipse-feature</packaging>
+
+    <name>Judo :: Rdbms :: Model :: Eclipse feature</name>
+    <description>Judo Rdbms model feature</description>
     
 </project>

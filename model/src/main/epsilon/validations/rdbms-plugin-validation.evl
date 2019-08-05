@@ -1,0 +1,5 @@
+import "rdbms.evl";
+
+pre {
+  var rdbmsUtils = new Native("hu.blackbelt.judo.meta.rdbms.runtime.RdbmsUtils")(RDBMS.resource.resourceSet, false);
+}
