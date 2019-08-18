@@ -4,11 +4,25 @@
       To install these features, point Eclipse at this site.
    </description>
    <feature id="hu.blackbelt.judo.meta.rdbms.feature">
-      <category name="site"/>
+      <category name="rdbms"/>
    </feature>
-   <category-def name="site" label="Judo Rdbms Model Update Site">
+   <category-def name="rdbms" label="Judo Rdbms Model">
       <description>
          Judo Rdbms Model Update Site: contains all features in this build.
       </description>
    </category-def>
+
+   <feature id="hu.blackbelt.judo.meta.rdbms.feature.source">
+      <category name="rdbms_source"/>
+   </feature>
+   <category-def name="rdbms_source" label="Judo Rdbms Model Source">
+      <description>
+         Judo Rdbms Model source code.
+      </description>
+   </category-def>
+
+   <!-- This is currently ignored by Tycho, see https://bugs.eclipse.org/bugs/show_bug.cgi?id=453708 -->
+   <!-- The tycho plugin 1.5.0 will fix it -->
+   <repository-reference location="https://nexus.blackbelt.cloud/repository/p2-judo/epsilon-runtime-eclipse/1.2.0.develop_00009" enabled="true" />
+
 </site>
