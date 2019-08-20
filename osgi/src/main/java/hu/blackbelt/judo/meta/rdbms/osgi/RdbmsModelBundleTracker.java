@@ -1,12 +1,10 @@
 package hu.blackbelt.judo.meta.rdbms.osgi;
 
-import hu.blackbelt.epsilon.runtime.osgi.BundleURIHandler;
 import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel;
 import hu.blackbelt.osgi.utils.osgi.api.BundleCallback;
 import hu.blackbelt.osgi.utils.osgi.api.BundleTrackerManager;
 import hu.blackbelt.osgi.utils.osgi.api.BundleUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.emf.common.util.URI;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -16,6 +14,9 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.metatype.annotations.AttributeDefinition;
+import org.osgi.service.metatype.annotations.Designate;
+import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -24,12 +25,26 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.util.Optional.ofNullable;
 
 @Component(immediate = true)
 @Slf4j
+@Designate(ocd = RdbmsModelBundleTracker.TrackerConfig.class)
 public class RdbmsModelBundleTracker {
 
     public static final String RDBMS_MODELS = "Rdbms-Models";
+
+    @ObjectClassDefinition(name="Rdbms Model Bundle Tracker")
+    public @interface TrackerConfig {
+        @AttributeDefinition(
+                name = "Tags",
+                description = "Which tags are on the loaded model when there is no one defined in bundle"
+        )
+        String tags() default "";
+    }
 
     @Reference
     BundleTrackerManager bundleTrackerManager;
@@ -38,8 +53,11 @@ public class RdbmsModelBundleTracker {
 
     Map<String, RdbmsModel> rdbmsModels = new HashMap<>();
 
+    TrackerConfig config;
+
     @Activate
-    public void activate(final ComponentContext componentContext) {
+    public void activate(final ComponentContext componentContext, final TrackerConfig trackerConfig) {
+        this.config = trackerConfig;
         bundleTrackerManager.registerBundleCallback(this.getClass().getName(),
                 new RdbmsRegisterCallback(componentContext.getBundleContext()),
                 new RdbmsUnregisterCallback(),
@@ -70,7 +88,6 @@ public class RdbmsModelBundleTracker {
         public void accept(Bundle trackedBundle) {
             List<Map<String, String>> entries = BundleUtil.getHeaderEntries(trackedBundle, RDBMS_MODELS);
 
-
             for (Map<String, String> params : entries) {
                 String key = params.get(RdbmsModel.NAME);
                 if (rdbmsModelRegistrations.containsKey(key)) {
@@ -81,13 +98,13 @@ public class RdbmsModelBundleTracker {
                         if (versionRange.includes(bundleContext.getBundle().getVersion())) {
                             // Unpack model
                             try {
-                                        RdbmsModel rdbmsModel = RdbmsModel.loadRdbmsModel(
+                                RdbmsModel rdbmsModel = RdbmsModel.loadRdbmsModel(
                                         RdbmsModel.LoadArguments.rdbmsLoadArgumentsBuilder()
-                                                .uriHandler(new BundleURIHandler(trackedBundle.getSymbolicName(), "", trackedBundle))
-                                                .uri(URI.createURI(trackedBundle.getSymbolicName() + ":" + params.get("file")))
+                                                .inputStream(trackedBundle.getEntry(params.get("file")).openStream())
                                                 .name(params.get(RdbmsModel.NAME))
                                                 .version(trackedBundle.getVersion().toString())
                                                 .checksum(Optional.ofNullable(params.get(RdbmsModel.CHECKSUM)).orElse("notset"))
+                                                .tags(Stream.of(ofNullable(params.get(RdbmsModel.TAGS)).orElse(config.tags()).split(",")).collect(Collectors.toSet()))
                                                 .acceptedMetaVersionRange(Optional.of(versionRange.toString()).orElse("[0,99)")));
 
                                 log.info("Registering Rdbms model: " + rdbmsModel);
@@ -96,11 +113,10 @@ public class RdbmsModelBundleTracker {
                                 rdbmsModels.put(key, rdbmsModel);
                                 rdbmsModelRegistrations.put(key, modelServiceRegistration);
 
-                            } catch (IOException e) {
-                                log.error("Could not load Rdbms model: " + params.get(RdbmsModel.NAME) + " from bundle: " + trackedBundle.getBundleId());
-                            } catch (RdbmsModel.RdbmsValidationException e) {
-                                log.error("Could not load Rdbms model: " + params.get(RdbmsModel.NAME) + " from bundle: " + trackedBundle.getBundleId(), e);
-                            }                        }
+                            } catch (IOException | RdbmsModel.RdbmsValidationException e) {
+                                log.error("Could not load Psm model: " + params.get(RdbmsModel.NAME) + " from bundle: " + trackedBundle.getBundleId(), e);
+                            }
+                        }
                     }
                 }
             }
