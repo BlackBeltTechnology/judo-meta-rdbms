@@ -11,10 +11,8 @@
 		<relativePath>../</relativePath>
 	</parent>
 	<artifactId>hu.blackbelt.judo.meta.rdbms.model.test</artifactId>
-	<packaging>eclipse-test-plugin</packaging>
-
-	<name>Judo :: Rdbms :: Model :: Eclipse test plugin</name>
-	<description>Judo Rdbms Model eclipse test plugin</description>
+	<name>Judo :: Rdbms :: Model :: Test</name>
+	<description>Judo Rdbms Model Test</description>
 
 	<dependencies>
 		<dependency>
@@ -37,7 +35,6 @@
 			<version>${epsilon-version}</version>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 
 </project>
