@@ -28,6 +28,9 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static hu.blackbelt.judo.meta.rdbmsDataTypes.support.RdbmsDataTypesModelResourceSupport.registerRdbmsDataTypesMetamodel;
+import static hu.blackbelt.judo.meta.rdbmsNameMapping.support.RdbmsNameMappingModelResourceSupport.registerRdbmsNameMappingMetamodel;
+import static hu.blackbelt.judo.meta.rdbmsRules.support.RdbmsTableMappingRulesModelResourceSupport.registerRdbmsTableMappingRulesMetamodel;
 import static java.util.Optional.ofNullable;
 
 @Component(immediate = true)
@@ -98,7 +101,17 @@ public class RdbmsModelBundleTracker {
                         if (versionRange.includes(bundleContext.getBundle().getVersion())) {
                             // Unpack model
                             try {
-                                RdbmsModel rdbmsModel = RdbmsModel.loadRdbmsModel(
+                                // Create empty RDBMS model
+                                RdbmsModel rdbmsModel = RdbmsModel.buildRdbmsModel()
+                                        .name(params.get(RdbmsModel.NAME))
+                                        .build();
+
+                                // The RDBMS model resourceset have to know the mapping models
+                                registerRdbmsNameMappingMetamodel(rdbmsModel.getResourceSet());
+                                registerRdbmsDataTypesMetamodel(rdbmsModel.getResourceSet());
+                                registerRdbmsTableMappingRulesMetamodel(rdbmsModel.getResourceSet());
+
+                                rdbmsModel.loadRdbmsModel(
                                         RdbmsModel.LoadArguments.rdbmsLoadArgumentsBuilder()
                                                 .inputStream(trackedBundle.getEntry(params.get("file")).openStream())
                                                 .name(params.get(RdbmsModel.NAME))
