@@ -67,5 +67,20 @@ public class RdbmsEpsilonValidator {
 	            } catch (Exception e) {}
 	        }
 	}
+	
+	public static URI calculateRdbmsValidationScriptURI() throws URISyntaxException {
+        URI rdbmsRoot = RdbmsModel.class.getProtectionDomain().getCodeSource().getLocation().toURI();
+        if (rdbmsRoot.toString().endsWith(".jar")) {
+            rdbmsRoot = new URI("jar:" + rdbmsRoot.toString() + "!/validations/");
+        } else if (rdbmsRoot.toString().startsWith("jar:bundle:")) {
+            // bundle://37.0:0/validations/
+            // jar:bundle://37.0:0/!/validations/esm.evl
+            rdbmsRoot = new URI(rdbmsRoot.toString().substring(4, rdbmsRoot.toString().indexOf("!")) + "validations/");
+        } else {
+            rdbmsRoot = new URI(rdbmsRoot.toString() + "/validations/");
+        }
+        return rdbmsRoot;
+
+    }
 
 }
