@@ -45,6 +45,13 @@ public class RdbmsValidationTest {
         rdbmsResource = rdbmsModelSupport.getResource();
 
         rdbmsUtils = new RdbmsUtils(rdbmsResource.getResourceSet(), false);
+        
+        rdbmsModel = RdbmsModel.buildRdbmsModel()
+        		.rdbmsModelResourceSupport(rdbmsModelSupport)
+                .uri(URI.createURI(createdSourceModelName))
+                .name("test")
+                .build();
+
 
         // Execution context
         executionContext = executionContextBuilder()
