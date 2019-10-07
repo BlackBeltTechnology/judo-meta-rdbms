@@ -12,6 +12,9 @@ import java.util.Collection;
 
 import org.eclipse.epsilon.common.util.UriUtil;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+
 import java.util.Arrays;
 
 import hu.blackbelt.epsilon.runtime.execution.ExecutionContext;
