@@ -23,8 +23,7 @@ public class RdbmsEpsilonValidator {
 	
 	public static void validateRdbms(Log log,
             RdbmsModel rdbmsModel,
-            URI scriptRoot) throws ScriptExecutionException, URISyntaxException
-	{
+            URI scriptRoot) throws ScriptExecutionException, URISyntaxException {
 		validateRdbms(log, rdbmsModel, scriptRoot, emptyList(), emptyList());
 	}
 	
@@ -32,8 +31,7 @@ public class RdbmsEpsilonValidator {
             RdbmsModel rdbmsModel,
             URI scriptRoot,
             Collection<String> expectedErrors,
-            Collection<String> expectedWarnings) throws ScriptExecutionException, URISyntaxException
-	{
+            Collection<String> expectedWarnings) throws ScriptExecutionException, URISyntaxException {
 		ExecutionContext executionContext = executionContextBuilder()
                 .log(log)
                 .resourceSet(rdbmsModel.getResourceSet())

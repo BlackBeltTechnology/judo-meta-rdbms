@@ -34,7 +34,6 @@ public class RdbmsValidationTest {
         
         rdbmsModel = RdbmsModel.buildRdbmsModel()
         		.rdbmsModelResourceSupport(rdbmsModelSupport)
-                .uri(URI.createURI(createdSourceModelName))
                 .name("test")
                 .build();
     }
