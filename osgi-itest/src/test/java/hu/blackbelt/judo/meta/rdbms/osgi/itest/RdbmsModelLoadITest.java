@@ -60,7 +60,7 @@ public class RdbmsModelLoadITest {
     private InputStream getRdbmsModelBundle() throws FileNotFoundException {
         return bundle()
                 .add( "model/" + DEMO + ".judo-meta-rdbms",
-                        new FileInputStream(new File(testTargetDir(getClass()).getAbsolutePath(),  "northwind-rdbms.model")))
+                        new FileInputStream(new File(testTargetDir(getClass()).getAbsolutePath(),  "northwind-rdbms_hsqldb.model")))
                 .set( Constants.BUNDLE_MANIFESTVERSION, "2")
                 .set( Constants.BUNDLE_SYMBOLICNAME, DEMO + "-rdbms" )
                 //set( Constants.IMPORT_PACKAGE, "meta/psm;version=\"" + getConfiguration(META_PSM_IMPORT_RANGE) +"\"")

@@ -2,6 +2,10 @@ package hu.blackbelt.judo.meta.rdbms.runtime;
 
 import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel;
 import hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport;
+import hu.blackbelt.judo.meta.rdbmsDataTypes.support.RdbmsDataTypesModelResourceSupport;
+import hu.blackbelt.judo.meta.rdbmsNameMapping.runtime.RdbmsNameMappingModel;
+import hu.blackbelt.judo.meta.rdbmsNameMapping.support.RdbmsNameMappingModelResourceSupport;
+import hu.blackbelt.judo.meta.rdbmsRules.support.RdbmsTableMappingRulesModelResourceSupport;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -16,6 +20,10 @@ import java.util.Iterator;
 import java.util.Optional;
 
 import static hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel.LoadArguments.rdbmsLoadArgumentsBuilder;
+import static hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport.createRdbmsResourceSet;
+import static hu.blackbelt.judo.meta.rdbmsDataTypes.support.RdbmsDataTypesModelResourceSupport.registerRdbmsDataTypesMetamodel;
+import static hu.blackbelt.judo.meta.rdbmsNameMapping.support.RdbmsNameMappingModelResourceSupport.registerRdbmsNameMappingMetamodel;
+import static hu.blackbelt.judo.meta.rdbmsRules.support.RdbmsTableMappingRulesModelResourceSupport.registerRdbmsTableMappingRulesMetamodel;
 
 public class RdbmsModelLoaderTest {
 
@@ -24,11 +32,15 @@ public class RdbmsModelLoaderTest {
     @Test
     @DisplayName("Load Rdbms Model")
     void loadRdbmsModel() throws IOException, RdbmsModel.RdbmsValidationException {
-        ResourceSet rdbmsResourceSet = RdbmsModelResourceSupport.createRdbmsResourceSet();
+        ResourceSet rdbmsResourceSet = createRdbmsResourceSet();
+
+        registerRdbmsNameMappingMetamodel(rdbmsResourceSet);
+        registerRdbmsDataTypesMetamodel(rdbmsResourceSet);
+        registerRdbmsTableMappingRulesMetamodel(rdbmsResourceSet);
 
         RdbmsModel rdbmsModel = RdbmsModel.loadRdbmsModel(rdbmsLoadArgumentsBuilder()
                 .resourceSet(rdbmsResourceSet)
-                .uri(URI.createFileURI(new File("src/test/model/test.rdbms").getAbsolutePath()))
+                .uri(URI.createFileURI(new File("target/test-classes/model/northwind-rdbms_hsqldb.model").getAbsolutePath()))
                 .name("test"));
 
         for (Iterator<EObject> i = rdbmsModel.getResourceSet().getResource(rdbmsModel.getUri(), false).getAllContents(); i.hasNext(); ) {
