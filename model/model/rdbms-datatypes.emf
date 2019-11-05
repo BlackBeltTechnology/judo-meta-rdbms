@@ -1,17 +1,16 @@
 @namespace(uri="http://blackbelt.hu/judo/meta/rdbms/datatypes", prefix="rdbmsDataTypes")
 package rdbmsDataTypes;
 
-import "http://www.eclipse.org/emf/2002/Ecore";
-
 class TypeMappings {
   val TypeMapping[*] typeMappings;
 }
 
 class TypeMapping {
-  attr ecore.EString[1] asmType;
-  attr ecore.EString[1] rdbmsType;
+  attr String[1] asmType;
+  attr String[1] rdbmsType;
   attr Integer rdbmsSize;
   attr Integer rdbmsPrecision;
   attr Integer rdbmsScale;
+  attr String rdbmsJdbcType;
 }
 
