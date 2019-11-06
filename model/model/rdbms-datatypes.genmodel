@@ -18,6 +18,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-datatypes.ecore#//TypeMapping/rdbmsSize"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-datatypes.ecore#//TypeMapping/rdbmsPrecision"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-datatypes.ecore#//TypeMapping/rdbmsScale"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms-datatypes.ecore#//TypeMapping/rdbmsJdbcType"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
