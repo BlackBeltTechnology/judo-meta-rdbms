@@ -154,6 +154,7 @@ release:
 #      cache_repo: true
 
 # Set version and deploy with steps
+
     - wercker/maven:
       goals: versions:set
       maven_opts: -Dtycho.mode=maven -DnewVersion=${VERSION_FROM_POM_BASE_VERSION} -DgenerateBackupPoms=false
