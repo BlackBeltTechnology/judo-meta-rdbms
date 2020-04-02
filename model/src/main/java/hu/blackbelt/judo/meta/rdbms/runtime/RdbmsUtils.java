@@ -3,7 +3,6 @@ package hu.blackbelt.judo.meta.rdbms.runtime;
 import hu.blackbelt.judo.meta.rdbms.RdbmsField;
 import hu.blackbelt.judo.meta.rdbms.RdbmsTable;
 import hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport;
-import lombok.Getter;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -20,13 +19,18 @@ public class RdbmsUtils {
 
     private ResourceSet resourceSet;
 
-    @Getter
+    //@Getter
     private RdbmsModelResourceSupport rdbmsModelResourceSupport;
-    @Getter
+    public RdbmsModelResourceSupport getRdbmsModelResourceSupport() { return rdbmsModelResourceSupport; }
+
+    //@Getter
     private RdbmsModel rdbmsModel;
+    public RdbmsModel getRdbmsModel() { return rdbmsModel; }
 
     //////////////////////////////////////////////////
     ////////////////// CONSTRUCTORS //////////////////
+
+    public RdbmsUtils() { }
 
     /**
      * Create RdbmsUtils by passing the RdbmsModel itself
