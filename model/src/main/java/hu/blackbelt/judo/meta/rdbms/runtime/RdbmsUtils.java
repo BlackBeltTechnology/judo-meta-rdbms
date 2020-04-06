@@ -2,6 +2,7 @@ package hu.blackbelt.judo.meta.rdbms.runtime;
 
 import hu.blackbelt.judo.meta.rdbms.RdbmsField;
 import hu.blackbelt.judo.meta.rdbms.RdbmsForeignKey;
+import hu.blackbelt.judo.meta.rdbms.RdbmsJunctionTable;
 import hu.blackbelt.judo.meta.rdbms.RdbmsTable;
 import hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport;
 import org.eclipse.emf.common.util.BasicEList;
@@ -13,11 +14,8 @@ import org.slf4j.LoggerFactory;
 import java.util.Optional;
 
 public class RdbmsUtils {
-
     private static final Logger log = LoggerFactory.getLogger(RdbmsUtils.class);
-
     private boolean failOnError;
-
     private ResourceSet resourceSet;
 
     //@Getter
@@ -74,7 +72,7 @@ public class RdbmsUtils {
         //TODO: Tests
         BasicEList<RdbmsTable> rdbmsTables = new BasicEList<>();
         rdbmsModelResourceSupport.getStreamOfRdbmsRdbmsTable().forEach(rdbmsTables::add);
-        return !(rdbmsTables.isEmpty())
+        return !rdbmsTables.isEmpty()
                 ? Optional.of(rdbmsTables)
                 : Optional.empty();
     }
@@ -101,7 +99,7 @@ public class RdbmsUtils {
      */
     public Optional<EList<RdbmsField>> getRdbmsFields(String rdbmsTableName) {
         //TODO: Tests
-        return getRdbmsTable(rdbmsTableName).isPresent() && !(getRdbmsTable(rdbmsTableName).get().getFields().isEmpty())
+        return getRdbmsTable(rdbmsTableName).isPresent() && !getRdbmsTable(rdbmsTableName).get().getFields().isEmpty()
                 ? Optional.of(getRdbmsTable(rdbmsTableName).get().getFields())
                 : Optional.empty();
     }
@@ -113,15 +111,13 @@ public class RdbmsUtils {
      * @param concatNames true if during search, rdbmsTableName and rdbmsFieldName will be concatenated with '#' between them
      * @return RdbmsField if exists
      */
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
     public Optional<RdbmsField> getRdbmsField(String rdbmsTableName, String rdbmsFieldName, boolean concatNames) {
         //TODO: Tests
-        final String finalRdbmsFieldName =
-                concatNames
-                        ? rdbmsTableName + "#" + rdbmsFieldName
-                        : rdbmsFieldName;
-        return (getRdbmsFields(rdbmsTableName).isPresent() && getRdbmsFields(rdbmsTableName).get().stream().anyMatch(o -> finalRdbmsFieldName.equals(o.getName())))
-                ? Optional.of(getRdbmsFields(rdbmsTableName).get().stream().filter(o -> finalRdbmsFieldName.equals(o.getName())).findAny().get())
+        final String finalRdbmsFieldName = concatNames
+                ? rdbmsTableName + "#" + rdbmsFieldName
+                : rdbmsFieldName;
+        return getRdbmsFields(rdbmsTableName).isPresent()
+                ? getRdbmsFields(rdbmsTableName).get().stream().filter(o -> finalRdbmsFieldName.equals(o.getName())).findAny()
                 : Optional.empty();
     }
 
@@ -140,7 +136,7 @@ public class RdbmsUtils {
             if(o instanceof RdbmsForeignKey) {
                 rdbmsForeignKeys.add((RdbmsForeignKey) o);
             }});
-        return (getRdbmsFields(rdbmsTableName).isPresent() && !rdbmsForeignKeys.isEmpty())
+        return getRdbmsFields(rdbmsTableName).isPresent() && !rdbmsForeignKeys.isEmpty()
                 ? Optional.of(rdbmsForeignKeys)
                 : Optional.empty();
     }
@@ -152,15 +148,45 @@ public class RdbmsUtils {
      * @param concatNames true if during search, rdbmsTableName and rdbmsForeignKeyName will be concatenated with '#' between them
      * @return RdbmsForeignKey if exists
      */
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
     public Optional<RdbmsForeignKey> getRdbmsForeignKey(String rdbmsTableName, String rdbmsForeignKeyName, boolean concatNames) {
         //TODO: Tests
-        final String finalRdbmsFieldName =
-                concatNames
-                        ? rdbmsTableName + "#" + rdbmsForeignKeyName
-                        : rdbmsForeignKeyName;
-        return (getRdbmsForeignKeys(rdbmsTableName).isPresent() && getRdbmsForeignKeys(rdbmsTableName).get().stream().anyMatch(o -> finalRdbmsFieldName.equals(o.getName())))
-                ? Optional.of(getRdbmsForeignKeys(rdbmsTableName).get().stream().filter(o -> finalRdbmsFieldName.equals(o.getName())).findAny().get())
+        final String finalRdbmsFieldName = concatNames
+                ? rdbmsTableName + "#" + rdbmsForeignKeyName
+                : rdbmsForeignKeyName;
+        return getRdbmsForeignKeys(rdbmsTableName).isPresent()
+                ? getRdbmsForeignKeys(rdbmsTableName).get().stream().filter(o -> finalRdbmsFieldName.equals(o.getName())).findAny()
+                : Optional.empty();
+    }
+
+    //////////////////////////////////////////////////
+    //////////////// JUNCTION TABLES /////////////////
+
+    /**
+     * Get all RdbmsJunctionTable from RdbmsModel
+     * @return all RdbmsJunctionTable if exists
+     */
+    public Optional<EList<RdbmsJunctionTable>> getRdbmsJunctionTables() {
+        //TODO: Tests
+        BasicEList<RdbmsJunctionTable> rdbmsJunctionTables = new BasicEList<>();
+        rdbmsModelResourceSupport.getStreamOfRdbmsRdbmsTable().forEach(o -> {
+            if(o instanceof RdbmsJunctionTable) {
+                rdbmsJunctionTables.add((RdbmsJunctionTable) o);
+            }
+        });
+        return !rdbmsJunctionTables.isEmpty()
+                ? Optional.of(rdbmsJunctionTables)
+                : Optional.empty();
+    }
+
+    /**
+     * Get certain RdbmsJunctionTable
+     * @param rdbmsJunctionTableName RdbmsJunctionTable's name to search for (packagename.classname)
+     * @return RdbmsJunctionTable if exists
+     */
+    public Optional<RdbmsJunctionTable> getRdbmsJunctionTable(String rdbmsJunctionTableName) {
+        //TODO: Tests
+        return getRdbmsJunctionTables().isPresent()
+                ? getRdbmsJunctionTables().get().stream().filter(o -> rdbmsJunctionTableName.equals(o.getName())).findAny()
                 : Optional.empty();
     }
 
