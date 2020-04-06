@@ -118,7 +118,7 @@ public class RdbmsUtils {
         final String finalRdbmsFieldName =
                 concatNames
                         ? rdbmsTableName + "#" + rdbmsFieldName
-                        : "#" + rdbmsFieldName;
+                        : rdbmsFieldName;
         return (getRdbmsFields(rdbmsTableName).isPresent() && getRdbmsFields(rdbmsTableName).get().stream().anyMatch(o -> finalRdbmsFieldName.equals(o.getName())))
                 ? Optional.of(getRdbmsFields(rdbmsTableName).get().stream().filter(o -> finalRdbmsFieldName.equals(o.getName())).findAny().get())
                 : Optional.empty();
