@@ -1,6 +1,7 @@
 package hu.blackbelt.judo.meta.rdbms.runtime;
 
 import hu.blackbelt.judo.meta.rdbms.RdbmsField;
+import hu.blackbelt.judo.meta.rdbms.RdbmsForeignKey;
 import hu.blackbelt.judo.meta.rdbms.RdbmsTable;
 import hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport;
 import org.eclipse.emf.common.util.BasicEList;
@@ -121,6 +122,25 @@ public class RdbmsUtils {
                         : rdbmsFieldName;
         return (getRdbmsFields(rdbmsTableName).isPresent() && getRdbmsFields(rdbmsTableName).get().stream().anyMatch(o -> finalRdbmsFieldName.equals(o.getName())))
                 ? Optional.of(getRdbmsFields(rdbmsTableName).get().stream().filter(o -> finalRdbmsFieldName.equals(o.getName())).findAny().get())
+                : Optional.empty();
+    }
+
+    //////////////////////////////////////////////////
+    ///////////////// FOREIGN KEYS ///////////////////
+
+    /**
+     * Get all RdbmsForeignKey in given table
+     * @param rdbmsTableName RdbmsTable's name to list RdbmsForeignKeys from
+     * @return all RdbmsForeignKey if exists
+     */
+    public Optional<EList<RdbmsForeignKey>> getRdbmsForeignKeys(String rdbmsTableName) {
+        BasicEList<RdbmsForeignKey> rdbmsForeignKeys = new BasicEList<>();
+        getRdbmsFields(rdbmsTableName).get().forEach(o -> {
+            if(o instanceof RdbmsForeignKey) {
+                rdbmsForeignKeys.add((RdbmsForeignKey) o);
+            }});
+        return (getRdbmsFields(rdbmsTableName).isPresent() && !rdbmsForeignKeys.isEmpty())
+                ? Optional.of(rdbmsForeignKeys)
                 : Optional.empty();
     }
 
