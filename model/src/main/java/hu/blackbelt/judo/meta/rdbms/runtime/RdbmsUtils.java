@@ -134,6 +134,7 @@ public class RdbmsUtils {
      * @return all RdbmsForeignKey if exists
      */
     public Optional<EList<RdbmsForeignKey>> getRdbmsForeignKeys(String rdbmsTableName) {
+        //TODO: Tests
         BasicEList<RdbmsForeignKey> rdbmsForeignKeys = new BasicEList<>();
         getRdbmsFields(rdbmsTableName).get().forEach(o -> {
             if(o instanceof RdbmsForeignKey) {
@@ -141,6 +142,25 @@ public class RdbmsUtils {
             }});
         return (getRdbmsFields(rdbmsTableName).isPresent() && !rdbmsForeignKeys.isEmpty())
                 ? Optional.of(rdbmsForeignKeys)
+                : Optional.empty();
+    }
+
+    /**
+     * Get certain RdbmsForeignKey from given RdbmsTable
+     * @param rdbmsTableName RdbmsTable's name to search in (packagename.classname)
+     * @param rdbmsForeignKeyName RdbmsForeignKey's name to search for
+     * @param concatNames true if during search, rdbmsTableName and rdbmsForeignKeyName will be concatenated with '#' between them
+     * @return RdbmsForeignKey if exists
+     */
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    public Optional<RdbmsForeignKey> getRdbmsForeignKey(String rdbmsTableName, String rdbmsForeignKeyName, boolean concatNames) {
+        //TODO: Tests
+        final String finalRdbmsFieldName =
+                concatNames
+                        ? rdbmsTableName + "#" + rdbmsForeignKeyName
+                        : rdbmsForeignKeyName;
+        return (getRdbmsForeignKeys(rdbmsTableName).isPresent() && getRdbmsForeignKeys(rdbmsTableName).get().stream().anyMatch(o -> finalRdbmsFieldName.equals(o.getName())))
+                ? Optional.of(getRdbmsForeignKeys(rdbmsTableName).get().stream().filter(o -> finalRdbmsFieldName.equals(o.getName())).findAny().get())
                 : Optional.empty();
     }
 
