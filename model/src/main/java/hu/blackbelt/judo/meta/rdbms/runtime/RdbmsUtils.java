@@ -20,19 +20,27 @@ public class RdbmsUtils {
 
     //@Getter
     private RdbmsModelResourceSupport rdbmsModelResourceSupport;
-    public RdbmsModelResourceSupport getRdbmsModelResourceSupport() { return rdbmsModelResourceSupport; }
+
+    public RdbmsModelResourceSupport getRdbmsModelResourceSupport() {
+        return rdbmsModelResourceSupport;
+    }
 
     //@Getter
     private RdbmsModel rdbmsModel;
-    public RdbmsModel getRdbmsModel() { return rdbmsModel; }
+
+    public RdbmsModel getRdbmsModel() {
+        return rdbmsModel;
+    }
 
     //////////////////////////////////////////////////
     ////////////////// CONSTRUCTORS //////////////////
 
-    public RdbmsUtils() { }
+    public RdbmsUtils() {
+    }
 
     /**
      * Create RdbmsUtils by passing the RdbmsModel itself
+     *
      * @param rdbmsModel Rdbms model to "build" utils on
      */
     public RdbmsUtils(RdbmsModel rdbmsModel) {
@@ -66,6 +74,7 @@ public class RdbmsUtils {
 
     /**
      * Get all RdbmsTable from RdbmsModel
+     *
      * @return all RdbmsTable if exists
      */
     public Optional<EList<RdbmsTable>> getRdbmsTables() {
@@ -79,6 +88,7 @@ public class RdbmsUtils {
 
     /**
      * Get certain RdbmsTable
+     *
      * @param rdbmsTableName RdbmsTable's name to search for (packagename.classname)
      * @return RdbmsTable if exists
      */
@@ -94,6 +104,7 @@ public class RdbmsUtils {
 
     /**
      * Get all RdbmsField from certain RdbmsTable
+     *
      * @param rdbmsTableName RdbmsTable's name to get all RdbmsField from (packagename.classname)
      * @return All RdbmsField if exists
      */
@@ -106,9 +117,10 @@ public class RdbmsUtils {
 
     /**
      * Get certain RdbmsField from given RdbmsTable
+     *
      * @param rdbmsTableName RdbmsTable's name to search in (packagename.classname)
      * @param rdbmsFieldName RdbmsField's name to search for
-     * @param concatNames true if during search, rdbmsTableName and rdbmsFieldName will be concatenated with '#' between them
+     * @param concatNames    true if during search, rdbmsTableName and rdbmsFieldName will be concatenated with '#' between them
      * @return RdbmsField if exists
      */
     public Optional<RdbmsField> getRdbmsField(String rdbmsTableName, String rdbmsFieldName, boolean concatNames) {
@@ -126,6 +138,7 @@ public class RdbmsUtils {
 
     /**
      * Get all RdbmsForeignKey in given table
+     *
      * @param rdbmsTableName RdbmsTable's name to list RdbmsForeignKeys from
      * @return all RdbmsForeignKey if exists
      */
@@ -133,9 +146,10 @@ public class RdbmsUtils {
         //TODO: Tests
         BasicEList<RdbmsForeignKey> rdbmsForeignKeys = new BasicEList<>();
         getRdbmsFields(rdbmsTableName).get().forEach(o -> {
-            if(o instanceof RdbmsForeignKey) {
+            if (o instanceof RdbmsForeignKey) {
                 rdbmsForeignKeys.add((RdbmsForeignKey) o);
-            }});
+            }
+        });
         return getRdbmsFields(rdbmsTableName).isPresent() && !rdbmsForeignKeys.isEmpty()
                 ? Optional.of(rdbmsForeignKeys)
                 : Optional.empty();
@@ -143,9 +157,10 @@ public class RdbmsUtils {
 
     /**
      * Get certain RdbmsForeignKey from given RdbmsTable
-     * @param rdbmsTableName RdbmsTable's name to search in (packagename.classname)
+     *
+     * @param rdbmsTableName      RdbmsTable's name to search in (packagename.classname)
      * @param rdbmsForeignKeyName RdbmsForeignKey's name to search for
-     * @param concatNames true if during search, rdbmsTableName and rdbmsForeignKeyName will be concatenated with '#' between them
+     * @param concatNames         true if during search, rdbmsTableName and rdbmsForeignKeyName will be concatenated with '#' between them
      * @return RdbmsForeignKey if exists
      */
     public Optional<RdbmsForeignKey> getRdbmsForeignKey(String rdbmsTableName, String rdbmsForeignKeyName, boolean concatNames) {
@@ -163,13 +178,14 @@ public class RdbmsUtils {
 
     /**
      * Get all RdbmsJunctionTable from RdbmsModel
+     *
      * @return all RdbmsJunctionTable if exists
      */
     public Optional<EList<RdbmsJunctionTable>> getRdbmsJunctionTables() {
         //TODO: Tests
         BasicEList<RdbmsJunctionTable> rdbmsJunctionTables = new BasicEList<>();
         rdbmsModelResourceSupport.getStreamOfRdbmsRdbmsTable().forEach(o -> {
-            if(o instanceof RdbmsJunctionTable) {
+            if (o instanceof RdbmsJunctionTable) {
                 rdbmsJunctionTables.add((RdbmsJunctionTable) o);
             }
         });
@@ -180,6 +196,7 @@ public class RdbmsUtils {
 
     /**
      * Get certain RdbmsJunctionTable
+     *
      * @param rdbmsJunctionTableName RdbmsJunctionTable's name to search for (packagename.classname)
      * @return RdbmsJunctionTable if exists
      */
