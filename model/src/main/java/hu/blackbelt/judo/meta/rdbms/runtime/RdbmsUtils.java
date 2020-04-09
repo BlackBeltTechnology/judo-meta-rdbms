@@ -18,14 +18,12 @@ public class RdbmsUtils {
     private boolean failOnError;
     private ResourceSet resourceSet;
 
-    //@Getter
     private RdbmsModelResourceSupport rdbmsModelResourceSupport;
 
     public RdbmsModelResourceSupport getRdbmsModelResourceSupport() {
         return rdbmsModelResourceSupport;
     }
 
-    //@Getter
     private RdbmsModel rdbmsModel;
 
     public RdbmsModel getRdbmsModel() {
