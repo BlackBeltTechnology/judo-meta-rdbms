@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
+import static hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport.rdbmsModelResourceSupportBuilder;
+
 public class RdbmsUtils {
     private static final Logger log = LoggerFactory.getLogger(RdbmsUtils.class);
     private boolean failOnError;
@@ -43,7 +45,7 @@ public class RdbmsUtils {
      */
     public RdbmsUtils(RdbmsModel rdbmsModel) {
         this.rdbmsModel = rdbmsModel;
-        rdbmsModelResourceSupport = RdbmsModelResourceSupport.rdbmsModelResourceSupportBuilder()
+        rdbmsModelResourceSupport = rdbmsModelResourceSupportBuilder()
                 .resourceSet(rdbmsModel.getResourceSet())
                 .uri(rdbmsModel.getUri())
                 .build();
@@ -118,16 +120,12 @@ public class RdbmsUtils {
      *
      * @param rdbmsTableName RdbmsTable's name to search in
      * @param rdbmsFieldName RdbmsField's name to search for
-     * @param concatNames    true if during search, rdbmsTableName and rdbmsFieldName should be concatenated with '#' between them
      * @return RdbmsField if exists
      */
-    public Optional<RdbmsField> getRdbmsField(String rdbmsTableName, String rdbmsFieldName, boolean concatNames) {
+    public Optional<RdbmsField> getRdbmsField(String rdbmsTableName, String rdbmsFieldName) {
         //TODO: Tests
-        final String finalRdbmsFieldName = concatNames
-                ? rdbmsTableName + "#" + rdbmsFieldName
-                : rdbmsFieldName;
         return getRdbmsFields(rdbmsTableName).isPresent()
-                ? getRdbmsFields(rdbmsTableName).get().stream().filter(o -> finalRdbmsFieldName.equals(o.getName())).findAny()
+                ? getRdbmsFields(rdbmsTableName).get().stream().filter(o -> rdbmsFieldName.equals(o.getName())).findAny()
                 : Optional.empty();
     }
 
@@ -158,16 +156,12 @@ public class RdbmsUtils {
      *
      * @param rdbmsTableName      RdbmsTable's name to search in
      * @param rdbmsForeignKeyName RdbmsForeignKey's name to search for
-     * @param concatNames         true if during search, rdbmsTableName and rdbmsForeignKeyName should be concatenated with '#' between them
      * @return RdbmsForeignKey if exists
      */
-    public Optional<RdbmsForeignKey> getRdbmsForeignKey(String rdbmsTableName, String rdbmsForeignKeyName, boolean concatNames) {
+    public Optional<RdbmsForeignKey> getRdbmsForeignKey(String rdbmsTableName, String rdbmsForeignKeyName) {
         //TODO: Tests
-        final String finalRdbmsFieldName = concatNames
-                ? rdbmsTableName + "#" + rdbmsForeignKeyName
-                : rdbmsForeignKeyName;
         return getRdbmsForeignKeys(rdbmsTableName).isPresent()
-                ? getRdbmsForeignKeys(rdbmsTableName).get().stream().filter(o -> finalRdbmsFieldName.equals(o.getName())).findAny()
+                ? getRdbmsForeignKeys(rdbmsTableName).get().stream().filter(o -> rdbmsForeignKeyName.equals(o.getName())).findAny()
                 : Optional.empty();
     }
 
