@@ -19,36 +19,12 @@ public class RdbmsUtils {
     private static final Logger log = LoggerFactory.getLogger(RdbmsUtils.class);
     private boolean failOnError;
     private ResourceSet resourceSet;
-
     private RdbmsModelResourceSupport rdbmsModelResourceSupport;
-
-    public RdbmsModelResourceSupport getRdbmsModelResourceSupport() {
-        return rdbmsModelResourceSupport;
-    }
-
-    private RdbmsModel rdbmsModel;
-
-    public RdbmsModel getRdbmsModel() {
-        return rdbmsModel;
-    }
 
     //////////////////////////////////////////////////
     ////////////////// CONSTRUCTORS //////////////////
 
     public RdbmsUtils() {
-    }
-
-    /**
-     * Create RdbmsUtils by passing the RdbmsModel itself
-     *
-     * @param rdbmsModel Rdbms model to "build" utils on
-     */
-    public RdbmsUtils(RdbmsModel rdbmsModel) {
-        this.rdbmsModel = rdbmsModel;
-        rdbmsModelResourceSupport = rdbmsModelResourceSupportBuilder()
-                .resourceSet(rdbmsModel.getResourceSet())
-                .uri(rdbmsModel.getUri())
-                .build();
     }
 
     public RdbmsUtils(final ResourceSet resourceSet) {
@@ -59,7 +35,9 @@ public class RdbmsUtils {
         this.resourceSet = resourceSet;
         this.failOnError = failOnError;
 
-        // TODO: Processes here
+        rdbmsModelResourceSupport = rdbmsModelResourceSupportBuilder()
+                .resourceSet(resourceSet)
+                .build();
     }
 
     //////////////////////////////////////////////////
@@ -67,6 +45,10 @@ public class RdbmsUtils {
 
     public void setFailOnError(final boolean failOnError) {
         this.failOnError = failOnError;
+    }
+
+    public RdbmsModelResourceSupport getRdbmsModelResourceSupport() {
+        return rdbmsModelResourceSupport;
     }
 
     //////////////////////////////////////////////////
