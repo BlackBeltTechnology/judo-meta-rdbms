@@ -89,7 +89,7 @@ public class RdbmsUtils {
     /**
      * Get certain RdbmsTable
      *
-     * @param rdbmsTableName RdbmsTable's name to search for (packagename.classname)
+     * @param rdbmsTableName RdbmsTable's name to search for
      * @return RdbmsTable if exists
      */
     public Optional<RdbmsTable> getRdbmsTable(String rdbmsTableName) {
@@ -105,7 +105,7 @@ public class RdbmsUtils {
     /**
      * Get all RdbmsField from certain RdbmsTable
      *
-     * @param rdbmsTableName RdbmsTable's name to get all RdbmsField from (packagename.classname)
+     * @param rdbmsTableName RdbmsTable's name to get all RdbmsField from
      * @return All RdbmsField if exists
      */
     public Optional<EList<RdbmsField>> getRdbmsFields(String rdbmsTableName) {
@@ -118,9 +118,9 @@ public class RdbmsUtils {
     /**
      * Get certain RdbmsField from given RdbmsTable
      *
-     * @param rdbmsTableName RdbmsTable's name to search in (packagename.classname)
+     * @param rdbmsTableName RdbmsTable's name to search in
      * @param rdbmsFieldName RdbmsField's name to search for
-     * @param concatNames    true if during search, rdbmsTableName and rdbmsFieldName will be concatenated with '#' between them
+     * @param concatNames    true if during search, rdbmsTableName and rdbmsFieldName should be concatenated with '#' between them
      * @return RdbmsField if exists
      */
     public Optional<RdbmsField> getRdbmsField(String rdbmsTableName, String rdbmsFieldName, boolean concatNames) {
@@ -158,9 +158,9 @@ public class RdbmsUtils {
     /**
      * Get certain RdbmsForeignKey from given RdbmsTable
      *
-     * @param rdbmsTableName      RdbmsTable's name to search in (packagename.classname)
+     * @param rdbmsTableName      RdbmsTable's name to search in
      * @param rdbmsForeignKeyName RdbmsForeignKey's name to search for
-     * @param concatNames         true if during search, rdbmsTableName and rdbmsForeignKeyName will be concatenated with '#' between them
+     * @param concatNames         true if during search, rdbmsTableName and rdbmsForeignKeyName should be concatenated with '#' between them
      * @return RdbmsForeignKey if exists
      */
     public Optional<RdbmsForeignKey> getRdbmsForeignKey(String rdbmsTableName, String rdbmsForeignKeyName, boolean concatNames) {
@@ -197,7 +197,7 @@ public class RdbmsUtils {
     /**
      * Get certain RdbmsJunctionTable
      *
-     * @param rdbmsJunctionTableName RdbmsJunctionTable's name to search for (packagename.classname)
+     * @param rdbmsJunctionTableName RdbmsJunctionTable's name to search for
      * @return RdbmsJunctionTable if exists
      */
     public Optional<RdbmsJunctionTable> getRdbmsJunctionTable(String rdbmsJunctionTableName) {
