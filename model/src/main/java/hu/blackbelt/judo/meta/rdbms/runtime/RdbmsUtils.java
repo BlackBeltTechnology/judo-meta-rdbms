@@ -1,31 +1,32 @@
 package hu.blackbelt.judo.meta.rdbms.runtime;
-import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.util.ECollections;
-import org.eclipse.emf.common.util.EMap;
-import org.eclipse.emf.common.util.UniqueEList;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
+import hu.blackbelt.judo.meta.rdbms.RdbmsField;
+import hu.blackbelt.judo.meta.rdbms.RdbmsForeignKey;
+import hu.blackbelt.judo.meta.rdbms.RdbmsJunctionTable;
+import hu.blackbelt.judo.meta.rdbms.RdbmsTable;
+import hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport;
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Optional;
+
+import static hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport.rdbmsModelResourceSupportBuilder;
 
 public class RdbmsUtils {
-
     private static final Logger log = LoggerFactory.getLogger(RdbmsUtils.class);
-
     private boolean failOnError;
-
     private ResourceSet resourceSet;
+    private RdbmsModelResourceSupport rdbmsModelResourceSupport;
+
+    //////////////////////////////////////////////////
+    ////////////////// CONSTRUCTORS //////////////////
 
     public RdbmsUtils() {
     }
-    
+
     public RdbmsUtils(final ResourceSet resourceSet) {
         this(resourceSet, false);
     }
@@ -34,10 +35,150 @@ public class RdbmsUtils {
         this.resourceSet = resourceSet;
         this.failOnError = failOnError;
 
-        // TODO: Processes here
+        rdbmsModelResourceSupport = rdbmsModelResourceSupportBuilder()
+                .resourceSet(resourceSet)
+                .build();
     }
+
+    //////////////////////////////////////////////////
+    ///////////////// OTHER METHODS //////////////////
 
     public void setFailOnError(final boolean failOnError) {
         this.failOnError = failOnError;
     }
+
+    public RdbmsModelResourceSupport getRdbmsModelResourceSupport() {
+        return rdbmsModelResourceSupport;
+    }
+
+    //////////////////////////////////////////////////
+    //////////////////// TABLES //////////////////////
+
+    /**
+     * Get all RdbmsTable from RdbmsModel
+     *
+     * @return all RdbmsTable if exists
+     */
+    public Optional<EList<RdbmsTable>> getRdbmsTables() {
+        //TODO: Tests
+        BasicEList<RdbmsTable> rdbmsTables = new BasicEList<>();
+        rdbmsModelResourceSupport.getStreamOfRdbmsRdbmsTable().forEach(rdbmsTables::add);
+        return !rdbmsTables.isEmpty()
+                ? Optional.of(rdbmsTables)
+                : Optional.empty();
+    }
+
+    /**
+     * Get certain RdbmsTable
+     *
+     * @param rdbmsTableName RdbmsTable's name to search for
+     * @return RdbmsTable if exists
+     */
+    public Optional<RdbmsTable> getRdbmsTable(String rdbmsTableName) {
+        //TODO: Tests
+        return getRdbmsTables().isPresent()
+                ? getRdbmsTables().get().stream().filter(o -> rdbmsTableName.equals(o.getName())).findAny()
+                : Optional.empty();
+    }
+
+    //////////////////////////////////////////////////
+    //////////////////// FIELDS //////////////////////
+
+    /**
+     * Get all RdbmsField from certain RdbmsTable
+     *
+     * @param rdbmsTableName RdbmsTable's name to get all RdbmsField from
+     * @return All RdbmsField if exists
+     */
+    public Optional<EList<RdbmsField>> getRdbmsFields(String rdbmsTableName) {
+        //TODO: Tests
+        return getRdbmsTable(rdbmsTableName).isPresent() && !getRdbmsTable(rdbmsTableName).get().getFields().isEmpty()
+                ? Optional.of(getRdbmsTable(rdbmsTableName).get().getFields())
+                : Optional.empty();
+    }
+
+    /**
+     * Get certain RdbmsField from given RdbmsTable
+     *
+     * @param rdbmsTableName RdbmsTable's name to search in
+     * @param rdbmsFieldName RdbmsField's name to search for
+     * @return RdbmsField if exists
+     */
+    public Optional<RdbmsField> getRdbmsField(String rdbmsTableName, String rdbmsFieldName) {
+        //TODO: Tests
+        return getRdbmsFields(rdbmsTableName).isPresent()
+                ? getRdbmsFields(rdbmsTableName).get().stream().filter(o -> rdbmsFieldName.equals(o.getName())).findAny()
+                : Optional.empty();
+    }
+
+    //////////////////////////////////////////////////
+    ///////////////// FOREIGN KEYS ///////////////////
+
+    /**
+     * Get all RdbmsForeignKey in given table
+     *
+     * @param rdbmsTableName RdbmsTable's name to list RdbmsForeignKeys from
+     * @return all RdbmsForeignKey if exists
+     */
+    public Optional<EList<RdbmsForeignKey>> getRdbmsForeignKeys(String rdbmsTableName) {
+        //TODO: Tests
+        BasicEList<RdbmsForeignKey> rdbmsForeignKeys = new BasicEList<>();
+        getRdbmsFields(rdbmsTableName).get().forEach(o -> {
+            if (o instanceof RdbmsForeignKey) {
+                rdbmsForeignKeys.add((RdbmsForeignKey) o);
+            }
+        });
+        return getRdbmsFields(rdbmsTableName).isPresent() && !rdbmsForeignKeys.isEmpty()
+                ? Optional.of(rdbmsForeignKeys)
+                : Optional.empty();
+    }
+
+    /**
+     * Get certain RdbmsForeignKey from given RdbmsTable
+     *
+     * @param rdbmsTableName      RdbmsTable's name to search in
+     * @param rdbmsForeignKeyName RdbmsForeignKey's name to search for
+     * @return RdbmsForeignKey if exists
+     */
+    public Optional<RdbmsForeignKey> getRdbmsForeignKey(String rdbmsTableName, String rdbmsForeignKeyName) {
+        //TODO: Tests
+        return getRdbmsForeignKeys(rdbmsTableName).isPresent()
+                ? getRdbmsForeignKeys(rdbmsTableName).get().stream().filter(o -> rdbmsForeignKeyName.equals(o.getName())).findAny()
+                : Optional.empty();
+    }
+
+    //////////////////////////////////////////////////
+    //////////////// JUNCTION TABLES /////////////////
+
+    /**
+     * Get all RdbmsJunctionTable from RdbmsModel
+     *
+     * @return all RdbmsJunctionTable if exists
+     */
+    public Optional<EList<RdbmsJunctionTable>> getRdbmsJunctionTables() {
+        //TODO: Tests
+        BasicEList<RdbmsJunctionTable> rdbmsJunctionTables = new BasicEList<>();
+        rdbmsModelResourceSupport.getStreamOfRdbmsRdbmsTable().forEach(o -> {
+            if (o instanceof RdbmsJunctionTable) {
+                rdbmsJunctionTables.add((RdbmsJunctionTable) o);
+            }
+        });
+        return !rdbmsJunctionTables.isEmpty()
+                ? Optional.of(rdbmsJunctionTables)
+                : Optional.empty();
+    }
+
+    /**
+     * Get certain RdbmsJunctionTable
+     *
+     * @param rdbmsJunctionTableName RdbmsJunctionTable's name to search for
+     * @return RdbmsJunctionTable if exists
+     */
+    public Optional<RdbmsJunctionTable> getRdbmsJunctionTable(String rdbmsJunctionTableName) {
+        //TODO: Tests
+        return getRdbmsJunctionTables().isPresent()
+                ? getRdbmsJunctionTables().get().stream().filter(o -> rdbmsJunctionTableName.equals(o.getName())).findAny()
+                : Optional.empty();
+    }
+
 }
