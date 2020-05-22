@@ -1,10 +1,8 @@
 package hu.blackbelt.judo.meta.rdbms.runtime;
 
-import hu.blackbelt.judo.meta.rdbms.RdbmsField;
-import hu.blackbelt.judo.meta.rdbms.RdbmsForeignKey;
-import hu.blackbelt.judo.meta.rdbms.RdbmsJunctionTable;
-import hu.blackbelt.judo.meta.rdbms.RdbmsTable;
+import hu.blackbelt.judo.meta.rdbms.*;
 import hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport;
+import hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsBuilders;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -53,6 +51,23 @@ public class RdbmsUtils {
 
     //////////////////////////////////////////////////
     //////////////////// TABLES //////////////////////
+
+    public static RdbmsTable newRdbmsTable(final String name) {
+        // TODO: test
+        final String uuid = "Tables." + name;
+
+        final RdbmsIdentifierField id = RdbmsBuilders.newRdbmsIdentifierFieldBuilder()
+                .withName("_id")
+                .withUuid(uuid + "#_id")
+                .build();
+
+        return RdbmsBuilders.newRdbmsTableBuilder()
+                .withName(name)
+                .withUuid(uuid)
+                .withFields(id)
+                .withPrimaryKey(id)
+                .build();
+    }
 
     /**
      * Get all RdbmsTable from RdbmsModel
