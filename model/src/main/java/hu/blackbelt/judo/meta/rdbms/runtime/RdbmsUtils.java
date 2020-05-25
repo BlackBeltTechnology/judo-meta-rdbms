@@ -1,5 +1,6 @@
 package hu.blackbelt.judo.meta.rdbms.runtime;
 
+import com.google.common.collect.ImmutableList;
 import hu.blackbelt.judo.meta.rdbms.*;
 import hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport;
 import hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsBuilders;
@@ -12,16 +13,18 @@ import org.slf4j.LoggerFactory;
 import java.util.Optional;
 
 import static hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport.rdbmsModelResourceSupportBuilder;
-import static hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsBuilders.newRdbmsTableBuilder;
+import static hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsBuilders.*;
 
 public class RdbmsUtils {
     private static final Logger log = LoggerFactory.getLogger(RdbmsUtils.class);
     private boolean failOnError;
     private ResourceSet resourceSet;
     private RdbmsModelResourceSupport rdbmsModelResourceSupport;
+    private static final String DEFAULT_PREFIX = "Tables";
 
     //////////////////////////////////////////////////
     ////////////////// CONSTRUCTORS //////////////////
+    //////////////////////////////////////////////////
 
     public RdbmsUtils() {
     }
@@ -41,6 +44,7 @@ public class RdbmsUtils {
 
     //////////////////////////////////////////////////
     ///////////////// OTHER METHODS //////////////////
+    //////////////////////////////////////////////////
 
     public void setFailOnError(final boolean failOnError) {
         this.failOnError = failOnError;
@@ -52,9 +56,39 @@ public class RdbmsUtils {
 
     //////////////////////////////////////////////////
     //////////////////// TABLES //////////////////////
+    //////////////////////////////////////////////////
 
-    public static RdbmsTable newRdbmsTable(final String name) {
-        final String uuid = "Tables." + name;
+    /**
+     * <p>Create simple RdbmsTable with given name and default prefix.</p>
+     * <p>Default prefix: {@value DEFAULT_PREFIX}</p>
+     * <p>UUID of the created RdbmsTable will be generated from name and default prefix.</p>
+     *
+     * @return new RdbmsTable
+     * @see #newRdbmsTable(String name, String prefix)
+     */
+    public static RdbmsTable newRdbmsTable(String name) {
+        return newRdbmsTable(name, DEFAULT_PREFIX);
+    }
+
+    /**
+     * <p>Create simple RdbmsTable with given name and prefix.</p>
+     * <p>UUID of the created RdbmsTable will be generated from name and prefix.</p>
+     *
+     * @return new RdbmsTable
+     * @see #newRdbmsTable(String name)
+     */
+    public static RdbmsTable newRdbmsTable(String name, String prefix) {
+        // TODO: test
+        if (name == null || prefix == null)
+            throw new IllegalArgumentException("Arguments cannot be null");
+
+        name = name.trim().replace(" ", "_");
+        prefix = prefix.trim().replace(" ", "_");
+
+        if (!prefix.endsWith("."))
+            prefix += ".";
+
+        final String uuid = prefix + name;
 
         final RdbmsIdentifierField id = RdbmsBuilders.newRdbmsIdentifierFieldBuilder()
                 .withName("_id")
@@ -96,6 +130,7 @@ public class RdbmsUtils {
 
     //////////////////////////////////////////////////
     //////////////////// FIELDS //////////////////////
+    //////////////////////////////////////////////////
 
     /**
      * Get all RdbmsField from certain RdbmsTable
@@ -124,6 +159,7 @@ public class RdbmsUtils {
 
     //////////////////////////////////////////////////
     ///////////////// FOREIGN KEYS ///////////////////
+    //////////////////////////////////////////////////
 
     /**
      * Get all RdbmsForeignKey in given table
@@ -160,6 +196,70 @@ public class RdbmsUtils {
 
     //////////////////////////////////////////////////
     //////////////// JUNCTION TABLES /////////////////
+    //////////////////////////////////////////////////
+
+    /**
+     * <p>Create simple RdbmsJunctionTable with given name and the tables that will be connected.</p>
+     * <p>Default prefix: {@value DEFAULT_PREFIX}.</p>
+     *
+     * @return new RdbmsJunctionTable with default prefix
+     * @see #newRdbmsJunctionTable(String name, String prefix, RdbmsTable rdbmsTable1, RdbmsTable rdbmsTable2)
+     */
+    public static RdbmsJunctionTable newRdbmsJunctionTable(
+            final String name, final RdbmsTable rdbmsTable1, final RdbmsTable rdbmsTable2) {
+        return newRdbmsJunctionTable(name, "Tables", rdbmsTable1, rdbmsTable2);
+    }
+
+    /**
+     * <p>Create simple RdbmsJunctionTable with given name, prefix and the tables that will be connected.</p>
+     * <p>UUID of the created RdbmsJunctionTable will be generated from name and prefix.</p>
+     *
+     * @return new RdbmsJunctionTable
+     * @see #newRdbmsJunctionTable(String name, RdbmsTable rdbmsTable1, RdbmsTable rdbmsTable2)
+     */
+    public static RdbmsJunctionTable newRdbmsJunctionTable(String name, String prefix,
+                                                           final RdbmsTable rdbmsTable1, final RdbmsTable rdbmsTable2) {
+        // TODO: test
+        if (name == null || prefix == null)
+            throw new IllegalArgumentException("Arguments cannot be null");
+
+        name = name.trim().replace(" ", "_");
+        prefix = prefix.trim().replace(" ", "_");
+
+        if (!prefix.endsWith("."))
+            prefix += ".";
+
+        final String uuid = prefix + name;
+
+        final RdbmsIdentifierField id = newRdbmsIdentifierFieldBuilder()
+                .withName("_id")
+                .withUuid(uuid + "#_id")
+                .build();
+
+        final RdbmsForeignKey rdbmsForeignKey = newRdbmsForeignKeyBuilder()
+                .withName(rdbmsTable1.getName() + "_fk1")
+                .withUuid(uuid + "#" + rdbmsTable1.getName() + "_fk1")
+                .withReferenceKey(rdbmsTable1.getPrimaryKey())
+                .withForeignKeySqlName(rdbmsTable1.getName())
+                .build();
+
+        final RdbmsForeignKey rdbmsForeignKey1 = newRdbmsForeignKeyBuilder()
+                .withName(rdbmsTable2.getName() + "_fk2")
+                .withUuid(uuid + "#" + rdbmsTable2.getName() + "_fk2")
+                .withReferenceKey(rdbmsTable2.getPrimaryKey())
+                .withForeignKeySqlName(rdbmsTable2.getName())
+                .build();
+
+        return newRdbmsJunctionTableBuilder()
+                .withName(name)
+                .withUuid(uuid)
+                .withFields(ImmutableList.of(id, rdbmsForeignKey, rdbmsForeignKey1))
+                .withPrimaryKey(id)
+                .withField1(rdbmsForeignKey)
+                .withField2(rdbmsForeignKey1)
+                .build();
+    }
+
 
     /**
      * Get all RdbmsJunctionTable from RdbmsModel
@@ -167,7 +267,6 @@ public class RdbmsUtils {
      * @return all RdbmsJunctionTable if exists
      */
     public Optional<EList<RdbmsJunctionTable>> getRdbmsJunctionTables() {
-        //TODO: Tests
         BasicEList<RdbmsJunctionTable> rdbmsJunctionTables = new BasicEList<>();
         rdbmsModelResourceSupport.getStreamOfRdbmsRdbmsTable().forEach(o -> {
             if (o instanceof RdbmsJunctionTable) {
@@ -186,7 +285,6 @@ public class RdbmsUtils {
      * @return RdbmsJunctionTable if exists
      */
     public Optional<RdbmsJunctionTable> getRdbmsJunctionTable(String rdbmsJunctionTableName) {
-        //TODO: Tests
         return getRdbmsJunctionTables().isPresent()
                 ? getRdbmsJunctionTables().get().stream().filter(o -> rdbmsJunctionTableName.equals(o.getName())).findAny()
                 : Optional.empty();
