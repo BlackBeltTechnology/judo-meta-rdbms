@@ -207,7 +207,7 @@ public class RdbmsUtils {
      */
     public static RdbmsJunctionTable newRdbmsJunctionTable(
             final String name, final RdbmsTable rdbmsTable1, final RdbmsTable rdbmsTable2) {
-        return newRdbmsJunctionTable(name, "Tables", rdbmsTable1, rdbmsTable2);
+        return newRdbmsJunctionTable(name, DEFAULT_PREFIX, rdbmsTable1, rdbmsTable2);
     }
 
     /**
