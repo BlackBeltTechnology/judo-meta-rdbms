@@ -78,7 +78,6 @@ public class RdbmsUtils {
      * @see #newRdbmsTable(String name)
      */
     public static RdbmsTable newRdbmsTable(String name, String prefix) {
-        // TODO: test
         if (name == null || prefix == null)
             throw new IllegalArgumentException("Arguments cannot be null");
 
@@ -219,7 +218,6 @@ public class RdbmsUtils {
      */
     public static RdbmsJunctionTable newRdbmsJunctionTable(String name, String prefix,
                                                            final RdbmsTable rdbmsTable1, final RdbmsTable rdbmsTable2) {
-        // TODO: test
         if (name == null || prefix == null)
             throw new IllegalArgumentException("Arguments cannot be null");
 
