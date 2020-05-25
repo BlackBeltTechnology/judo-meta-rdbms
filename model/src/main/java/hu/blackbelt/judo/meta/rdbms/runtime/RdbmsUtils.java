@@ -1,6 +1,5 @@
 package hu.blackbelt.judo.meta.rdbms.runtime;
 
-import com.google.common.collect.ImmutableList;
 import hu.blackbelt.judo.meta.rdbms.*;
 import hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport;
 import hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsBuilders;
@@ -10,6 +9,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import static hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport.rdbmsModelResourceSupportBuilder;
@@ -253,7 +253,7 @@ public class RdbmsUtils {
         return newRdbmsJunctionTableBuilder()
                 .withName(name)
                 .withUuid(uuid)
-                .withFields(ImmutableList.of(id, rdbmsForeignKey, rdbmsForeignKey1))
+                .withFields(Arrays.asList(id, rdbmsForeignKey, rdbmsForeignKey1))
                 .withPrimaryKey(id)
                 .withField1(rdbmsForeignKey)
                 .withField2(rdbmsForeignKey1)
