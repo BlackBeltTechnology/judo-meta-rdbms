@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Optional;
 
 import static hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport.rdbmsModelResourceSupportBuilder;
+import static hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsBuilders.newRdbmsTableBuilder;
 
 public class RdbmsUtils {
     private static final Logger log = LoggerFactory.getLogger(RdbmsUtils.class);
@@ -53,7 +54,6 @@ public class RdbmsUtils {
     //////////////////// TABLES //////////////////////
 
     public static RdbmsTable newRdbmsTable(final String name) {
-        // TODO: test
         final String uuid = "Tables." + name;
 
         final RdbmsIdentifierField id = RdbmsBuilders.newRdbmsIdentifierFieldBuilder()
@@ -61,7 +61,7 @@ public class RdbmsUtils {
                 .withUuid(uuid + "#_id")
                 .build();
 
-        return RdbmsBuilders.newRdbmsTableBuilder()
+        return newRdbmsTableBuilder()
                 .withName(name)
                 .withUuid(uuid)
                 .withFields(id)
@@ -75,7 +75,6 @@ public class RdbmsUtils {
      * @return all RdbmsTable if exists
      */
     public Optional<EList<RdbmsTable>> getRdbmsTables() {
-        //TODO: Tests
         BasicEList<RdbmsTable> rdbmsTables = new BasicEList<>();
         rdbmsModelResourceSupport.getStreamOfRdbmsRdbmsTable().forEach(rdbmsTables::add);
         return !rdbmsTables.isEmpty()
@@ -90,7 +89,6 @@ public class RdbmsUtils {
      * @return RdbmsTable if exists
      */
     public Optional<RdbmsTable> getRdbmsTable(String rdbmsTableName) {
-        //TODO: Tests
         return getRdbmsTables().isPresent()
                 ? getRdbmsTables().get().stream().filter(o -> rdbmsTableName.equals(o.getName())).findAny()
                 : Optional.empty();
@@ -106,7 +104,6 @@ public class RdbmsUtils {
      * @return All RdbmsField if exists
      */
     public Optional<EList<RdbmsField>> getRdbmsFields(String rdbmsTableName) {
-        //TODO: Tests
         return getRdbmsTable(rdbmsTableName).isPresent() && !getRdbmsTable(rdbmsTableName).get().getFields().isEmpty()
                 ? Optional.of(getRdbmsTable(rdbmsTableName).get().getFields())
                 : Optional.empty();
@@ -120,7 +117,6 @@ public class RdbmsUtils {
      * @return RdbmsField if exists
      */
     public Optional<RdbmsField> getRdbmsField(String rdbmsTableName, String rdbmsFieldName) {
-        //TODO: Tests
         return getRdbmsFields(rdbmsTableName).isPresent()
                 ? getRdbmsFields(rdbmsTableName).get().stream().filter(o -> rdbmsFieldName.equals(o.getName())).findAny()
                 : Optional.empty();
@@ -136,8 +132,9 @@ public class RdbmsUtils {
      * @return all RdbmsForeignKey if exists
      */
     public Optional<EList<RdbmsForeignKey>> getRdbmsForeignKeys(String rdbmsTableName) {
-        //TODO: Tests
         BasicEList<RdbmsForeignKey> rdbmsForeignKeys = new BasicEList<>();
+        if (!getRdbmsFields(rdbmsTableName).isPresent())
+            return Optional.empty();
         getRdbmsFields(rdbmsTableName).get().forEach(o -> {
             if (o instanceof RdbmsForeignKey) {
                 rdbmsForeignKeys.add((RdbmsForeignKey) o);
@@ -156,7 +153,6 @@ public class RdbmsUtils {
      * @return RdbmsForeignKey if exists
      */
     public Optional<RdbmsForeignKey> getRdbmsForeignKey(String rdbmsTableName, String rdbmsForeignKeyName) {
-        //TODO: Tests
         return getRdbmsForeignKeys(rdbmsTableName).isPresent()
                 ? getRdbmsForeignKeys(rdbmsTableName).get().stream().filter(o -> rdbmsForeignKeyName.equals(o.getName())).findAny()
                 : Optional.empty();
