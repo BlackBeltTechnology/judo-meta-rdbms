@@ -1,19 +1,21 @@
 package hu.blackbelt.judo.meta.rdbms.runtime;
 
-import hu.blackbelt.judo.meta.rdbms.RdbmsField;
-import hu.blackbelt.judo.meta.rdbms.RdbmsForeignKey;
-import hu.blackbelt.judo.meta.rdbms.RdbmsJunctionTable;
-import hu.blackbelt.judo.meta.rdbms.RdbmsTable;
+import hu.blackbelt.judo.meta.rdbms.*;
 import hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport;
+import hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsBuilders;
+import hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsJunctionTableBuilder;
+import hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsTableBuilder;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import static hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport.rdbmsModelResourceSupportBuilder;
+import static hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsBuilders.*;
 
 public class RdbmsUtils {
     private static final Logger log = LoggerFactory.getLogger(RdbmsUtils.class);
@@ -23,6 +25,7 @@ public class RdbmsUtils {
 
     //////////////////////////////////////////////////
     ////////////////// CONSTRUCTORS //////////////////
+    //////////////////////////////////////////////////
 
     public RdbmsUtils() {
     }
@@ -42,6 +45,7 @@ public class RdbmsUtils {
 
     //////////////////////////////////////////////////
     ///////////////// OTHER METHODS //////////////////
+    //////////////////////////////////////////////////
 
     public void setFailOnError(final boolean failOnError) {
         this.failOnError = failOnError;
@@ -53,6 +57,43 @@ public class RdbmsUtils {
 
     //////////////////////////////////////////////////
     //////////////////// TABLES //////////////////////
+    //////////////////////////////////////////////////
+
+    /**
+     * <p>Creates a new RdbmsTableBuilder.</p>
+     * <p>Filled attributes are:</p>
+     * <ol>
+     *     <li>ID field:</li>
+     *          <ul>
+     *              <li>Name</li>
+     *              <li>UUID</li>
+     *          </ul>
+     *     <li>Table:</li>
+     *          <ul>
+     *              <li>Primary key</li>
+     *              <li>Name</li>
+     *              <li>UUID</li>
+     *          </ul>
+     * </ol>
+     *
+     * @param tableName RdbmsTable's name
+     * @return RdbmsTableBuilder
+     */
+    public static RdbmsTableBuilder newRdbmsTableBuilderInit(String tableName) {
+        if (tableName == null)
+            throw new IllegalArgumentException("Arguments cannot be null");
+
+        final RdbmsIdentifierField id = RdbmsBuilders.newRdbmsIdentifierFieldBuilder()
+                .withName("_id")
+                .withUuid(tableName + "#_id")
+                .build();
+
+        return newRdbmsTableBuilder()
+                .withName(tableName)
+                .withUuid(tableName)
+                .withFields(id)
+                .withPrimaryKey(id);
+    }
 
     /**
      * Get all RdbmsTable from RdbmsModel
@@ -60,7 +101,6 @@ public class RdbmsUtils {
      * @return all RdbmsTable if exists
      */
     public Optional<EList<RdbmsTable>> getRdbmsTables() {
-        //TODO: Tests
         BasicEList<RdbmsTable> rdbmsTables = new BasicEList<>();
         rdbmsModelResourceSupport.getStreamOfRdbmsRdbmsTable().forEach(rdbmsTables::add);
         return !rdbmsTables.isEmpty()
@@ -75,7 +115,6 @@ public class RdbmsUtils {
      * @return RdbmsTable if exists
      */
     public Optional<RdbmsTable> getRdbmsTable(String rdbmsTableName) {
-        //TODO: Tests
         return getRdbmsTables().isPresent()
                 ? getRdbmsTables().get().stream().filter(o -> rdbmsTableName.equals(o.getName())).findAny()
                 : Optional.empty();
@@ -83,6 +122,7 @@ public class RdbmsUtils {
 
     //////////////////////////////////////////////////
     //////////////////// FIELDS //////////////////////
+    //////////////////////////////////////////////////
 
     /**
      * Get all RdbmsField from certain RdbmsTable
@@ -91,7 +131,6 @@ public class RdbmsUtils {
      * @return All RdbmsField if exists
      */
     public Optional<EList<RdbmsField>> getRdbmsFields(String rdbmsTableName) {
-        //TODO: Tests
         return getRdbmsTable(rdbmsTableName).isPresent() && !getRdbmsTable(rdbmsTableName).get().getFields().isEmpty()
                 ? Optional.of(getRdbmsTable(rdbmsTableName).get().getFields())
                 : Optional.empty();
@@ -105,7 +144,6 @@ public class RdbmsUtils {
      * @return RdbmsField if exists
      */
     public Optional<RdbmsField> getRdbmsField(String rdbmsTableName, String rdbmsFieldName) {
-        //TODO: Tests
         return getRdbmsFields(rdbmsTableName).isPresent()
                 ? getRdbmsFields(rdbmsTableName).get().stream().filter(o -> rdbmsFieldName.equals(o.getName())).findAny()
                 : Optional.empty();
@@ -113,6 +151,7 @@ public class RdbmsUtils {
 
     //////////////////////////////////////////////////
     ///////////////// FOREIGN KEYS ///////////////////
+    //////////////////////////////////////////////////
 
     /**
      * Get all RdbmsForeignKey in given table
@@ -121,8 +160,9 @@ public class RdbmsUtils {
      * @return all RdbmsForeignKey if exists
      */
     public Optional<EList<RdbmsForeignKey>> getRdbmsForeignKeys(String rdbmsTableName) {
-        //TODO: Tests
         BasicEList<RdbmsForeignKey> rdbmsForeignKeys = new BasicEList<>();
+        if (!getRdbmsFields(rdbmsTableName).isPresent())
+            return Optional.empty();
         getRdbmsFields(rdbmsTableName).get().forEach(o -> {
             if (o instanceof RdbmsForeignKey) {
                 rdbmsForeignKeys.add((RdbmsForeignKey) o);
@@ -141,7 +181,6 @@ public class RdbmsUtils {
      * @return RdbmsForeignKey if exists
      */
     public Optional<RdbmsForeignKey> getRdbmsForeignKey(String rdbmsTableName, String rdbmsForeignKeyName) {
-        //TODO: Tests
         return getRdbmsForeignKeys(rdbmsTableName).isPresent()
                 ? getRdbmsForeignKeys(rdbmsTableName).get().stream().filter(o -> rdbmsForeignKeyName.equals(o.getName())).findAny()
                 : Optional.empty();
@@ -149,6 +188,105 @@ public class RdbmsUtils {
 
     //////////////////////////////////////////////////
     //////////////// JUNCTION TABLES /////////////////
+    //////////////////////////////////////////////////
+
+    /**
+     * <p>Creates a new RdbmsJunctionTableBuilder</p>
+     * <ol>
+     *     <li>ID field:</li>
+     *          <ul>
+     *              <li>Name</li>
+     *              <li>UUID</li>
+     *          </ul>
+     *     <li>rdbmsForeignKey1 and rdbmsForeignKey2</li>
+     *          <ul>
+     *              <li>Name</li>
+     *              <li>UUID</li>
+     *              <li>ReferenceKey</li>
+     *              <li>ForeignKeySqlName</li>
+     *          </ul>
+     *     <li>RdbmsJunctionTable</li>
+     *          <ul>
+     *              <li>Name</li>
+     *              <li>UUID</li>
+     *              <li>PrimaryKey</li>
+     *              <li>Field1</li>
+     *              <li>Field2</li>
+     *          </ul>
+     * </ol>
+     *
+     * @param tableName   RdbmsJunctionTable's name
+     * @param rdbmsTable1
+     * @param rdbmsTable2
+     * @return RdbmsJunctionTableBuilder
+     */
+    public static RdbmsJunctionTableBuilder newRdbmsJunctionTableBuilderInit(String tableName, final RdbmsTable rdbmsTable1, final RdbmsTable rdbmsTable2) {
+        if (tableName == null || rdbmsTable1 == null || rdbmsTable2 == null)
+            throw new IllegalArgumentException("Arguments cannot be null");
+
+        final RdbmsIdentifierField id = newRdbmsIdentifierFieldBuilder()
+                .withName("_id")
+                .withUuid(tableName + "#_id")
+                .build();
+
+        final RdbmsForeignKey rdbmsForeignKey = newRdbmsForeignKeyBuilder()
+                .withName(rdbmsTable1.getName() + "_fk1")
+                .withUuid(tableName + "#" + rdbmsTable1.getName() + "_fk1")
+                .withReferenceKey(rdbmsTable1.getPrimaryKey())
+                .withForeignKeySqlName(rdbmsTable1.getName())
+                .build();
+
+        final RdbmsForeignKey rdbmsForeignKey1 = newRdbmsForeignKeyBuilder()
+                .withName(rdbmsTable2.getName() + "_fk2")
+                .withUuid(tableName + "#" + rdbmsTable2.getName() + "_fk2")
+                .withReferenceKey(rdbmsTable2.getPrimaryKey())
+                .withForeignKeySqlName(rdbmsTable2.getName())
+                .build();
+
+        return newRdbmsJunctionTableBuilder()
+                .withName(tableName)
+                .withUuid(tableName)
+                .withFields(Arrays.asList(id, rdbmsForeignKey, rdbmsForeignKey1))
+                .withPrimaryKey(id)
+                .withField1(rdbmsForeignKey)
+                .withField2(rdbmsForeignKey1);
+    }
+
+    /**
+     * <p>Creates a new RdbmsJunctionTableBuilder</p>
+     * <ol>
+     *     <li>ID field:</li>
+     *          <ul>
+     *              <li>Name</li>
+     *              <li>UUID</li>
+     *          </ul>
+     *     <li>RdbmsJunctionTable</li>
+     *          <ul>
+     *              <li>Name</li>
+     *              <li>UUID</li>
+     *              <li>PrimaryKey</li>
+     *          </ul>
+     * </ol>
+     *
+     * @param tableName RdbmsJunctionTable's name
+     * @return RdbmsJunctionTableBuilder
+     */
+    public static RdbmsJunctionTableBuilder newRdbmsJunctionTableBuilderInit(final String tableName) {
+        if (tableName == null)
+            throw new IllegalArgumentException("Arguments cannot be null");
+
+        final RdbmsIdentifierField id = newRdbmsIdentifierFieldBuilder()
+                .withName("_id")
+                .withUuid(tableName + "#_id")
+                .build();
+
+        return newRdbmsJunctionTableBuilder()
+                .withName(tableName)
+                .withUuid(tableName)
+                .withFields(id)
+                .withPrimaryKey(id);
+    }
+
 
     /**
      * Get all RdbmsJunctionTable from RdbmsModel
@@ -156,7 +294,6 @@ public class RdbmsUtils {
      * @return all RdbmsJunctionTable if exists
      */
     public Optional<EList<RdbmsJunctionTable>> getRdbmsJunctionTables() {
-        //TODO: Tests
         BasicEList<RdbmsJunctionTable> rdbmsJunctionTables = new BasicEList<>();
         rdbmsModelResourceSupport.getStreamOfRdbmsRdbmsTable().forEach(o -> {
             if (o instanceof RdbmsJunctionTable) {
@@ -175,7 +312,6 @@ public class RdbmsUtils {
      * @return RdbmsJunctionTable if exists
      */
     public Optional<RdbmsJunctionTable> getRdbmsJunctionTable(String rdbmsJunctionTableName) {
-        //TODO: Tests
         return getRdbmsJunctionTables().isPresent()
                 ? getRdbmsJunctionTables().get().stream().filter(o -> rdbmsJunctionTableName.equals(o.getName())).findAny()
                 : Optional.empty();
