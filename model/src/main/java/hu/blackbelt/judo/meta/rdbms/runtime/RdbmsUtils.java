@@ -3,6 +3,8 @@ package hu.blackbelt.judo.meta.rdbms.runtime;
 import hu.blackbelt.judo.meta.rdbms.*;
 import hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport;
 import hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsBuilders;
+import hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsJunctionTableBuilder;
+import hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsTableBuilder;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -20,7 +22,6 @@ public class RdbmsUtils {
     private boolean failOnError;
     private ResourceSet resourceSet;
     private RdbmsModelResourceSupport rdbmsModelResourceSupport;
-    private static final String DEFAULT_PREFIX = "Tables";
 
     //////////////////////////////////////////////////
     ////////////////// CONSTRUCTORS //////////////////
@@ -59,47 +60,39 @@ public class RdbmsUtils {
     //////////////////////////////////////////////////
 
     /**
-     * <p>Create simple RdbmsTable with given name and default prefix.</p>
-     * <p>Default prefix: {@value DEFAULT_PREFIX}</p>
-     * <p>UUID of the created RdbmsTable will be generated from name and default prefix.</p>
+     * <p>Creates a new RdbmsTableBuilder.</p>
+     * <p>Filled attributes are:</p>
+     * <ol>
+     *     <li>ID field:</li>
+     *          <ul>
+     *              <li>Name</li>
+     *              <li>UUID</li>
+     *          </ul>
+     *     <li>Table:</li>
+     *          <ul>
+     *              <li>Primary key</li>
+     *              <li>Name</li>
+     *              <li>UUID</li>
+     *          </ul>
+     * </ol>
      *
-     * @return new RdbmsTable
-     * @see #newRdbmsTable(String name, String prefix)
+     * @param tableName RdbmsTable's name
+     * @return RdbmsTableBuilder
      */
-    public static RdbmsTable newRdbmsTable(String name) {
-        return newRdbmsTable(name, DEFAULT_PREFIX);
-    }
-
-    /**
-     * <p>Create simple RdbmsTable with given name and prefix.</p>
-     * <p>UUID of the created RdbmsTable will be generated from name and prefix.</p>
-     *
-     * @return new RdbmsTable
-     * @see #newRdbmsTable(String name)
-     */
-    public static RdbmsTable newRdbmsTable(String name, String prefix) {
-        if (name == null || prefix == null)
+    public static RdbmsTableBuilder newRdbmsTableBuilderInit(String tableName) {
+        if (tableName == null)
             throw new IllegalArgumentException("Arguments cannot be null");
-
-        name = name.trim().replace(" ", "_");
-        prefix = prefix.trim().replace(" ", "_");
-
-        if (!prefix.endsWith("."))
-            prefix += ".";
-
-        final String uuid = prefix + name;
 
         final RdbmsIdentifierField id = RdbmsBuilders.newRdbmsIdentifierFieldBuilder()
                 .withName("_id")
-                .withUuid(uuid + "#_id")
+                .withUuid(tableName + "#_id")
                 .build();
 
         return newRdbmsTableBuilder()
-                .withName(name)
-                .withUuid(uuid)
+                .withName(tableName)
+                .withUuid(tableName)
                 .withFields(id)
-                .withPrimaryKey(id)
-                .build();
+                .withPrimaryKey(id);
     }
 
     /**
@@ -198,64 +191,100 @@ public class RdbmsUtils {
     //////////////////////////////////////////////////
 
     /**
-     * <p>Create simple RdbmsJunctionTable with given name and the tables that will be connected.</p>
-     * <p>Default prefix: {@value DEFAULT_PREFIX}.</p>
+     * <p>Creates a new RdbmsJunctionTableBuilder</p>
+     * <ol>
+     *     <li>ID field:</li>
+     *          <ul>
+     *              <li>Name</li>
+     *              <li>UUID</li>
+     *          </ul>
+     *     <li>rdbmsForeignKey1 and rdbmsForeignKey2</li>
+     *          <ul>
+     *              <li>Name</li>
+     *              <li>UUID</li>
+     *              <li>ReferenceKey</li>
+     *              <li>ForeignKeySqlName</li>
+     *          </ul>
+     *     <li>RdbmsJunctionTable</li>
+     *          <ul>
+     *              <li>Name</li>
+     *              <li>UUID</li>
+     *              <li>PrimaryKey</li>
+     *              <li>Field1</li>
+     *              <li>Field2</li>
+     *          </ul>
+     * </ol>
      *
-     * @return new RdbmsJunctionTable with default prefix
-     * @see #newRdbmsJunctionTable(String name, String prefix, RdbmsTable rdbmsTable1, RdbmsTable rdbmsTable2)
+     * @param tableName   RdbmsJunctionTable's name
+     * @param rdbmsTable1
+     * @param rdbmsTable2
+     * @return RdbmsJunctionTableBuilder
      */
-    public static RdbmsJunctionTable newRdbmsJunctionTable(
-            final String name, final RdbmsTable rdbmsTable1, final RdbmsTable rdbmsTable2) {
-        return newRdbmsJunctionTable(name, DEFAULT_PREFIX, rdbmsTable1, rdbmsTable2);
-    }
-
-    /**
-     * <p>Create simple RdbmsJunctionTable with given name, prefix and the tables that will be connected.</p>
-     * <p>UUID of the created RdbmsJunctionTable will be generated from name and prefix.</p>
-     *
-     * @return new RdbmsJunctionTable
-     * @see #newRdbmsJunctionTable(String name, RdbmsTable rdbmsTable1, RdbmsTable rdbmsTable2)
-     */
-    public static RdbmsJunctionTable newRdbmsJunctionTable(String name, String prefix,
-                                                           final RdbmsTable rdbmsTable1, final RdbmsTable rdbmsTable2) {
-        if (name == null || prefix == null)
+    public static RdbmsJunctionTableBuilder newRdbmsJunctionTableBuilderInit(String tableName, final RdbmsTable rdbmsTable1, final RdbmsTable rdbmsTable2) {
+        if (tableName == null || rdbmsTable1 == null || rdbmsTable2 == null)
             throw new IllegalArgumentException("Arguments cannot be null");
-
-        name = name.trim().replace(" ", "_");
-        prefix = prefix.trim().replace(" ", "_");
-
-        if (!prefix.endsWith("."))
-            prefix += ".";
-
-        final String uuid = prefix + name;
 
         final RdbmsIdentifierField id = newRdbmsIdentifierFieldBuilder()
                 .withName("_id")
-                .withUuid(uuid + "#_id")
+                .withUuid(tableName + "#_id")
                 .build();
 
         final RdbmsForeignKey rdbmsForeignKey = newRdbmsForeignKeyBuilder()
                 .withName(rdbmsTable1.getName() + "_fk1")
-                .withUuid(uuid + "#" + rdbmsTable1.getName() + "_fk1")
+                .withUuid(tableName + "#" + rdbmsTable1.getName() + "_fk1")
                 .withReferenceKey(rdbmsTable1.getPrimaryKey())
                 .withForeignKeySqlName(rdbmsTable1.getName())
                 .build();
 
         final RdbmsForeignKey rdbmsForeignKey1 = newRdbmsForeignKeyBuilder()
                 .withName(rdbmsTable2.getName() + "_fk2")
-                .withUuid(uuid + "#" + rdbmsTable2.getName() + "_fk2")
+                .withUuid(tableName + "#" + rdbmsTable2.getName() + "_fk2")
                 .withReferenceKey(rdbmsTable2.getPrimaryKey())
                 .withForeignKeySqlName(rdbmsTable2.getName())
                 .build();
 
         return newRdbmsJunctionTableBuilder()
-                .withName(name)
-                .withUuid(uuid)
+                .withName(tableName)
+                .withUuid(tableName)
                 .withFields(Arrays.asList(id, rdbmsForeignKey, rdbmsForeignKey1))
                 .withPrimaryKey(id)
                 .withField1(rdbmsForeignKey)
-                .withField2(rdbmsForeignKey1)
+                .withField2(rdbmsForeignKey1);
+    }
+
+    /**
+     * <p>Creates a new RdbmsJunctionTableBuilder</p>
+     * <ol>
+     *     <li>ID field:</li>
+     *          <ul>
+     *              <li>Name</li>
+     *              <li>UUID</li>
+     *          </ul>
+     *     <li>RdbmsJunctionTable</li>
+     *          <ul>
+     *              <li>Name</li>
+     *              <li>UUID</li>
+     *              <li>PrimaryKey</li>
+     *          </ul>
+     * </ol>
+     *
+     * @param tableName RdbmsJunctionTable's name
+     * @return RdbmsJunctionTableBuilder
+     */
+    public static RdbmsJunctionTableBuilder newRdbmsJunctionTableBuilderInit(final String tableName) {
+        if (tableName == null)
+            throw new IllegalArgumentException("Arguments cannot be null");
+
+        final RdbmsIdentifierField id = newRdbmsIdentifierFieldBuilder()
+                .withName("_id")
+                .withUuid(tableName + "#_id")
                 .build();
+
+        return newRdbmsJunctionTableBuilder()
+                .withName(tableName)
+                .withUuid(tableName)
+                .withFields(id)
+                .withPrimaryKey(id);
     }
 
 

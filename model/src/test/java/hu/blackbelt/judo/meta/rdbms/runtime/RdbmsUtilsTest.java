@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
 
-import static hu.blackbelt.judo.meta.rdbms.runtime.RdbmsUtils.newRdbmsJunctionTable;
-import static hu.blackbelt.judo.meta.rdbms.runtime.RdbmsUtils.newRdbmsTable;
+import static hu.blackbelt.judo.meta.rdbms.runtime.RdbmsUtils.newRdbmsJunctionTableBuilderInit;
+import static hu.blackbelt.judo.meta.rdbms.runtime.RdbmsUtils.newRdbmsTableBuilderInit;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RdbmsUtilsTest {
@@ -35,14 +35,10 @@ public class RdbmsUtilsTest {
 
     @Test
     public void testNewRdbmsTable() {
-        RdbmsTable rdbmsTable = newRdbmsTable("TestTable");
-        RdbmsTable rdbmsTable1 = newRdbmsTable("TestTable", "Alma.");
-        RdbmsTable rdbmsTable2 = newRdbmsTable("TestTable", "Alma");
+        RdbmsTable rdbmsTable = newRdbmsTableBuilderInit("Tables.TestTable").build();
 
         assertEquals("Tables.TestTable", rdbmsTable.getUuid());
-        assertEquals("Alma.TestTable", rdbmsTable1.getUuid());
-        assertEquals("Alma.TestTable", rdbmsTable2.getUuid());
-        assertEquals("TestTable", rdbmsTable.getName());
+        assertEquals("Tables.TestTable", rdbmsTable.getName());
         assertTrue(rdbmsTable.getFields().stream().allMatch(e -> "_id".equals(e.getName())));
         assertEquals(
                 rdbmsTable.getFields().stream().filter(e -> "_id".equals(e.getName())).findFirst()
@@ -54,20 +50,24 @@ public class RdbmsUtilsTest {
 
     @Test
     public void testNewRdbmsJunctionTable() {
-        RdbmsTable rdbmsTable = newRdbmsTable("TestTable1");
-        RdbmsTable rdbmsTable1 = newRdbmsTable("TestTable2");
-        RdbmsJunctionTable rdbmsJunctionTable = newRdbmsJunctionTable("TestJunctTable", rdbmsTable, rdbmsTable1);
-        RdbmsJunctionTable rdbmsJunctionTable1 = newRdbmsJunctionTable("TestJunctTable", "Alma.", rdbmsTable, rdbmsTable1);
-        RdbmsJunctionTable rdbmsJunctionTable2 = newRdbmsJunctionTable("TestJunctTable", "Alma", rdbmsTable, rdbmsTable1);
+        RdbmsTable rdbmsTable = newRdbmsTableBuilderInit("Tables.TestTable1").build();
+        RdbmsTable rdbmsTable1 = newRdbmsTableBuilderInit("Tables.TestTable2").build();
+        RdbmsJunctionTable rdbmsJunctionTable = RdbmsUtils.newRdbmsJunctionTableBuilderInit("Tables.TestJunctTable", rdbmsTable, rdbmsTable1).build();
+        RdbmsJunctionTable rdbmsJunctionTable2 = newRdbmsJunctionTableBuilderInit("Tables.TestJunctTable2").build();
 
         assertEquals("Tables.TestJunctTable", rdbmsJunctionTable.getUuid());
-        assertEquals("Alma.TestJunctTable", rdbmsJunctionTable1.getUuid());
-        assertEquals("Alma.TestJunctTable", rdbmsJunctionTable2.getUuid());
-        assertEquals("TestJunctTable", rdbmsJunctionTable.getName());
+        assertEquals("Tables.TestJunctTable", rdbmsJunctionTable.getName());
+        assertEquals("Tables.TestJunctTable2", rdbmsJunctionTable2.getUuid());
+        assertEquals("Tables.TestJunctTable2", rdbmsJunctionTable2.getName());
         assertEquals(
                 rdbmsJunctionTable.getFields().stream().filter(e -> "_id".equals(e.getName())).findFirst()
                         .orElseThrow(() -> new RuntimeException("_id field not found")),
                 rdbmsJunctionTable.getPrimaryKey()
+        );
+        assertEquals(
+                rdbmsJunctionTable2.getFields().stream().filter(e -> "_id".equals(e.getName())).findFirst()
+                        .orElseThrow(() -> new RuntimeException("_id field not found")),
+                rdbmsJunctionTable2.getPrimaryKey()
         );
 
         assertEquals(
@@ -83,7 +83,7 @@ public class RdbmsUtilsTest {
 
     @Test
     public void testGetRdbmsTables() {
-        final String RDBMS_TABLE_NAME = "TestTable";
+        final String RDBMS_TABLE_NAME = "Tables.TestTable";
         final String RDBMS_MODEL_NAME = "TestGetTableModel";
         RdbmsModel rdbmsModel = RdbmsModel.buildRdbmsModel()
                 .name(RDBMS_MODEL_NAME)
@@ -95,7 +95,7 @@ public class RdbmsUtilsTest {
         assertFalse(rdbmsUtils.getRdbmsTables().isPresent());
         assertFalse(rdbmsUtils.getRdbmsTable(RDBMS_TABLE_NAME).isPresent());
 
-        rdbmsModel.addContent(newRdbmsTable(RDBMS_TABLE_NAME));
+        rdbmsModel.addContent(newRdbmsTableBuilderInit(RDBMS_TABLE_NAME).build());
 
         saveModel(rdbmsModel);
 
@@ -110,7 +110,7 @@ public class RdbmsUtilsTest {
 
     @Test
     public void testGetRdbmsFields() {
-        final String RDBMS_TABLE_NAME = "TestTable";
+        final String RDBMS_TABLE_NAME = "Tables.TestTable";
         final String RDBMS_MODEL_NAME = "TestGetFieldModel";
         RdbmsModel rdbmsModel = RdbmsModel.buildRdbmsModel()
                 .name(RDBMS_MODEL_NAME)
@@ -122,7 +122,7 @@ public class RdbmsUtilsTest {
         assertFalse(rdbmsUtils.getRdbmsFields(RDBMS_TABLE_NAME).isPresent());
         assertFalse(rdbmsUtils.getRdbmsField(RDBMS_TABLE_NAME, "_id").isPresent());
 
-        rdbmsModel.addContent(newRdbmsTable(RDBMS_TABLE_NAME));
+        rdbmsModel.addContent(newRdbmsTableBuilderInit(RDBMS_TABLE_NAME).build());
 
         saveModel(rdbmsModel);
 
@@ -135,7 +135,7 @@ public class RdbmsUtilsTest {
 
     @Test
     public void testGetForeignKey() {
-        final String RDBMS_TABLE_NAME = "TestTable";
+        final String RDBMS_TABLE_NAME = "Tables.TestTable";
         final String RDBMS_MODEL_NAME = "TestGetForeignKeyModel";
         final String RDBMS_FOREIGN_KEY = "TestForeignKey";
         final String RDBMS_TABLE_NAME1 = RDBMS_TABLE_NAME + "1";
@@ -144,7 +144,7 @@ public class RdbmsUtilsTest {
                 .name(RDBMS_MODEL_NAME)
                 .build();
 
-        RdbmsTable rdbmsTable = newRdbmsTable(RDBMS_TABLE_NAME);
+        RdbmsTable rdbmsTable = newRdbmsTableBuilderInit(RDBMS_TABLE_NAME).build();
         rdbmsModel.addContent(rdbmsTable);
 
         RdbmsUtils rdbmsUtils = new RdbmsUtils(rdbmsModel.getResourceSet());
@@ -153,7 +153,7 @@ public class RdbmsUtilsTest {
         assertFalse(rdbmsUtils.getRdbmsForeignKeys(RDBMS_TABLE_NAME).isPresent());
         assertFalse(rdbmsUtils.getRdbmsForeignKey(RDBMS_TABLE_NAME, RDBMS_FOREIGN_KEY).isPresent());
 
-        RdbmsTable rdbmsTable1 = newRdbmsTable(RDBMS_TABLE_NAME1);
+        RdbmsTable rdbmsTable1 = newRdbmsTableBuilderInit(RDBMS_TABLE_NAME1).build();
 
         RdbmsForeignKey rdbmsForeignKey = RdbmsForeignKeyBuilder.create()
                 .withName(RDBMS_FOREIGN_KEY)
@@ -187,7 +187,7 @@ public class RdbmsUtilsTest {
 
     @Test
     public void testGetJunctionTable() {
-        final String RDBMS_TABLE_NAME = "TestTable";
+        final String RDBMS_TABLE_NAME = "Tables.TestTable";
         final String RDBMS_TABLE_NAME1 = RDBMS_TABLE_NAME + "1";
         final String RDBMS_JUNCT_TABLE_NAME = RDBMS_TABLE_NAME + "To" + RDBMS_TABLE_NAME1;
         final String RDBMS_MODEL_NAME = "TestGetJunctionTableModel";
@@ -202,11 +202,11 @@ public class RdbmsUtilsTest {
         assertFalse(rdbmsUtils.getRdbmsJunctionTables().isPresent());
         assertFalse(rdbmsUtils.getRdbmsJunctionTable(RDBMS_JUNCT_TABLE_NAME).isPresent());
 
-        final RdbmsTable rdbmsTable = newRdbmsTable(RDBMS_TABLE_NAME);
-        final RdbmsTable rdbmsTable1 = newRdbmsTable(RDBMS_TABLE_NAME1);
+        final RdbmsTable rdbmsTable = newRdbmsTableBuilderInit(RDBMS_TABLE_NAME).build();
+        final RdbmsTable rdbmsTable1 = newRdbmsTableBuilderInit(RDBMS_TABLE_NAME1).build();
 
         final RdbmsJunctionTable rdbmsJunctionTable =
-                newRdbmsJunctionTable(RDBMS_JUNCT_TABLE_NAME, rdbmsTable, rdbmsTable1);
+                RdbmsUtils.newRdbmsJunctionTableBuilderInit(RDBMS_JUNCT_TABLE_NAME, rdbmsTable, rdbmsTable1).build();
 
         rdbmsModel.addContent(rdbmsTable);
         rdbmsModel.addContent(rdbmsTable1);
