@@ -60,21 +60,7 @@ public class RdbmsUtils {
     //////////////////////////////////////////////////
 
     /**
-     * <p>Creates a new RdbmsTableBuilder.</p>
-     * <p>Filled attributes are:</p>
-     * <ol>
-     *     <li>ID field:</li>
-     *          <ul>
-     *              <li>Name</li>
-     *              <li>UUID</li>
-     *          </ul>
-     *     <li>Table:</li>
-     *          <ul>
-     *              <li>Primary key</li>
-     *              <li>Name</li>
-     *              <li>UUID</li>
-     *          </ul>
-     * </ol>
+     * <p>Creates a new RdbmsTableBuilder with id field pre-added.</p>
      *
      * @param tableName RdbmsTable's name
      * @return RdbmsTableBuilder
@@ -86,11 +72,13 @@ public class RdbmsUtils {
         final RdbmsIdentifierField id = RdbmsBuilders.newRdbmsIdentifierFieldBuilder()
                 .withName("_id")
                 .withUuid(tableName + "#_id")
+                .withSqlName("id")
                 .build();
 
         return newRdbmsTableBuilder()
                 .withName(tableName)
                 .withUuid(tableName)
+                .withSqlName(tableName)
                 .withFields(id)
                 .withPrimaryKey(id);
     }
@@ -191,33 +179,11 @@ public class RdbmsUtils {
     //////////////////////////////////////////////////
 
     /**
-     * <p>Creates a new RdbmsJunctionTableBuilder</p>
-     * <ol>
-     *     <li>ID field:</li>
-     *          <ul>
-     *              <li>Name</li>
-     *              <li>UUID</li>
-     *          </ul>
-     *     <li>rdbmsForeignKey1 and rdbmsForeignKey2</li>
-     *          <ul>
-     *              <li>Name</li>
-     *              <li>UUID</li>
-     *              <li>ReferenceKey</li>
-     *              <li>ForeignKeySqlName</li>
-     *          </ul>
-     *     <li>RdbmsJunctionTable</li>
-     *          <ul>
-     *              <li>Name</li>
-     *              <li>UUID</li>
-     *              <li>PrimaryKey</li>
-     *              <li>Field1</li>
-     *              <li>Field2</li>
-     *          </ul>
-     * </ol>
+     * <p>Creates a new RdbmsJunctionTableBuilder with id, field1 and field2 pre-added</p>
      *
      * @param tableName   RdbmsJunctionTable's name
-     * @param rdbmsTable1
-     * @param rdbmsTable2
+     * @param rdbmsTable1 Field1
+     * @param rdbmsTable2 Field2
      * @return RdbmsJunctionTableBuilder
      */
     public static RdbmsJunctionTableBuilder newRdbmsJunctionTableBuilderInit(String tableName, final RdbmsTable rdbmsTable1, final RdbmsTable rdbmsTable2) {
@@ -227,25 +193,31 @@ public class RdbmsUtils {
         final RdbmsIdentifierField id = newRdbmsIdentifierFieldBuilder()
                 .withName("_id")
                 .withUuid(tableName + "#_id")
+                .withSqlName("_id")
                 .build();
 
+        final String rdbmsForeignKeyName = rdbmsTable1.getName() + "_fk1";
         final RdbmsForeignKey rdbmsForeignKey = newRdbmsForeignKeyBuilder()
-                .withName(rdbmsTable1.getName() + "_fk1")
-                .withUuid(tableName + "#" + rdbmsTable1.getName() + "_fk1")
+                .withName(rdbmsForeignKeyName)
+                .withUuid(tableName + "#" + rdbmsForeignKeyName)
                 .withReferenceKey(rdbmsTable1.getPrimaryKey())
-                .withForeignKeySqlName(rdbmsTable1.getName())
+                .withSqlName(rdbmsForeignKeyName)
+                .withForeignKeySqlName(rdbmsForeignKeyName)
                 .build();
 
+        final String rdbmsForeignKeyName2 = rdbmsTable2.getName() + "_fk2";
         final RdbmsForeignKey rdbmsForeignKey1 = newRdbmsForeignKeyBuilder()
-                .withName(rdbmsTable2.getName() + "_fk2")
-                .withUuid(tableName + "#" + rdbmsTable2.getName() + "_fk2")
+                .withName(rdbmsForeignKeyName2)
+                .withUuid(tableName + "#" + rdbmsForeignKeyName2)
                 .withReferenceKey(rdbmsTable2.getPrimaryKey())
-                .withForeignKeySqlName(rdbmsTable2.getName())
+                .withForeignKeySqlName(rdbmsForeignKeyName2)
+                .withSqlName(rdbmsForeignKeyName2)
                 .build();
 
         return newRdbmsJunctionTableBuilder()
                 .withName(tableName)
                 .withUuid(tableName)
+                .withSqlName(tableName)
                 .withFields(Arrays.asList(id, rdbmsForeignKey, rdbmsForeignKey1))
                 .withPrimaryKey(id)
                 .withField1(rdbmsForeignKey)
@@ -253,20 +225,7 @@ public class RdbmsUtils {
     }
 
     /**
-     * <p>Creates a new RdbmsJunctionTableBuilder</p>
-     * <ol>
-     *     <li>ID field:</li>
-     *          <ul>
-     *              <li>Name</li>
-     *              <li>UUID</li>
-     *          </ul>
-     *     <li>RdbmsJunctionTable</li>
-     *          <ul>
-     *              <li>Name</li>
-     *              <li>UUID</li>
-     *              <li>PrimaryKey</li>
-     *          </ul>
-     * </ol>
+     * <p>Creates a new RdbmsJunctionTableBuilder with id field pre-added</p>
      *
      * @param tableName RdbmsJunctionTable's name
      * @return RdbmsJunctionTableBuilder
@@ -278,11 +237,13 @@ public class RdbmsUtils {
         final RdbmsIdentifierField id = newRdbmsIdentifierFieldBuilder()
                 .withName("_id")
                 .withUuid(tableName + "#_id")
+                .withSqlName("_id")
                 .build();
 
         return newRdbmsJunctionTableBuilder()
                 .withName(tableName)
                 .withUuid(tableName)
+                .withSqlName(tableName)
                 .withFields(id)
                 .withPrimaryKey(id);
     }
