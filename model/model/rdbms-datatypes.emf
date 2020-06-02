@@ -12,5 +12,6 @@ class TypeMapping {
   attr Integer rdbmsPrecision;
   attr Integer rdbmsScale;
   attr String rdbmsJdbcType;
+  attr Integer rdbmsSqlType;
 }
 
