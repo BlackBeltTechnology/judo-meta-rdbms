@@ -1,9 +1,14 @@
 package hu.blackbelt.judo.meta.rdbms.osgi.itest;
 
 import hu.blackbelt.epsilon.runtime.execution.impl.StringBuilderLogger;
+import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel;
+import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel.RdbmsValidationException;
+import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel.SaveArguments;
 import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsEpsilonValidator;
 import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel;
 import hu.blackbelt.osgi.utils.osgi.api.BundleTrackerManager;
+
+import org.eclipse.emf.common.util.URI;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.Configuration;
@@ -44,7 +49,7 @@ public class RdbmsModelLoadITest {
     RdbmsModel rdbmsModel;
 
     @Configuration
-    public Option[] config() throws FileNotFoundException {
+    public Option[] config() throws IOException, RdbmsValidationException {
 
         return combine(getRuntimeFeaturesForMetamodel(this.getClass()),
                 mavenBundle(maven()
@@ -54,16 +59,26 @@ public class RdbmsModelLoadITest {
                 getProvisonModelBundle());
     }
 
-    public Option getProvisonModelBundle() throws FileNotFoundException {
+    public Option getProvisonModelBundle() throws IOException, RdbmsValidationException {
         return provision(
                 getRdbmsModelBundle()
         );
     }
 
-    private InputStream getRdbmsModelBundle() throws FileNotFoundException {
+    private InputStream getRdbmsModelBundle() throws IOException, RdbmsValidationException {
+    	
+    	RdbmsModel measureModel = RdbmsModel.buildRdbmsModel()
+    			.name(DEMO)
+    			.uri(URI.createFileURI("test.model"))
+    			.build();
+    	
+    	ByteArrayOutputStream os = new ByteArrayOutputStream();
+    	
+    	measureModel.saveRdbmsModel(SaveArguments.rdbmsSaveArgumentsBuilder().outputStream(os));
+    	
         return bundle()
                 .add( "model/" + DEMO + ".judo-meta-rdbms",
-                        new FileInputStream(new File(testTargetDir(getClass()).getAbsolutePath(),  "northwind-rdbms_hsqldb.model")))
+                		new ByteArrayInputStream(os.toByteArray()))
                 .set( Constants.BUNDLE_MANIFESTVERSION, "2")
                 .set( Constants.BUNDLE_SYMBOLICNAME, DEMO + "-rdbms" )
                 //set( Constants.IMPORT_PACKAGE, "meta/psm;version=\"" + getConfiguration(META_PSM_IMPORT_RANGE) +"\"")
