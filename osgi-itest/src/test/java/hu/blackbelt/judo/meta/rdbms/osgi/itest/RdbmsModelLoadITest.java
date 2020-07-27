@@ -74,7 +74,7 @@ public class RdbmsModelLoadITest {
     	
     	ByteArrayOutputStream os = new ByteArrayOutputStream();
     	
-    	measureModel.saveRdbmsModel(SaveArguments.rdbmsSaveArgumentsBuilder().outputStream(os));
+    	rdbmsModel.saveRdbmsModel(SaveArguments.rdbmsSaveArgumentsBuilder().outputStream(os));
     	
         return bundle()
                 .add( "model/" + DEMO + ".judo-meta-rdbms",
