@@ -67,7 +67,7 @@ public class RdbmsModelLoadITest {
 
     private InputStream getRdbmsModelBundle() throws IOException, RdbmsValidationException {
     	
-    	RdbmsModel measureModel = RdbmsModel.buildRdbmsModel()
+    	RdbmsModel rdbmsModel = RdbmsModel.buildRdbmsModel()
     			.name(DEMO)
     			.uri(URI.createFileURI("test.model"))
     			.build();
@@ -81,7 +81,6 @@ public class RdbmsModelLoadITest {
                 		new ByteArrayInputStream(os.toByteArray()))
                 .set( Constants.BUNDLE_MANIFESTVERSION, "2")
                 .set( Constants.BUNDLE_SYMBOLICNAME, DEMO + "-rdbms" )
-                //set( Constants.IMPORT_PACKAGE, "meta/psm;version=\"" + getConfiguration(META_PSM_IMPORT_RANGE) +"\"")
                 .set( "Rdbms-Models", "file=model/" + DEMO + ".judo-meta-rdbms;version=1.0.0;name=" + DEMO + ";checksum=notset;meta-version-range=\"[1.0.0,2)\"")
                 .build( withBnd());
     }
