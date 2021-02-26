@@ -90,7 +90,7 @@
         upperBound="-1" eType="#//RdbmsDeleteFieldOperation" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="previousTable" lowerBound="1"
         eType="#//RdbmsTable"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nameChanged" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sqlNameChanged" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="modifyFieldOperations"
         upperBound="-1" eType="#//RdbmsModifyFieldOperation" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isNewTable" lowerBound="1"
@@ -119,7 +119,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="previousField" lowerBound="1"
         eType="#//RdbmsField"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="sizeChanged" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nameChanged" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sqlNameChanged" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="changedValueFieldToForeignKey"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="changedForeignKeyToValueField"

@@ -1909,7 +1909,7 @@
         <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']"/>
         <target xmi:type="ecore:EPackage" href="rdbms.ecore#/"/>
       </ownedRepresentationDescriptors>
-      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_AZlQYO15Eeer_IHzBpC5uA" name="rdbms operation diagram" repPath="#_AZl3cO15Eeer_IHzBpC5uA" changeId="7e8a683b-4003-4ae4-9580-bf6684698aac">
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_AZlQYO15Eeer_IHzBpC5uA" name="rdbms operation diagram" repPath="#_AZl3cO15Eeer_IHzBpC5uA" changeId="80e4e2b8-709f-492b-b1cd-a0bd013ba615">
         <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']"/>
         <target xmi:type="ecore:EPackage" href="rdbms.ecore#/"/>
       </ownedRepresentationDescriptors>
@@ -3134,7 +3134,7 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="_wMTkMu9fEeeHKLiXBEFc_A"/>
           </children>
           <styles xmi:type="notation:ShapeStyle" xmi:id="_wLnnse9fEeeHKLiXBEFc_A" fontName="Verdana" fontHeight="8"/>
-          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_wLnnsu9fEeeHKLiXBEFc_A" x="490" y="547" width="223"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_wLnnsu9fEeeHKLiXBEFc_A" x="490" y="547" width="243"/>
         </children>
         <children xmi:type="notation:Node" xmi:id="_wMVZYO9fEeeHKLiXBEFc_A" type="2003" element="_wKzvYO9fEeeHKLiXBEFc_A">
           <children xmi:type="notation:Node" xmi:id="_wMWAcO9fEeeHKLiXBEFc_A" type="5007"/>
@@ -3320,7 +3320,7 @@
           <styles xmi:type="notation:ConnectorStyle" xmi:id="_wMvCAe9fEeeHKLiXBEFc_A" routing="Rectilinear"/>
           <styles xmi:type="notation:FontStyle" xmi:id="_wMvCAu9fEeeHKLiXBEFc_A" fontColor="7490599" fontName="Verdana" fontHeight="8"/>
           <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_wMvCA-9fEeeHKLiXBEFc_A" points="[53, 49, -243, -9]$[53, 139, -243, 81]$[293, 139, -3, 81]$[293, 107, -3, 49]"/>
-          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_wMvpEO9fEeeHKLiXBEFc_A" id="(0.4819004524886878,0.5)"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_wMvpEO9fEeeHKLiXBEFc_A" id="(0.44190871369294604,0.5)"/>
           <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_wMvpEe9fEeeHKLiXBEFc_A" id="(0.5,0.5)"/>
         </edges>
         <edges xmi:type="notation:Edge" xmi:id="_wMwQJO9fEeeHKLiXBEFc_A" type="4001" element="_wuFJY7XBEeiP1IHvVwMOqQ" source="_wLnnsO9fEeeHKLiXBEFc_A" target="_wMaR4-9fEeeHKLiXBEFc_A">
@@ -3336,7 +3336,7 @@
           <styles xmi:type="notation:ConnectorStyle" xmi:id="_wMwQJe9fEeeHKLiXBEFc_A" routing="Rectilinear"/>
           <styles xmi:type="notation:FontStyle" xmi:id="_wMwQJu9fEeeHKLiXBEFc_A" fontColor="7490599" fontName="Verdana" fontHeight="8"/>
           <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_wMwQJ-9fEeeHKLiXBEFc_A" points="[19, 49, -481, -9]$[19, 174, -481, 116]$[500, 174, 0, 116]$[500, 107, 0, 49]"/>
-          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_wMw3NO9fEeeHKLiXBEFc_A" id="(0.4819004524886878,0.5)"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_wMw3NO9fEeeHKLiXBEFc_A" id="(0.44190871369294604,0.5)"/>
           <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_wMw3Ne9fEeeHKLiXBEFc_A" id="(0.5,0.5)"/>
         </edges>
         <edges xmi:type="notation:Edge" xmi:id="_wMw3Nu9fEeeHKLiXBEFc_A" type="4001" element="_wuG-kLXBEeiP1IHvVwMOqQ" source="_wMVZYO9fEeeHKLiXBEFc_A" target="_wyX1gO15Eeer_IHzBpC5uA">
@@ -3528,7 +3528,7 @@
           <styles xmi:type="notation:ConnectorStyle" xmi:id="_PzdmgXB1EeiSAvPpoeP5Xw" routing="Tree"/>
           <styles xmi:type="notation:FontStyle" xmi:id="_PzdmgnB1EeiSAvPpoeP5Xw" fontName=".SF NS Text" fontHeight="8"/>
           <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Pzdmg3B1EeiSAvPpoeP5Xw" points="[0, -49, 119, 79]$[0, -61, 119, 67]$[-61, -61, 58, 67]$[-61, -79, 58, 49]"/>
-          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Pze0oHB1EeiSAvPpoeP5Xw" id="(0.4819004524886878,0.5)"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Pze0oHB1EeiSAvPpoeP5Xw" id="(0.44190871369294604,0.5)"/>
           <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Pze0oXB1EeiSAvPpoeP5Xw" id="(0.04469696969696969,0.93)"/>
         </edges>
         <edges xmi:type="notation:Edge" xmi:id="_vti9gHB1EeiSAvPpoeP5Xw" type="4001" element="_wu96MLXBEeiP1IHvVwMOqQ" source="_nyekYHB1EeiSAvPpoeP5Xw" target="_5du6oHB0EeiSAvPpoeP5Xw">
@@ -3576,7 +3576,7 @@
           <styles xmi:type="notation:ConnectorStyle" xmi:id="_RcTXIXB2EeiSAvPpoeP5Xw" routing="Rectilinear"/>
           <styles xmi:type="notation:FontStyle" xmi:id="_RcTXInB2EeiSAvPpoeP5Xw" fontColor="7490599" fontName=".SF NS Text" fontHeight="8"/>
           <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_RcTXI3B2EeiSAvPpoeP5Xw" points="[-61, 0, 101, 208]$[-61, -197, 101, 11]$[-162, -197, 0, 11]"/>
-          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_RcUlQHB2EeiSAvPpoeP5Xw" id="(0.6380090497737556,0.0)"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_RcUlQHB2EeiSAvPpoeP5Xw" id="(0.5850622406639004,0.0)"/>
           <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_RcUlQXB2EeiSAvPpoeP5Xw" id="(1.0,0.6836734693877551)"/>
         </edges>
         <edges xmi:type="notation:Edge" xmi:id="_wyhMEHB2EeiSAvPpoeP5Xw" type="4001" element="_wuJa07XBEeiP1IHvVwMOqQ" source="_c80pMO-vEeem1agjAI3v8A" target="_wyWAUO15Eeer_IHzBpC5uA">
@@ -3672,6 +3672,7 @@
           <styles xmi:type="notation:ConnectorStyle" xmi:id="_kAJPsXHXEeuAhL_kAds4fw" routing="Rectilinear"/>
           <styles xmi:type="notation:FontStyle" xmi:id="_kAJPsnHXEeuAhL_kAds4fw" fontColor="7490599" fontName="Ubuntu" fontHeight="8"/>
           <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_kAJPs3HXEeuAhL_kAds4fw" points="[-20, 49, -776, -9]$[-20, 224, -776, 166]$[765, 224, 9, 166]$[765, 155, 9, 97]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_rePBgHgwEeuWn-kUIt9GBg" id="(0.45850622406639,0.5)"/>
           <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_kAJ2wXHXEeuAhL_kAds4fw" id="(0.5,0.3356164383561644)"/>
         </edges>
         <edges xmi:type="notation:Edge" xmi:id="_12FI8HH3EeuTQt9OE2z2mA" type="4001" element="_10z9pnH3EeuTQt9OE2z2mA" source="_nyekYHB1EeiSAvPpoeP5Xw" target="_wMYcs-9fEeeHKLiXBEFc_A">
@@ -3804,9 +3805,9 @@
         <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@style"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
-      <ownedElements xmi:type="diagram:DNodeListElement" uid="_wt6KQrXBEeiP1IHvVwMOqQ" name="nameChanged : EBoolean = false" tooltipText="">
-        <target xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsModifyTableOperation/nameChanged"/>
-        <semanticElements xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsModifyTableOperation/nameChanged"/>
+      <ownedElements xmi:type="diagram:DNodeListElement" uid="_wt6KQrXBEeiP1IHvVwMOqQ" name="sqlNameChanged : EBoolean = false" tooltipText="">
+        <target xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsModifyTableOperation/sqlNameChanged"/>
+        <semanticElements xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsModifyTableOperation/sqlNameChanged"/>
         <ownedStyle xmi:type="diagram:BundledImage" uid="_wt6xULXBEeiP1IHvVwMOqQ" labelAlignment="LEFT">
           <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']/@style"/>
         </ownedStyle>
@@ -3902,9 +3903,9 @@
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']"/>
       </ownedElements>
-      <ownedElements xmi:type="diagram:DNodeListElement" uid="_wt8mg7XBEeiP1IHvVwMOqQ" name="nameChanged : EBoolean = false" tooltipText="">
-        <target xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsModifyFieldOperation/nameChanged"/>
-        <semanticElements xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsModifyFieldOperation/nameChanged"/>
+      <ownedElements xmi:type="diagram:DNodeListElement" uid="_wt8mg7XBEeiP1IHvVwMOqQ" name="sqlNameChanged : EBoolean = false" tooltipText="">
+        <target xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsModifyFieldOperation/sqlNameChanged"/>
+        <semanticElements xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsModifyFieldOperation/sqlNameChanged"/>
         <ownedStyle xmi:type="diagram:BundledImage" uid="_wt9NkLXBEeiP1IHvVwMOqQ" labelAlignment="LEFT">
           <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']/@style"/>
         </ownedStyle>
