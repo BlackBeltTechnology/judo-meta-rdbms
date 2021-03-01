@@ -93,9 +93,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="sqlNameChanged" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="modifyFieldOperations"
         upperBound="-1" eType="#//RdbmsModifyFieldOperation" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isNewTable" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
-        changeable="false" defaultValueLiteral="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RdbmsFieldOperation" abstract="true"
       eSuperTypes="#//RdbmsElement">
@@ -139,9 +136,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="RdbmsCreateTableOperation" eSuperTypes="#//RdbmsTableOperation">
     <eStructuralFeatures xsi:type="ecore:EReference" name="createFieldOperations"
         upperBound="-1" eType="#//RdbmsCreateFieldOperation" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isNewTable" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
-        changeable="false" defaultValueLiteral="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RdbmsDeleteTableOperation" eSuperTypes="#//RdbmsTableOperation"/>
   <eClassifiers xsi:type="ecore:EClass" name="RdbmsOperationMeta">

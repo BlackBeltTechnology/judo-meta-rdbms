@@ -1909,7 +1909,7 @@
         <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']"/>
         <target xmi:type="ecore:EPackage" href="rdbms.ecore#/"/>
       </ownedRepresentationDescriptors>
-      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_AZlQYO15Eeer_IHzBpC5uA" name="rdbms operation diagram" repPath="#_AZl3cO15Eeer_IHzBpC5uA" changeId="80e4e2b8-709f-492b-b1cd-a0bd013ba615">
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_AZlQYO15Eeer_IHzBpC5uA" name="rdbms operation diagram" repPath="#_AZl3cO15Eeer_IHzBpC5uA" changeId="a00bbea6-2c7e-4257-909f-1b73f2b2db3b">
         <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']"/>
         <target xmi:type="ecore:EPackage" href="rdbms.ecore#/"/>
       </ownedRepresentationDescriptors>
@@ -3126,10 +3126,6 @@
               <styles xmi:type="notation:FontStyle" xmi:id="_Bk5HoXB4EeiSAvPpoeP5Xw" fontColor="2697711" fontName=".SF NS Text" fontHeight="8"/>
               <layoutConstraint xmi:type="notation:Location" xmi:id="_Bk5HonB4EeiSAvPpoeP5Xw"/>
             </children>
-            <children xmi:type="notation:Node" xmi:id="_D-cboHLFEeuIK4dbhvVe4w" type="3010" element="_D-EoN3LFEeuIK4dbhvVe4w">
-              <styles xmi:type="notation:FontStyle" xmi:id="_D-cboXLFEeuIK4dbhvVe4w" fontName="Ubuntu" fontHeight="8" bold="true"/>
-              <layoutConstraint xmi:type="notation:Location" xmi:id="_D-cbonLFEeuIK4dbhvVe4w"/>
-            </children>
             <styles xmi:type="notation:SortingStyle" xmi:id="_wMTkMe9fEeeHKLiXBEFc_A"/>
             <styles xmi:type="notation:FilteringStyle" xmi:id="_wMTkMu9fEeeHKLiXBEFc_A"/>
           </children>
@@ -3278,10 +3274,6 @@
         <children xmi:type="notation:Node" xmi:id="_nyekYHB1EeiSAvPpoeP5Xw" type="2003" element="_nyGw8HB1EeiSAvPpoeP5Xw">
           <children xmi:type="notation:Node" xmi:id="_nyfLcHB1EeiSAvPpoeP5Xw" type="5007"/>
           <children xmi:type="notation:Node" xmi:id="_nyfLcXB1EeiSAvPpoeP5Xw" type="7004">
-            <children xmi:type="notation:Node" xmi:id="_DoHmUHLFEeuIK4dbhvVe4w" type="3010" element="_Dn6K-nLFEeuIK4dbhvVe4w">
-              <styles xmi:type="notation:FontStyle" xmi:id="_DoHmUXLFEeuIK4dbhvVe4w" fontName="Ubuntu" fontHeight="8" bold="true"/>
-              <layoutConstraint xmi:type="notation:Location" xmi:id="_DoHmUnLFEeuIK4dbhvVe4w"/>
-            </children>
             <styles xmi:type="notation:SortingStyle" xmi:id="_nyfLcnB1EeiSAvPpoeP5Xw"/>
             <styles xmi:type="notation:FilteringStyle" xmi:id="_nyfLc3B1EeiSAvPpoeP5Xw"/>
           </children>
@@ -3813,14 +3805,6 @@
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']"/>
       </ownedElements>
-      <ownedElements xmi:type="diagram:DNodeListElement" uid="_D-EoN3LFEeuIK4dbhvVe4w" name="isNewTable : Boolean = false" tooltipText="">
-        <target xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsModifyTableOperation/isNewTable"/>
-        <semanticElements xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsModifyTableOperation/isNewTable"/>
-        <ownedStyle xmi:type="diagram:BundledImage" uid="_D-EoOHLFEeuIK4dbhvVe4w" labelAlignment="LEFT" description="_ChWOIe15Eeer_IHzBpC5uA">
-          <labelFormat>bold</labelFormat>
-        </ownedStyle>
-        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']"/>
-      </ownedElements>
     </ownedDiagramElements>
     <ownedDiagramElements xmi:type="diagram:DNodeList" uid="_wKzvYO9fEeeHKLiXBEFc_A" name="RdbmsFieldOperation" tooltipText="" outgoingEdges="_wuG-kLXBEeiP1IHvVwMOqQ _wu5BtLXBEeiP1IHvVwMOqQ" incomingEdges="_wu5ow7XBEeiP1IHvVwMOqQ _wu624LXBEeiP1IHvVwMOqQ _wu7d87XBEeiP1IHvVwMOqQ" width="12" height="10">
       <target xmi:type="ecore:EClass" href="rdbms.ecore#//RdbmsFieldOperation"/>
@@ -4074,14 +4058,6 @@
         <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@style"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
-      <ownedElements xmi:type="diagram:DNodeListElement" uid="_Dn6K-nLFEeuIK4dbhvVe4w" name="isNewTable : Boolean = true" tooltipText="">
-        <target xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsCreateTableOperation/isNewTable"/>
-        <semanticElements xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsCreateTableOperation/isNewTable"/>
-        <ownedStyle xmi:type="diagram:BundledImage" uid="_Dn6yAHLFEeuIK4dbhvVe4w" labelAlignment="LEFT" description="_ChWOIe15Eeer_IHzBpC5uA">
-          <labelFormat>bold</labelFormat>
-        </ownedStyle>
-        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']"/>
-      </ownedElements>
     </ownedDiagramElements>
     <ownedDiagramElements xmi:type="diagram:DNodeList" uid="_qQ5uoHB1EeiSAvPpoeP5Xw" name="RdbmsDeleteTableOperation" tooltipText="" outgoingEdges="_wvF2A7XBEeiP1IHvVwMOqQ" width="12" height="10">
       <target xmi:type="ecore:EClass" href="rdbms.ecore#//RdbmsDeleteTableOperation"/>

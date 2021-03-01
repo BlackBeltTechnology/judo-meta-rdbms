@@ -74,7 +74,6 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsModifyTableOperation/previousTable"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsModifyTableOperation/sqlNameChanged"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsModifyTableOperation/modifyFieldOperations"/>
-      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsModifyTableOperation/isNewTable"/>
     </genClasses>
     <genClasses image="false" ecoreClass="rdbms.ecore#//RdbmsFieldOperation">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsFieldOperation/field"/>
@@ -103,7 +102,6 @@
     </genClasses>
     <genClasses ecoreClass="rdbms.ecore#//RdbmsCreateTableOperation">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsCreateTableOperation/createFieldOperations"/>
-      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsCreateTableOperation/isNewTable"/>
     </genClasses>
     <genClasses ecoreClass="rdbms.ecore#//RdbmsDeleteTableOperation"/>
     <genClasses ecoreClass="rdbms.ecore#//RdbmsOperationMeta">
