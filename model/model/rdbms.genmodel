@@ -102,6 +102,7 @@
     <genClasses ecoreClass="rdbms.ecore#//RdbmsOperationMeta">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsOperationMeta/previousModel"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsOperationMeta/currentModel"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsOperationMeta/incrementalModel"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

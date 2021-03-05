@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:diagram="http://www.eclipse.org/sirius/diagram/1.1.0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/style/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/style">
-  <viewpoint:DAnalysis uid="_alOLkJLcEeebic-fhPgqVg" selectedViews="_aoAZ0JLcEeebic-fhPgqVg _aoMAAJLcEeebic-fhPgqVg _aods0JLcEeebic-fhPgqVg _aond0JLcEeebic-fhPgqVg" version="14.1.0.201810161215">
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:diagram="http://www.eclipse.org/sirius/diagram/1.1.0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.3/notation" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/style/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/style">
+  <viewpoint:DAnalysis uid="_alOLkJLcEeebic-fhPgqVg" selectedViews="_aoAZ0JLcEeebic-fhPgqVg _aoMAAJLcEeebic-fhPgqVg _aods0JLcEeebic-fhPgqVg _aond0JLcEeebic-fhPgqVg" version="14.3.1.202003261200">
     <semanticResources>rdbms.ecore</semanticResources>
     <semanticResources>http://blackbelt.hu/judo/meta/rdbms</semanticResources>
     <semanticResources>rdbms.genmodel</semanticResources>
@@ -1773,13 +1773,116 @@
     <semanticResources>java:/Objects/org.eclipse.emf.common.notify.impl.SingletonAdapterImpl</semanticResources>
     <semanticResources>java:/Objects/org.eclipse.emf.codegen.util.GIFEmitter</semanticResources>
     <semanticResources>java:/Objects/com.google.common.annotations.GwtCompatible</semanticResources>
+    <semanticResources>java:/Objects/hu.blackbelt.eclipse.emf.genmodel.generator.helper.HelperGeneratorWorkflow</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.annotations.Accessors</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.Active</semanticResources>
+    <semanticResources>java:/Objects/com.google.common.annotations.Beta</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.annotations.AccessorsProcessor</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.TransformationParticipant</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtext.xbase.lib.Extension</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.TransformationContext</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.services.Tracability</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.Element</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.services.ProblemSupport</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.services.Problem</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtext.xbase.lib.Procedures</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.services.TypeReferenceProvider</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.TypeReference</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.ResolvedMethod</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.ResolvedExecutable</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.ExecutableDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.TypeParameterDeclarator</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.MemberDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.Declaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.AnnotationTarget</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.NamedElement</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.CompilationUnit</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.file.Path</semanticResources>
+    <semanticResources>java:/Objects/com.google.common.collect.ImmutableList</semanticResources>
+    <semanticResources>java:/Objects/com.google.common.collect.ImmutableCollection</semanticResources>
+    <semanticResources>java:/Objects/com.google.common.collect.UnmodifiableIterator</semanticResources>
+    <semanticResources>java:/Objects/com.google.common.annotations.VisibleForTesting</semanticResources>
+    <semanticResources>java:/Objects/com.google.common.collect.UnmodifiableListIterator</semanticResources>
+    <semanticResources>java:/Objects/com.google.common.base.Splitter</semanticResources>
+    <semanticResources>java:/Objects/com.google.common.base.AbstractIterator</semanticResources>
+    <semanticResources>java:/Objects/com.google.common.base.CharMatcher</semanticResources>
+    <semanticResources>java:/Objects/com.google.common.base.Predicate</semanticResources>
+    <semanticResources>java:/Objects/com.google.common.annotations.GwtIncompatible</semanticResources>
+    <semanticResources>java:/Objects/com.google.common.base.CommonPattern</semanticResources>
+    <semanticResources>java:/Objects/com.google.common.base.CommonMatcher</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.TypeDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.Type</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.AnnotationReference</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.AnnotationTypeDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.AnnotationTypeElementDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.expression.Expression</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.Modifier</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.Visibility</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.EnumerationValueDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.EnumerationTypeDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.ConstructorDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.ParameterDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.FieldDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.MethodDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.TypeParameterDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.ClassDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.InterfaceDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.ResolvedConstructor</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.ResolvedParameter</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.ResolvedTypeParameter</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.services.TypeLookup</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.services.GlobalTypeLookup</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.MutableAnnotationTypeDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.MutableTypeDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.MutableMemberDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.MutableDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.MutableAnnotationTarget</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.MutableNamedElement</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.MutableElement</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.MutableConstructorDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.MutableExecutableDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.MutableTypeParameterDeclarator</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.MutableTypeParameterDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.MutableFieldDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.CompilationStrategy</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend2.lib.StringConcatenationClient</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.MutableMethodDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.MutableParameterDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.MutableClassDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.MutableEnumerationTypeDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.MutableEnumerationValueDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.MutableInterfaceDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.declaration.MutableAnnotationTypeElementDeclaration</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.file.FileSystemSupport</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.file.FileLocations</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.services.AnnotationReferenceProvider</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.services.AnnotationReferenceBuildContext</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.macro.services.Associator</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.annotations.AccessorsDeprecationPolicy</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtend.lib.annotations.AccessorType</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.xtext.xbase.lib.Pure</semanticResources>
+    <semanticResources>java:/Objects/org.eclipse.emf.mwe2.runtime.IFactory</semanticResources>
+    <semanticResources>java:/Objects/hu.blackbelt.eclipse.emf.genmodel.generator.builder.BuilderGeneratorWorkflow</semanticResources>
+    <semanticResources>java:/Objects/java.util.logging.Logger</semanticResources>
+    <semanticResources>java:/Objects/java.util.logging.LogManager</semanticResources>
+    <semanticResources>java:/Objects/java.util.logging.Handler</semanticResources>
+    <semanticResources>java:/Objects/java.util.logging.ErrorManager</semanticResources>
+    <semanticResources>java:/Objects/java.util.logging.Filter</semanticResources>
+    <semanticResources>java:/Objects/java.util.logging.LogRecord</semanticResources>
+    <semanticResources>java:/Objects/java.util.logging.Level</semanticResources>
+    <semanticResources>java:/Objects/java.util.logging.Formatter</semanticResources>
+    <semanticResources>java:/Objects/java.beans.PropertyChangeListener</semanticResources>
+    <semanticResources>java:/Objects/java.beans.PropertyChangeEvent</semanticResources>
+    <semanticResources>java:/Objects/java.util.logging.LoggingMXBean</semanticResources>
+    <semanticResources>java:/Objects/java.util.concurrent.CopyOnWriteArrayList</semanticResources>
+    <semanticResources>java:/Objects/hu.blackbelt.judo.eclipse.emf.genmodel.generator.runtimemodel.RuntimeModelGeneratorWorkflow</semanticResources>
     <ownedViews xmi:type="viewpoint:DView" uid="_aoAZ0JLcEeebic-fhPgqVg">
       <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']"/>
       <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_M-M7ELJ_Eee1jLPIYgb5Uw" name="rdbms table diagram" repPath="#_ax4CUJLuEeebic-fhPgqVg">
         <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']"/>
         <target xmi:type="ecore:EPackage" href="rdbms.ecore#/"/>
       </ownedRepresentationDescriptors>
-      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_AZlQYO15Eeer_IHzBpC5uA" name="rdbms operation diagram" repPath="#_AZl3cO15Eeer_IHzBpC5uA">
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_AZlQYO15Eeer_IHzBpC5uA" name="rdbms operation diagram" repPath="#_AZl3cO15Eeer_IHzBpC5uA" changeId="a9037cee-2fb8-4f16-98e2-a2fa2ce53142">
         <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']"/>
         <target xmi:type="ecore:EPackage" href="rdbms.ecore#/"/>
       </ownedRepresentationDescriptors>
@@ -1794,7 +1897,7 @@
       <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Generation']"/>
     </ownedViews>
   </viewpoint:DAnalysis>
-  <diagram:DSemanticDiagram uid="_ax4CUJLuEeebic-fhPgqVg" name="rdbms table diagram">
+  <diagram:DSemanticDiagram uid="_ax4CUJLuEeebic-fhPgqVg">
     <ownedAnnotationEntries xmi:type="description:AnnotationEntry" uid="_ax4CUZLuEeebic-fhPgqVg" source="DANNOTATION_CUSTOMIZATION_KEY">
       <data xmi:type="diagram:ComputedStyleDescriptionRegistry" uid="_ax4CUpLuEeebic-fhPgqVg">
         <computedStyleDescriptions xmi:type="style:EdgeStyleDescription" xmi:id="_2V6-cJL0Eeemx8bacpodGA" routingStyle="manhattan">
@@ -2897,7 +3000,7 @@
     <activatedLayers xmi:type="description_1:AdditionalLayer" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Archetype']/@ownedRepresentationExtensions[name='Entities%20With%20Archetypes']/@layers[name='Archetypes']"/>
     <target xmi:type="ecore:EPackage" href="rdbms.ecore#/"/>
   </diagram:DSemanticDiagram>
-  <diagram:DSemanticDiagram uid="_AZl3cO15Eeer_IHzBpC5uA" name="rdbms operation diagram">
+  <diagram:DSemanticDiagram uid="_AZl3cO15Eeer_IHzBpC5uA">
     <ownedAnnotationEntries xmi:type="description:AnnotationEntry" uid="_AZl3ce15Eeer_IHzBpC5uA" source="DANNOTATION_CUSTOMIZATION_KEY">
       <data xmi:type="diagram:ComputedStyleDescriptionRegistry" uid="_AZl3cu15Eeer_IHzBpC5uA">
         <computedStyleDescriptions xmi:type="style:BundledImageDescription" xmi:id="_ChWOIe15Eeer_IHzBpC5uA" labelExpression="service:render" labelAlignment="LEFT" tooltipExpression="service:renderTooltip" sizeComputationExpression="1">
@@ -3492,7 +3595,7 @@
           </children>
           <styles xmi:type="notation:ConnectorStyle" xmi:id="_M21ycXB3EeiSAvPpoeP5Xw" routing="Rectilinear"/>
           <styles xmi:type="notation:FontStyle" xmi:id="_M21ycnB3EeiSAvPpoeP5Xw" fontColor="7490599" fontName=".SF NS Text" fontHeight="8"/>
-          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_M21yc3B3EeiSAvPpoeP5Xw" points="[0, -23, 190, 0]$[-190, -23, 0, 0]"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_M21yc3B3EeiSAvPpoeP5Xw" points="[0, -31, 190, -8]$[-190, -31, 0, -8]"/>
           <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_M22ZhnB3EeiSAvPpoeP5Xw" id="(0.0,0.5045871559633027)"/>
           <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_M22Zh3B3EeiSAvPpoeP5Xw" id="(1.0,0.3302752293577982)"/>
         </edges>
@@ -3508,7 +3611,7 @@
           </children>
           <styles xmi:type="notation:ConnectorStyle" xmi:id="_TybrkXB3EeiSAvPpoeP5Xw" routing="Rectilinear"/>
           <styles xmi:type="notation:FontStyle" xmi:id="_TybrknB3EeiSAvPpoeP5Xw" fontColor="7490599" fontName=".SF NS Text" fontHeight="8"/>
-          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Tybrk3B3EeiSAvPpoeP5Xw" points="[0, 0, 309, 60]$[-304, 0, 5, 60]$[-304, -59, 5, 1]"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Tybrk3B3EeiSAvPpoeP5Xw" points="[0, -10, 190, -4]$[-190, -10, 0, -4]"/>
           <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TycSoHB3EeiSAvPpoeP5Xw" id="(0.0,0.5321100917431193)"/>
           <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TycSoXB3EeiSAvPpoeP5Xw" id="(1.0,0.5321100917431193)"/>
         </edges>
@@ -3527,6 +3630,22 @@
           <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_iK_Nk4DLEemnH7S_-HIS5g" points="[0, 0, -332, 0]$[332, 0, 0, 0]"/>
           <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_iLF7QIDLEemnH7S_-HIS5g" id="(0.5,0.5)"/>
           <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_iLGiUIDLEemnH7S_-HIS5g" id="(0.5,0.5)"/>
+        </edges>
+        <edges xmi:type="notation:Edge" xmi:id="_XkzV4H33Eeuogdlv11WWkA" type="4001" element="_Xkfz7H33Eeuogdlv11WWkA" source="_iKekoHB2EeiSAvPpoeP5Xw" target="_c80pMO-vEeem1agjAI3v8A">
+          <children xmi:type="notation:Node" xmi:id="_Xk4OYH33Eeuogdlv11WWkA" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Xk4OYX33Eeuogdlv11WWkA" x="46" y="7"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_Xk4OYn33Eeuogdlv11WWkA" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Xk4OY333Eeuogdlv11WWkA" y="10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_Xk41cH33Eeuogdlv11WWkA" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Xk41cX33Eeuogdlv11WWkA" y="10"/>
+          </children>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="_XkzV4X33Eeuogdlv11WWkA" routing="Rectilinear"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="_XkzV4n33Eeuogdlv11WWkA" fontColor="7490599" fontName=".AppleSystemUIFont" fontHeight="8"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_XkzV4333Eeuogdlv11WWkA" points="[0, 0, 190, 0]$[-190, 0, 0, 0]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Xk7RsH33Eeuogdlv11WWkA" id="(0.0,0.6238532110091743)"/>
+          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Xk7RsX33Eeuogdlv11WWkA" id="(1.0,0.6938775510204082)"/>
         </edges>
       </data>
     </ownedAnnotationEntries>
@@ -3642,7 +3761,7 @@
         <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@style"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
-      <ownedElements xmi:type="diagram:DNodeListElement" uid="_wt6KQrXBEeiP1IHvVwMOqQ" name="nameChanged : Boolean = false" tooltipText="">
+      <ownedElements xmi:type="diagram:DNodeListElement" uid="_wt6KQrXBEeiP1IHvVwMOqQ" name="nameChanged : EBoolean = false" tooltipText="">
         <target xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsModifyTableOperation/nameChanged"/>
         <semanticElements xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsModifyTableOperation/nameChanged"/>
         <ownedStyle xmi:type="diagram:BundledImage" uid="_wt6xULXBEeiP1IHvVwMOqQ" labelAlignment="LEFT">
@@ -3708,7 +3827,7 @@
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']"/>
       </ownedElements>
-      <ownedElements xmi:type="diagram:DNodeListElement" uid="_wt8mgbXBEeiP1IHvVwMOqQ" name="sizeChanged : Boolean = false" tooltipText="">
+      <ownedElements xmi:type="diagram:DNodeListElement" uid="_wt8mgbXBEeiP1IHvVwMOqQ" name="sizeChanged : EBoolean = false" tooltipText="">
         <target xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsModifyFieldOperation/sizeChanged"/>
         <semanticElements xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsModifyFieldOperation/sizeChanged"/>
         <ownedStyle xmi:type="diagram:BundledImage" uid="_wt8mgrXBEeiP1IHvVwMOqQ" labelAlignment="LEFT">
@@ -3716,7 +3835,7 @@
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']"/>
       </ownedElements>
-      <ownedElements xmi:type="diagram:DNodeListElement" uid="_wt8mg7XBEeiP1IHvVwMOqQ" name="nameChanged : Boolean = false" tooltipText="">
+      <ownedElements xmi:type="diagram:DNodeListElement" uid="_wt8mg7XBEeiP1IHvVwMOqQ" name="nameChanged : EBoolean = false" tooltipText="">
         <target xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsModifyFieldOperation/nameChanged"/>
         <semanticElements xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsModifyFieldOperation/nameChanged"/>
         <ownedStyle xmi:type="diagram:BundledImage" uid="_wt9NkLXBEeiP1IHvVwMOqQ" labelAlignment="LEFT">
@@ -3724,7 +3843,7 @@
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']"/>
       </ownedElements>
-      <ownedElements xmi:type="diagram:DNodeListElement" uid="_wt9NkbXBEeiP1IHvVwMOqQ" name="changedValueFieldToForeignKey : Boolean = false" tooltipText="">
+      <ownedElements xmi:type="diagram:DNodeListElement" uid="_wt9NkbXBEeiP1IHvVwMOqQ" name="changedValueFieldToForeignKey : EBoolean = false" tooltipText="">
         <target xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsModifyFieldOperation/changedValueFieldToForeignKey"/>
         <semanticElements xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsModifyFieldOperation/changedValueFieldToForeignKey"/>
         <ownedStyle xmi:type="diagram:BundledImage" uid="_wt9NkrXBEeiP1IHvVwMOqQ" labelAlignment="LEFT">
@@ -3732,7 +3851,7 @@
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']"/>
       </ownedElements>
-      <ownedElements xmi:type="diagram:DNodeListElement" uid="_wt9Nk7XBEeiP1IHvVwMOqQ" name="changedForeignKeyToValueField : Boolean = false" tooltipText="">
+      <ownedElements xmi:type="diagram:DNodeListElement" uid="_wt9Nk7XBEeiP1IHvVwMOqQ" name="changedForeignKeyToValueField : EBoolean = false" tooltipText="">
         <target xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsModifyFieldOperation/changedForeignKeyToValueField"/>
         <semanticElements xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsModifyFieldOperation/changedForeignKeyToValueField"/>
         <ownedStyle xmi:type="diagram:BundledImage" uid="_wt90oLXBEeiP1IHvVwMOqQ" labelAlignment="LEFT">
@@ -3836,7 +3955,7 @@
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']"/>
       </ownedElements>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DNodeList" uid="_c8ob8O-vEeem1agjAI3v8A" name="RdbmsModel" tooltipText="" outgoingEdges="_wuJa07XBEeiP1IHvVwMOqQ _wuKB47XBEeiP1IHvVwMOqQ" incomingEdges="_wuKo87XBEeiP1IHvVwMOqQ _wuLQA7XBEeiP1IHvVwMOqQ" width="12" height="10">
+    <ownedDiagramElements xmi:type="diagram:DNodeList" uid="_c8ob8O-vEeem1agjAI3v8A" name="RdbmsModel" tooltipText="" outgoingEdges="_wuJa07XBEeiP1IHvVwMOqQ _wuKB47XBEeiP1IHvVwMOqQ" incomingEdges="_wuKo87XBEeiP1IHvVwMOqQ _wuLQA7XBEeiP1IHvVwMOqQ _Xkfz7H33Eeuogdlv11WWkA" width="12" height="10">
       <target xmi:type="ecore:EClass" href="rdbms.ecore#//RdbmsModel"/>
       <semanticElements xmi:type="ecore:EClass" href="rdbms.ecore#//RdbmsModel"/>
       <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
@@ -3899,7 +4018,7 @@
       </ownedStyle>
       <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DNodeList" uid="_iKJNcHB2EeiSAvPpoeP5Xw" name="RdbmsOperationMeta" tooltipText="" outgoingEdges="_wuKo87XBEeiP1IHvVwMOqQ _wuLQA7XBEeiP1IHvVwMOqQ" width="12" height="10">
+    <ownedDiagramElements xmi:type="diagram:DNodeList" uid="_iKJNcHB2EeiSAvPpoeP5Xw" name="RdbmsOperationMeta" tooltipText="" outgoingEdges="_wuKo87XBEeiP1IHvVwMOqQ _wuLQA7XBEeiP1IHvVwMOqQ _Xkfz7H33Eeuogdlv11WWkA" width="12" height="10">
       <target xmi:type="ecore:EClass" href="rdbms.ecore#//RdbmsOperationMeta"/>
       <semanticElements xmi:type="ecore:EClass" href="rdbms.ecore#//RdbmsOperationMeta"/>
       <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
@@ -4180,6 +4299,17 @@
         <endLabelStyle xmi:type="diagram:EndLabelStyle" uid="_iJy6wYDLEemnH7S_-HIS5g" showIcon="false" labelColor="39,76,114">
           <customFeatures>labelSize</customFeatures>
         </endLabelStyle>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@edgeMappings[name='EC_EReference']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DEdge" uid="_Xkfz7H33Eeuogdlv11WWkA" name="[1..1] incrementalModel" sourceNode="_iKJNcHB2EeiSAvPpoeP5Xw" targetNode="_c8ob8O-vEeem1agjAI3v8A">
+      <target xmi:type="ecore:EReference" href="rdbms.ecore#//RdbmsOperationMeta/incrementalModel"/>
+      <semanticElements xmi:type="ecore:EReference" href="rdbms.ecore#//RdbmsOperationMeta/incrementalModel"/>
+      <ownedStyle xmi:type="diagram:EdgeStyle" uid="_anV54n33Eeuogdlv11WWkA" description="_wLY-MO9fEeeHKLiXBEFc_A" routingStyle="manhattan" strokeColor="0,0,0">
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="_anV55H33Eeuogdlv11WWkA" showIcon="false">
+          <labelFormat>bold</labelFormat>
+        </centerLabelStyle>
+        <endLabelStyle xmi:type="diagram:EndLabelStyle" uid="_anV54333Eeuogdlv11WWkA" labelSize="6" showIcon="false" labelColor="39,76,114"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@edgeMappings[name='EC_EReference']"/>
     </ownedDiagramElements>
