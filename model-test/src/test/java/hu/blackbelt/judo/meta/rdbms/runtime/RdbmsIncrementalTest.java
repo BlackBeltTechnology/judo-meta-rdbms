@@ -6,7 +6,10 @@ import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel.RdbmsValidationException;
 import org.eclipse.epsilon.common.util.UriUtil;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -63,68 +66,15 @@ public class RdbmsIncrementalTest {
         excelToRdbmsEtlContext.commit();
         excelToRdbmsEtlContext.close();
 
-        /* 
-        final RdbmsUtils rdbmsUtils = new RdbmsUtils(originalModel.getResourceSet());
-        final RdbmsTable rdbmsTable = rdbmsUtils.getRdbmsTables().get().get(0);
-        rdbmsTable.getIndexes().add(
-                RdbmsIndexBuilder.create()
-                        .withName("TestIndex")
-                        .withUuid(rdbmsTable.getUuid() + ".TestIndex")
-                        .withFields(rdbmsTable.getFields().get(0), rdbmsTable.getFields().get(1))
-                        .withSqlName("TestIndex".toUpperCase())
-                        .build());
-        rdbmsTable.getUniqueConstraints().add(
-                RdbmsUniqueConstraintBuilder.create()
-                        .withName("TestUniqueConstraint")
-                        .withUuid(rdbmsTable.getUuid() + ".TestUniqueConstraint")
-                        .withFields(rdbmsTable.getFields().get(2), rdbmsTable.getFields().get(3))
-                        .withSqlName("TestUniqueConstraint".toUpperCase())
-                        .build());
 
-        final RdbmsUtils rdbmsUtils2 = new RdbmsUtils(newModel.getResourceSet());
-        final RdbmsTable rdbmsTable2 = rdbmsUtils2.getRdbmsTables().get().get(0);
-        rdbmsTable2.getIndexes().add(
-                RdbmsIndexBuilder.create()
-                        .withName("TestIndex")
-                        .withUuid(rdbmsTable2.getUuid() + ".TestIndex")
-                        .withFields(rdbmsTable2.getFields().get(0), rdbmsTable2.getFields().get(1))
-                        .withSqlName("TestIndex".toUpperCase())
-                        .build());
-        rdbmsTable2.getUniqueConstraints().add(
-                RdbmsUniqueConstraintBuilder.create()
-                        .withName("TestUniqueConstraint")
-                        .withUuid(rdbmsTable2.getUuid() + ".TestUniqueConstraint")
-                        .withFields(rdbmsTable2.getFields().get(2), rdbmsTable2.getFields().get(3))
-                        .withSqlName("TestUniqueConstraint".toUpperCase())
-                        .build());
-		*/
-        
-        File originalRdbmsFile = new File(TARGET_TEST_CLASSES, String.format("testContents-%s-rdbms.model", originalModel.getName()));
-        try {
-            originalModel.saveRdbmsModel(rdbmsSaveArgumentsBuilder().file(originalRdbmsFile));
-        } catch (RdbmsValidationException ex) {
-            fail(format("Model:\n%s\nDiagnostic:\n%s", originalModel.asString(), originalModel.getDiagnosticsAsString()));
-        }
-
-        File newRdbmsFile = new File(TARGET_TEST_CLASSES, String.format("testContents-%s-rdbms.model", newModel.getName()));
-        try {
-            newModel.saveRdbmsModel(rdbmsSaveArgumentsBuilder().file(newRdbmsFile));
-        } catch (RdbmsValidationException ex) {
-            fail(format("Model:\n%s\nDiagnostic:\n%s", newModel.asString(), newModel.getDiagnosticsAsString()));
-        }
+        saveRdbms(originalModel);
+        saveRdbms(newModel);
 
 		RdbmsModel incrementalRdbmsModel = buildRdbmsModel().name("Incremental").build();
 
         RdbmsIncremental.transformRdbmsIncrementalModel(originalModel, newModel, incrementalRdbmsModel, "hsqldb", true);
 
-        File incrementalRdbmsFile = new File(TARGET_TEST_CLASSES, String.format("testContents-%s-rdbms.model", incrementalRdbmsModel.getName()));
-        try {
-        	incrementalRdbmsModel.saveRdbmsModel(rdbmsSaveArgumentsBuilder().file(incrementalRdbmsFile));
-        } catch (RdbmsValidationException ex) {
-            fail(format("Model:\n%s\nDiagnostic:\n%s", incrementalRdbmsModel.asString(), incrementalRdbmsModel.getDiagnosticsAsString()));
-        }
-        
-        
+        saveRdbms(incrementalRdbmsModel);
 
         // Execution context
         ExecutionContext testIncrementalModelContext = executionContextBuilder()
@@ -203,4 +153,15 @@ public class RdbmsIncrementalTest {
     
 
 	 */
+
+    private void saveRdbms(RdbmsModel rdbmsModel) {
+        File incrementalRdbmsFile = new File(TARGET_TEST_CLASSES, String.format("testContents-%s-rdbms.model", rdbmsModel.getName()));
+        try {
+            rdbmsModel.saveRdbmsModel(rdbmsSaveArgumentsBuilder().file(incrementalRdbmsFile));
+        } catch (RdbmsValidationException | IOException ex) {
+            fail(format("Model:\n%s\nDiagnostic:\n%s", rdbmsModel.asString(), rdbmsModel.getDiagnosticsAsString()));
+        }
+
+    }
+
 }
