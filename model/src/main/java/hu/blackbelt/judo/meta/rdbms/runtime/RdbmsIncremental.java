@@ -17,9 +17,9 @@ import static hu.blackbelt.epsilon.runtime.execution.contexts.EtlExecutionContex
 import static hu.blackbelt.epsilon.runtime.execution.model.emf.WrappedEmfModelContext.wrappedEmfModelContextBuilder;
 import static java.util.Arrays.asList;
 
-public class RdbmsInremental {
+public class RdbmsIncremental {
 
-    private static final Logger log = LoggerFactory.getLogger(RdbmsInremental.class);
+    private static final Logger log = LoggerFactory.getLogger(RdbmsIncremental.class);
 
     public static void transformRdbmsIncrementalModel(RdbmsModel originalModel,
                                                       RdbmsModel newModel,

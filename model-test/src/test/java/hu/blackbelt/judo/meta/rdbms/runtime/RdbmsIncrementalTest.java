@@ -2,10 +2,7 @@ package hu.blackbelt.judo.meta.rdbms.runtime;
 
 import com.google.common.collect.ImmutableList;
 import hu.blackbelt.epsilon.runtime.execution.ExecutionContext;
-import hu.blackbelt.judo.meta.rdbms.RdbmsTable;
 import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel.RdbmsValidationException;
-import hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsIndexBuilder;
-import hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsUniqueConstraintBuilder;
 import org.eclipse.epsilon.common.util.UriUtil;
 import org.junit.jupiter.api.Test;
 
@@ -118,7 +115,7 @@ public class RdbmsIncrementalTest {
 
 		RdbmsModel incrementalRdbmsModel = buildRdbmsModel().name("Incremental").build();
 
-        RdbmsInremental.transformRdbmsIncrementalModel(originalModel, newModel, incrementalRdbmsModel, "hsqldb", true);
+        RdbmsIncremental.transformRdbmsIncrementalModel(originalModel, newModel, incrementalRdbmsModel, "hsqldb", true);
 
         File incrementalRdbmsFile = new File(TARGET_TEST_CLASSES, String.format("testContents-%s-rdbms.model", incrementalRdbmsModel.getName()));
         try {
