@@ -22,29 +22,29 @@ public class RdbmsInremental {
     private static final Logger log = LoggerFactory.getLogger(RdbmsInremental.class);
 
     public static void transformRdbmsIncrementalModel(RdbmsModel originalModel,
-                                                                       RdbmsModel newModel,
-                                                                       RdbmsModel incrementalRdbmsModel,
-                                                                       String dialect,
-                                                                       boolean mergeModels) throws Exception {
+                                                      RdbmsModel newModel,
+                                                      RdbmsModel incrementalRdbmsModel,
+                                                      String dialect,
+                                                      boolean mergeModels) throws Exception {
         transformRdbmsIncrementalModel(originalModel, newModel, incrementalRdbmsModel, new Slf4jLog(log), calculateRdbmsTransformationScriptURI(), dialect, mergeModels);
     }
 
     public static void transformRdbmsIncrementalModel(RdbmsModel originalModel,
-                                                                       RdbmsModel newModel,
-                                                                       RdbmsModel incrementalRdbmsModel,
-                                                                       Log log,
-                                                                       String dialect,
-                                                                       boolean mergeModels) throws Exception {
+                                                      RdbmsModel newModel,
+                                                      RdbmsModel incrementalRdbmsModel,
+                                                      Log log,
+                                                      String dialect,
+                                                      boolean mergeModels) throws Exception {
         transformRdbmsIncrementalModel(originalModel, newModel, incrementalRdbmsModel, log, calculateRdbmsTransformationScriptURI(), dialect, mergeModels);
     }
 
 
     public static void transformRdbmsIncrementalModel(RdbmsModel originalModel,
-                                                                       RdbmsModel newModel,
-                                                                       RdbmsModel incrementalRdbmsModel,
-                                                                       Log log,
-                                                                       URI scriptUri,
-                                                                       String dialect, boolean mergeModels) throws Exception {
+                                                      RdbmsModel newModel,
+                                                      RdbmsModel incrementalRdbmsModel,
+                                                      Log log,
+                                                      URI scriptUri,
+                                                      String dialect, boolean mergeModels) throws Exception {
 
         // Execution context
         ExecutionContext executionContext = executionContextBuilder()
@@ -76,8 +76,7 @@ public class RdbmsInremental {
                         .source(UriUtil.resolve("createIncrementalOperationModel.etl", scriptUri))
                         .parameters(Arrays.asList(
                                 ProgramParameter.programParameterBuilder().name("dialect").value(dialect).build(),
-                                ProgramParameter.programParameterBuilder().name("mergeModels").value(Boolean.toString(mergeModels)).build()
-                		))
+                                ProgramParameter.programParameterBuilder().name("mergeModels").value(Boolean.toString(mergeModels)).build()))
                         .build());
 
         executionContext.commit();
