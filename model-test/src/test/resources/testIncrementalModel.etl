@@ -1,0 +1,173 @@
+import "excel.eol";
+
+pre {
+	var createdElements = new Map;
+	var modifiedElements = new Map;
+	var deletedElements = new Map;
+	
+	//var root = INCREMENTAL!RdbmsModel.all().first();
+    var operationMeta = INCREMENTAL!RdbmsOperationMeta.all.first();
+		
+	var root = operationMeta.incrementalModel;
+	
+	for (op in root.tableOperations) {
+
+		if(op.instanceOf(INCREMENTAL!RdbmsModifyTableOperation)) {
+
+    	    log.info("Modify Table operation: " + op.table.name + " ");
+			modifiedElements.put(op.uuid.removeIndicator(), op);
+			
+			for (field in op.createFieldOperations) {
+        	    log.info("   - Create field operation: " + field.field.name + " ");
+				createdElements.put(field.uuid.removeIndicator(), field);
+			}
+			
+			for (field in op.deleteFieldOperations) {
+        	    log.info("   - Delete field operation: " + field.field.name + " ");
+				deletedElements.put(field.uuid.removeIndicator(), field);
+			}
+			
+			for (field in op.modifyFieldOperations) {
+        	    log.info("   - Modify field operation: " + field.field.name + " ");
+				modifiedElements.put(field.uuid.removeIndicator(), field);
+			}
+		}
+		
+		if(op.instanceOf(INCREMENTAL!RdbmsCreateTableOperation)) {
+    	    log.info("Create Table operation: " + op.table.name + " ");
+			createdElements.put(op.uuid.removeIndicator(), op);
+		}
+		
+		if(op.instanceOf(INCREMENTAL!RdbmsDeleteTableOperation)) {
+    	    log.info("Remove Table operation: " + op.table.name + " ");
+			deletedElements.put(op.uuid.removeIndicator(), op);
+		}
+		
+	}
+	log.info("------TEST------");
+	var testOK = true;
+}
+
+post {
+	if(not createdElements.isEmpty()) {
+		testOK = false;
+		log.error("Not listed elements were created: " + createdElements.keySet());
+	}
+	if(not deletedElements.isEmpty()) {
+		testOK = false;
+		log.error("Not listed elements were deleted: " + deletedElements.keySet());
+	}
+	if(not modifiedElements.isEmpty()) {
+		testOK = false;
+		log.error("Not listed elements were modified: " + modifiedElements.keySet());
+	}
+	
+	if(testOK) {
+		log.info("----- TEST PASSED -----");
+	} else {
+		log.error("----- TEST FAILED -----");
+		throw "Test failed";
+	}
+}
+
+rule processExistingElement
+	transform f : XLS!Differences
+	to t : XLS!Result {
+		guard : f.uuid.isDefined() and f.exists()
+		var obj = modifiedElements.get(f.uuid);
+
+		log.info("|-Exists " + f.uuid);
+
+		if (obj.isDefined()) {
+			if (f.nameChanged() == obj.nameChanged) {
+				log.info("|----Name: OK");
+			} else {
+                log.error("|----Name: ERROR  " + "Expected: " + f.nameChanged() + " Actual: " + obj.nameChanged);
+				testOK = false;
+			}
+			
+			if(obj.instanceOf(INCREMENTAL!RdbmsModifyFieldOperation)) {
+				if(f.typeChanged() == obj.typeChanged) {
+					log.info("|----Type: OK");
+				} else {
+					log.error("|----Type: ERROR  " + "Expected: " + f.typeChanged() + " Actual: " + obj.typeChanged);
+					testOK = false;
+				}
+
+				if(f.sizeChanged() == obj.sizeChanged) {
+					log.info("|----Size: OK");
+				} else {
+					log.error("|----Size: ERROR  " + "Expected: " + f.sizeChanged() + " Actual: " + obj.sizeChanged);
+					testOK = false;
+				}
+
+				if (f.mandatoryChanged() == obj.mandatoryChanged) {
+					log.info("|----Mandatory: OK");
+				} else {
+                    log.error("|----Mandatory: ERROR  " + "Expected: " + f.mandatoryChanged() + " Actual: " + obj.mandatoryChanged);
+					testOK = false;
+				}
+				
+				if (f.toValueField() == obj.changedForeignKeyToValueField) {
+					log.info("|----Foreign key changed to value field: OK");
+				} else {
+                    log.error("|----Foreign key changed to value field: ERROR  " + "Expected: " + f.toValueField() + " Actual: " + obj.changedForeignKeyToValueField);
+					testOK = false;
+				}
+				
+				if (f.toForeignKey() == obj.changedValueFieldToForeignKey) {
+					log.info("|----Value field changed to foreign key: OK");
+				} else {
+                    log.error("|----Value field changed to foreign key: ERROR  " + "Expected: " + f.toForeignKey() + " Actual: " + obj.changedValueFieldToForeignKey);
+					testOK = false;
+				}
+			}
+			modifiedElements.remove(f.uuid);
+		} else {
+		    if (f.isAnyChanged()) {
+                log.error(": ERROR - NOT FOUND");
+                testOK = false;
+            } else {
+                log.info(": OK - Not changed ");
+            }
+		}
+}
+
+rule processCreatedElement
+	transform f : XLS!Differences
+	to t : XLS!Result {
+		guard : f.uuid.isDefined() and f.created()
+		log.info("|-Created " + f.uuid);
+		if(createdElements.get(f.uuid).isDefined()) {
+			log.info(": OK");
+			createdElements.remove(f.uuid);
+		} else {
+			log.error(": ERROR");
+			testOK = false;
+		}
+}
+
+rule processDeletedElement
+	transform f : XLS!Differences
+	to t : XLS!Result {
+		guard : f.uuid.isDefined() and f.deleted()
+		log.info("|-Deleted " + f.uuid);
+		if(deletedElements.get(f.uuid).isDefined()) {
+			log.info(": OK");
+			deletedElements.remove(f.uuid);
+		} else {
+			log.error(": ERROR");
+			testOK = false;
+		}	
+}
+
+
+
+
+
+
+
+
+
+
+

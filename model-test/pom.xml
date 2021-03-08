@@ -35,6 +35,14 @@
 			<version>${epsilon-version}</version>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.epsilon</groupId>
+			<artifactId>epsilon-spreadsheets</artifactId>
+			<version>${epsilon-version}</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 </project>
