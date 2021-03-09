@@ -333,6 +333,6 @@ rule RenameExistingTable
 	extends ModifyTableOperationForExistingTable {
     	guard : previousModel.tableExists(s) 
     			and previousModel.tableOf(s).isSqlNameChanged(s)
-        t.nameChanged = true;
+        s.equivalent("ModifyTableOperationForExistingTable").nameChanged = true;
         log.info("    Sql name changed: " + previousModel.tableOf(s).sqlName + " -> " + s.sqlName);
 }
