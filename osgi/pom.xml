@@ -32,7 +32,7 @@
 						<Export-Package>
                             hu.blackbelt.judo.meta.rdbms*;version=${project.version},
                         </Export-Package>
-						<Include-Resource>{maven-resources},meta/rdbms=../model/model,validations=../model/src/main/epsilon/validations</Include-Resource>
+						<Include-Resource>{maven-resources},meta/rdbms=../model/model,validations=../model/src/main/epsilon/validations,transformations=../model/src/main/epsilon/transformations</Include-Resource>
 					</instructions>
 				</configuration>
 			</plugin>
