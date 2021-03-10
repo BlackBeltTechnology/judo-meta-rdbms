@@ -8,9 +8,9 @@ class TypeMappings {
 class TypeMapping {
   attr String[1] asmType;
   attr String[1] rdbmsType;
-  attr Integer rdbmsSize;
-  attr Integer rdbmsPrecision;
-  attr Integer rdbmsScale;
+  attr String rdbmsSize;
+  attr String rdbmsPrecision;
+  attr String rdbmsScale;
   attr String rdbmsJdbcType;
   attr Integer rdbmsSqlType;
 }
