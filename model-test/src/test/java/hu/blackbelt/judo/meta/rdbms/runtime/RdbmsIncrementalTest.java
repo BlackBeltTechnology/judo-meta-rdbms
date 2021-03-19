@@ -2,6 +2,7 @@ package hu.blackbelt.judo.meta.rdbms.runtime;
 
 import com.google.common.collect.ImmutableList;
 import hu.blackbelt.epsilon.runtime.execution.ExecutionContext;
+import hu.blackbelt.epsilon.runtime.execution.impl.Slf4jLog;
 import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel.RdbmsValidationException;
 import org.eclipse.epsilon.common.util.UriUtil;
 import org.junit.jupiter.api.Test;
@@ -79,6 +80,7 @@ public class RdbmsIncrementalTest {
         // Execution context
         ExecutionContext testIncrementalModelContext = executionContextBuilder()
                 .resourceSet(originalModel.getResourceSet())
+                .log(new Slf4jLog())
                 .modelContexts(ImmutableList.of(
                         excelModelContextBuilder()
                                 .name("EXCEL")

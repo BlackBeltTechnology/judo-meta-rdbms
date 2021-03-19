@@ -149,11 +149,11 @@ rule processCreatedElement
         log.info("|-Created " + f.uuid);
         if(createdElements.get(f.uuid).isDefined()) {
         
-            if (f.reviewRequired() and createdElements.get(f.uuid).isKindOf(INCREMENTAL!RdbmsCreateFieldOperation)) {
-                if (createdElements.get(f.uuid).field.mandatory) {
+            if (createdElements.get(f.uuid).isKindOf(INCREMENTAL!RdbmsCreateFieldOperation)) {
+                if (f.reviewRequired()) {
                     log.info("|----Review required: OK");
                 } else {
-                    log.error("|----Review required: ERROR  " + "Expected: " + createdElements.get(f.uuid).mandatory + " Actual: " + f.reviewRequired());
+                    log.error("|----Review required: ERROR  " + "Expected: true Actual: " + f.reviewRequired());
                     testOK = false;
                 }
             }
