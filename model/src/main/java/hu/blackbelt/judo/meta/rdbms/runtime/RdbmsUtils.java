@@ -11,6 +11,11 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -55,6 +60,23 @@ public class RdbmsUtils {
 
     public RdbmsModelResourceSupport getRdbmsModelResourceSupport() {
         return rdbmsModelResourceSupport;
+    }
+
+    public static boolean isSqlScriptPathValid(String sqlScriptPath) {
+        return (new File(sqlScriptPath)).exists();
+    }
+
+    public static boolean isSqlScriptEmpty(String sqlScriptPath) throws IOException {
+        if (isSqlScriptPathValid(sqlScriptPath)) {
+            File file = new File(sqlScriptPath);
+            Path filePath = Paths.get(file.toURI());
+            return Files.readAllLines(filePath).stream().map(l -> l.trim()).allMatch(l -> l.isEmpty());
+        }
+        return true;
+    }
+
+    public static String getSqlScriptAbsolutePath(String sqlScriptPath) {
+        return (new File(sqlScriptPath)).getAbsolutePath();
     }
 
     //////////////////////////////////////////////////
