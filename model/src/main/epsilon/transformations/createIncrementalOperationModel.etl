@@ -125,7 +125,7 @@ rule CreateNewValueFieldOnExistingTable
         t.uuid =  f.uuid + "-CreateValueField";
         t.name = "Create " + f.name;
         t.field = f;
-        t.reviewRequired = true;
+        t.reviewRequired = f.mandatory;
         log.info("Create new value field on existing table: " + f.uuid);
 }
 
@@ -152,7 +152,7 @@ rule CreateNewForeignKeyOnExistingTable
         t.uuid =  f.uuid + "-CreateForeignKey";
         t.name = "Create " + f.name;
         t.field = f;
-        t.reviewRequired = true;
+        t.reviewRequired = f.mandatory;
         log.info("Create new foreign key on existing table: " + f.uuid);
 }
 
@@ -179,7 +179,7 @@ rule CreateNewIdentifierFieldOnExistingTable
         t.name = "Create " + f.name;
         t.field = f;
         t.isIdentifierField = true;
-        t.reviewRequired = true;
+        t.reviewRequired = f.mandatory;
         log.info("Create new identifier field on existing table: " + f.uuid);
 }
 

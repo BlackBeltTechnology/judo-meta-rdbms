@@ -1878,7 +1878,7 @@
     <semanticResources>java:/Objects/hu.blackbelt.judo.eclipse.emf.genmodel.generator.runtimemodel.RuntimeModelGeneratorWorkflow</semanticResources>
     <ownedViews xmi:type="viewpoint:DView" uid="_aoAZ0JLcEeebic-fhPgqVg">
       <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']"/>
-      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_M-M7ELJ_Eee1jLPIYgb5Uw" name="rdbms table diagram" repPath="#_ax4CUJLuEeebic-fhPgqVg" changeId="70680a11-0d75-4836-897c-dc8a23bc0eea">
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_M-M7ELJ_Eee1jLPIYgb5Uw" name="rdbms table diagram" repPath="#_ax4CUJLuEeebic-fhPgqVg" changeId="676d94ac-ea45-491b-b0ca-5ba74d4fb8e7">
         <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']"/>
         <target xmi:type="ecore:EPackage" href="rdbms.ecore#/"/>
       </ownedRepresentationDescriptors>
@@ -2022,10 +2022,6 @@
             <children xmi:type="notation:Node" xmi:id="_LfxhkHLXEeiSAvPpoeP5Xw" type="3010" element="_ws5dpbXBEeiP1IHvVwMOqQ">
               <styles xmi:type="notation:FontStyle" xmi:id="_LfxhkXLXEeiSAvPpoeP5Xw" fontName=".SF NS Text" fontHeight="8"/>
               <layoutConstraint xmi:type="notation:Location" xmi:id="_LfxhknLXEeiSAvPpoeP5Xw"/>
-            </children>
-            <children xmi:type="notation:Node" xmi:id="_t2ArQIZUEeu1o4s7uAdlxg" type="3010" element="_t1a1YIZUEeu1o4s7uAdlxg">
-              <styles xmi:type="notation:FontStyle" xmi:id="_t2ArQYZUEeu1o4s7uAdlxg" fontColor="2697711" fontName="Ubuntu" fontHeight="8"/>
-              <layoutConstraint xmi:type="notation:Location" xmi:id="_t2ArQoZUEeu1o4s7uAdlxg"/>
             </children>
             <styles xmi:type="notation:SortingStyle" xmi:id="_d-nEEZLuEeebic-fhPgqVg"/>
             <styles xmi:type="notation:FilteringStyle" xmi:id="_d-nEEpLuEeebic-fhPgqVg"/>
@@ -2588,14 +2584,6 @@
         <semanticElements xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsField/storageByte"/>
         <ownedStyle xmi:type="diagram:BundledImage" uid="_ws5dprXBEeiP1IHvVwMOqQ" labelAlignment="LEFT">
           <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']/@style"/>
-        </ownedStyle>
-        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']"/>
-      </ownedElements>
-      <ownedElements xmi:type="diagram:DNodeListElement" uid="_t1a1YIZUEeu1o4s7uAdlxg" name="isString : EBoolean = false" tooltipText="">
-        <target xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsField/isString"/>
-        <semanticElements xmi:type="ecore:EAttribute" href="rdbms.ecore#//RdbmsField/isString"/>
-        <ownedStyle xmi:type="diagram:BundledImage" uid="_xtQpoYZUEeu1o4s7uAdlxg" labelAlignment="LEFT" description="_SVCaEKkBEee7ap3V8huaDw">
-          <labelFormat>bold</labelFormat>
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']"/>
       </ownedElements>

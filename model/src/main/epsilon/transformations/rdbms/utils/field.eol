@@ -50,10 +50,7 @@ operation isMandatoryReviewRequired(previousField : RDBMS!RdbmsField, newField :
 }
 
 operation isSqlTypeReviewRequired(previousField : RDBMS!RdbmsField, newField : RDBMS!RdbmsField) : Boolean {
-    if (previousField.isSqlTypeChanged(newField)) {
-        return previousField.isString and not newField.isString;
-    }
-    return false;
+    return previousField.isSqlTypeChanged(newField);
 }
 
 operation isSizeReviewRequired(previousField : RDBMS!RdbmsField, newField : RDBMS!RdbmsField) : Boolean {

@@ -28,9 +28,6 @@ rule transformOriginalValue
         t.uuid = f.uuid;
         t.mandatory = f.mandatory.asBoolean();
         t.rdbmsTypeName = f.type_name;
-        if (t.rdbmsTypeName == "VARCHAR") {
-          t.isString = true;
-        }
         t.size = f.size.asInteger();
         t.precision = f.precision.asInteger();
         t.scale = f.scale.asInteger();
@@ -47,9 +44,6 @@ rule transformOriginalId
         t.uuid = f.uuid;
         t.mandatory = f.mandatory.asBoolean();
         t.rdbmsTypeName = f.type_name;
-        if (t.rdbmsTypeName == "VARCHAR") {
-          t.isString = true;
-        }
         t.size = f.size.asInteger();
         t.precision = f.precision.asInteger();
         t.scale = f.scale.asInteger();
@@ -68,9 +62,6 @@ rule transformOriginalForeignKey
         t.uuid = f.uuid;
         t.mandatory = f.mandatory.asBoolean();
         t.rdbmsTypeName = f.type_name;
-        if (t.rdbmsTypeName == "VARCHAR") {
-          t.isString = true;
-        }
         t.size = f.size.asInteger();
         t.precision = f.precision.asInteger();
         t.scale = f.scale.asInteger();
@@ -99,9 +90,6 @@ rule transformNewValue
         t.uuid = f.uuid;
         t.mandatory = f.mandatory.asBoolean();
         t.rdbmsTypeName = f.type_name;
-        if (t.rdbmsTypeName == "VARCHAR") {
-          t.isString = true;
-        }
         t.size = f.size.asInteger();
         t.precision = f.precision.asInteger();
         t.scale = f.scale.asInteger();
@@ -118,9 +106,6 @@ rule transformNewId
         t.uuid = f.uuid;
         t.mandatory = f.mandatory.asBoolean();
         t.rdbmsTypeName = f.type_name;
-        if (t.rdbmsTypeName == "VARCHAR") {
-          t.isString = true;
-        }
         t.size = f.size.asInteger();
         t.precision = f.precision.asInteger();
         t.scale = f.scale.asInteger();
@@ -140,9 +125,6 @@ rule transformNewForeignKey
         t.uuid = f.uuid;
         t.mandatory = f.mandatory.asBoolean();
         t.rdbmsTypeName = f.type_name;
-        if (t.rdbmsTypeName == "VARCHAR") {
-          t.isString = true;
-        }
         t.size = f.size.asInteger();
         t.precision = f.precision.asInteger();
         t.scale = f.scale.asInteger();
