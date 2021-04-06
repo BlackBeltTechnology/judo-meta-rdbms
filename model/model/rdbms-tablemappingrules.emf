@@ -1,30 +1,93 @@
 @namespace(uri="http://blackbelt.hu/judo/meta/rdbms/rules", prefix="rdbmsRules")
 package rdbmsRules;
 
-import "http://blackbelt.hu/judo/meta/rdbms";
-import "http://www.eclipse.org/emf/2002/Ecore";
-
 class Rules {
+
+  @GenModel(body="java.util.Optional<org.eclipse.emf.ecore.EReference> opposite = 
+        java.util.Optional.ofNullable(reference.getEOpposite());
+
+final int lower;
+if (reference.getLowerBound() > 1) {
+    lower = 1;
+} else {
+    lower = reference.getLowerBound();
+}
+
+final int upper;
+if (reference.getUpperBound() > 1) {
+    upper = -1;
+} else {
+    upper = reference.getUpperBound();
+}
+
+final Integer oppositeLower;
+final Integer oppositeUpper;
+final boolean first = !opposite.isPresent() || reference.getName().compareTo(opposite.get().getName()) < 0;
+
+if (opposite.isPresent()) {
+    if (opposite.get().getLowerBound() > 1) {
+        oppositeLower = 1;
+    } else {
+        oppositeLower = opposite.get().getLowerBound();
+    }
+    if (opposite.get().getUpperBound() > 1) {
+        oppositeUpper = -1;
+    } else {
+        oppositeUpper = opposite.get().getUpperBound();
+    }
+} else {
+    oppositeLower = null;
+    oppositeUpper = null;
+}
+
+java.util.Optional<hu.blackbelt.judo.meta.rdbmsRules.Rule> ret = getRules().stream()
+        .filter(o ->
+                o.isFirst() == first
+                        && reference.isContainer() == o.isContainer()
+                        && reference.isContainment() == o.isContainment()
+                        && lower == o.getLower()
+                        && upper == o.getUpper()
+                        && ((!opposite.isPresent() && !o.isOpposite()) || (
+                        opposite.isPresent()
+                                && oppositeLower == o.getOppositeLower()
+                                && oppositeUpper == o.getOppositeUpper())
+                )
+        ).findFirst();
+
+if (!ret.isPresent()) {
+    throw new RuntimeException(\"Could not find mapping for reference: \" + reference.getName()
+            + \" Parent: \" + reference.getEReferenceType().getName()
+            + \" (Lower: \" + lower
+            + \" Upper: \" + upper
+            + \" Opposite lower: \" + oppositeLower
+            + \" OppositeUpper: \" + oppositeUpper
+            + \" Container: \" + reference.isContainer()
+            + \" Containment: \" + reference.isContainment() + \")\");
+}
+return ret.get();
+
+")
+  op Rule getRuleFromReference(ecore.EReference reference);
   val Rule[*] rules;
 }
 
 class Rule {
- attr ecore.EString symbol;
- attr int[1] lower;
- attr int[1] upper;
- attr boolean[1] opposite;
- attr int oppositeLower;
- attr int oppositeUpper;
- attr boolean[1] containment;
- attr boolean[1] container;
- attr boolean[1] first;
- attr boolean[1] foreignKey;
- attr boolean[1] inverseForeignKey;
- attr boolean readOnly;
- attr boolean cascade;
- attr boolean mandatory;
- attr boolean[1] rangeConstraint;
- attr boolean[1] inverseRangeConstraint;
- attr boolean[1] joinTable;
+  attr String symbol;
+  attr int[1] lower;
+  attr int[1] upper;
+  attr boolean[1] opposite;
+  attr int oppositeLower;
+  attr int oppositeUpper;
+  attr boolean[1] containment;
+  attr boolean[1] container;
+  attr boolean[1] first;
+  attr boolean[1] foreignKey;
+  attr boolean[1] inverseForeignKey;
+  attr boolean readOnly;
+  attr boolean cascade;
+  attr boolean mandatory;
+  attr boolean[1] rangeConstraint;
+  attr boolean[1] inverseRangeConstraint;
+  attr boolean[1] joinTable;
 }
 
