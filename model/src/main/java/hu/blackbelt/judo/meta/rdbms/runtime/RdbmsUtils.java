@@ -11,8 +11,15 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport.rdbmsModelResourceSupportBuilder;
 import static hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsBuilders.*;
@@ -53,6 +60,23 @@ public class RdbmsUtils {
 
     public RdbmsModelResourceSupport getRdbmsModelResourceSupport() {
         return rdbmsModelResourceSupport;
+    }
+
+    public static boolean isSqlScriptPathValid(String sqlScriptPath) {
+        return (new File(sqlScriptPath)).exists();
+    }
+
+    public static boolean isSqlScriptEmpty(String sqlScriptPath) throws IOException {
+        if (isSqlScriptPathValid(sqlScriptPath)) {
+            File file = new File(sqlScriptPath);
+            Path filePath = Paths.get(file.toURI());
+            return Files.readAllLines(filePath).stream().map(l -> l.trim()).allMatch(l -> l.isEmpty());
+        }
+        return true;
+    }
+
+    public static String getSqlScriptAbsolutePath(String sqlScriptPath) {
+        return (new File(sqlScriptPath)).getAbsolutePath();
     }
 
     //////////////////////////////////////////////////
@@ -104,8 +128,8 @@ public class RdbmsUtils {
         BasicEList<RdbmsTable> rdbmsTables = new BasicEList<>();
         rdbmsModelResourceSupport.getStreamOfRdbmsRdbmsTable().forEach(rdbmsTables::add);
         return !rdbmsTables.isEmpty()
-                ? Optional.of(rdbmsTables)
-                : Optional.empty();
+               ? Optional.of(rdbmsTables)
+               : Optional.empty();
     }
 
     /**
@@ -116,13 +140,25 @@ public class RdbmsUtils {
      */
     public Optional<RdbmsTable> getRdbmsTable(String rdbmsTableName) {
         return getRdbmsTables().isPresent()
-                ? getRdbmsTables().get().stream().filter(o -> rdbmsTableName.equals(o.getName())).findAny()
-                : Optional.empty();
+               ? getRdbmsTables().get().stream().filter(o -> rdbmsTableName.equals(o.getName())).findAny()
+               : Optional.empty();
     }
 
     //////////////////////////////////////////////////
     //////////////////// FIELDS //////////////////////
     //////////////////////////////////////////////////
+
+    /**
+     * Get all RdbmsField from RdbmsModel
+     *
+     * @return Optional list of RdbmsFields
+     */
+    public Optional<List<RdbmsField>> getAllRdbmsField() {
+        final List<RdbmsField> rdbmsFields = rdbmsModelResourceSupport.getStreamOfRdbmsRdbmsField().collect(Collectors.toList());
+        return !rdbmsFields.isEmpty()
+               ? Optional.of(rdbmsFields)
+               : Optional.empty();
+    }
 
     /**
      * Get all RdbmsField from certain RdbmsTable
@@ -132,8 +168,8 @@ public class RdbmsUtils {
      */
     public Optional<EList<RdbmsField>> getRdbmsFields(String rdbmsTableName) {
         return getRdbmsTable(rdbmsTableName).isPresent() && !getRdbmsTable(rdbmsTableName).get().getFields().isEmpty()
-                ? Optional.of(getRdbmsTable(rdbmsTableName).get().getFields())
-                : Optional.empty();
+               ? Optional.of(getRdbmsTable(rdbmsTableName).get().getFields())
+               : Optional.empty();
     }
 
     /**
@@ -145,8 +181,8 @@ public class RdbmsUtils {
      */
     public Optional<RdbmsField> getRdbmsField(String rdbmsTableName, String rdbmsFieldName) {
         return getRdbmsFields(rdbmsTableName).isPresent()
-                ? getRdbmsFields(rdbmsTableName).get().stream().filter(o -> rdbmsFieldName.equals(o.getName())).findAny()
-                : Optional.empty();
+               ? getRdbmsFields(rdbmsTableName).get().stream().filter(o -> rdbmsFieldName.equals(o.getName())).findAny()
+               : Optional.empty();
     }
 
     //////////////////////////////////////////////////
@@ -169,8 +205,8 @@ public class RdbmsUtils {
             }
         });
         return getRdbmsFields(rdbmsTableName).isPresent() && !rdbmsForeignKeys.isEmpty()
-                ? Optional.of(rdbmsForeignKeys)
-                : Optional.empty();
+               ? Optional.of(rdbmsForeignKeys)
+               : Optional.empty();
     }
 
     /**
@@ -182,8 +218,8 @@ public class RdbmsUtils {
      */
     public Optional<RdbmsForeignKey> getRdbmsForeignKey(String rdbmsTableName, String rdbmsForeignKeyName) {
         return getRdbmsForeignKeys(rdbmsTableName).isPresent()
-                ? getRdbmsForeignKeys(rdbmsTableName).get().stream().filter(o -> rdbmsForeignKeyName.equals(o.getName())).findAny()
-                : Optional.empty();
+               ? getRdbmsForeignKeys(rdbmsTableName).get().stream().filter(o -> rdbmsForeignKeyName.equals(o.getName())).findAny()
+               : Optional.empty();
     }
 
     //////////////////////////////////////////////////
@@ -301,8 +337,8 @@ public class RdbmsUtils {
             }
         });
         return !rdbmsJunctionTables.isEmpty()
-                ? Optional.of(rdbmsJunctionTables)
-                : Optional.empty();
+               ? Optional.of(rdbmsJunctionTables)
+               : Optional.empty();
     }
 
     /**
@@ -313,8 +349,8 @@ public class RdbmsUtils {
      */
     public Optional<RdbmsJunctionTable> getRdbmsJunctionTable(String rdbmsJunctionTableName) {
         return getRdbmsJunctionTables().isPresent()
-                ? getRdbmsJunctionTables().get().stream().filter(o -> rdbmsJunctionTableName.equals(o.getName())).findAny()
-                : Optional.empty();
+               ? getRdbmsJunctionTables().get().stream().filter(o -> rdbmsJunctionTableName.equals(o.getName())).findAny()
+               : Optional.empty();
     }
 
 }

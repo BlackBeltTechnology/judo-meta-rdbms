@@ -119,6 +119,7 @@ public class RdbmsUtilsTest {
         RdbmsUtils rdbmsUtils = new RdbmsUtils(rdbmsModel.getResourceSet());
 
         // ASSERTIONS - check optional.empty
+        assertFalse(rdbmsUtils.getAllRdbmsField().isPresent());
         assertFalse(rdbmsUtils.getRdbmsFields(RDBMS_TABLE_NAME).isPresent());
         assertFalse(rdbmsUtils.getRdbmsField(RDBMS_TABLE_NAME, "_id").isPresent());
 
@@ -129,6 +130,7 @@ public class RdbmsUtilsTest {
         rdbmsUtils = new RdbmsUtils(rdbmsModel.getResourceSet());
 
         // ASSERTIONS
+        assertTrue(rdbmsUtils.getAllRdbmsField().isPresent());
         assertTrue(rdbmsUtils.getRdbmsFields(RDBMS_TABLE_NAME).isPresent());
         assertTrue(rdbmsUtils.getRdbmsField(RDBMS_TABLE_NAME, "_id").isPresent());
     }

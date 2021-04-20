@@ -1,44 +1,90 @@
 operation RDBMS!RdbmsField isSqlNameChanged(field : RDBMS!RdbmsField) : Boolean {
-	return self.sqlName <> field.sqlName;
+    return self.sqlName <> field.sqlName;
 }
 
 operation RDBMS!RdbmsField isMandatoryChanged(field : RDBMS!RdbmsField) : Boolean {
-	return self.mandatory <> field.mandatory;
+    return self.mandatory <> field.mandatory;
 }
 
 operation RDBMS!RdbmsField isSqlTypeChanged(field : RDBMS!RdbmsField) : Boolean {
-	return self.rdbmsTypeName <> field.rdbmsTypeName;
+    return self.rdbmsTypeName <> field.rdbmsTypeName;
 }
 
 operation RDBMS!RdbmsField isSizeChanged(field : RDBMS!RdbmsField) : Boolean {
-	return self.size <> field.size;
+    return self.size <> field.size;
 }
 operation RDBMS!RdbmsField isPrecisionChanged(field : RDBMS!RdbmsField) : Boolean {
-	return self.precision <> field.precision;
+    return self.precision <> field.precision;
 }
 
 operation RDBMS!RdbmsField isScaleChanged(field : RDBMS!RdbmsField) : Boolean {
-	return self.scale <> field.scale;
+    return self.scale <> field.scale;
 }
 
 operation RDBMS!RdbmsField isStorageByteChanged(field : RDBMS!RdbmsField) : Boolean {
-	return self.storageByte <> field.storageByte;
+    return self.storageByte <> field.storageByte;
 }
 
 operation RDBMS!RdbmsField isAnyChanged(field : RDBMS!RdbmsField) : Boolean {
-	return self.isSqlNameChanged(field) 
-			or self.isMandatoryChanged(field) 
-			or self.isSqlTypeChanged(field) 
-			or self.isSizeChanged(field) 
-			or self.isPrecisionChanged(field) 
-			or self.isScaleChanged(field) 
-			or self.isStorageByteChanged(field);
+    return self.isSqlNameChanged(field) 
+            or self.isMandatoryChanged(field) 
+            or self.isSqlTypeChanged(field) 
+            or self.isSizeChanged(field) 
+            or self.isPrecisionChanged(field) 
+            or self.isScaleChanged(field) 
+            or self.isStorageByteChanged(field);
 }
 
 operation RDBMS!RdbmsField isSameFieldType(field : RDBMS!RdbmsField) : Boolean {
-	return (self.isTypeOf(RDBMS!RdbmsIdentifierField) 
-			and field.isTypeOf(RDBMS!RdbmsIdentifierField)) 
-			or (self.isTypeOf(RDBMS!RdbmsValueField) 
-			and field.isTypeOf(RDBMS!RdbmsValueField));
+    return (self.isTypeOf(RDBMS!RdbmsIdentifierField) 
+            and field.isTypeOf(RDBMS!RdbmsIdentifierField)) 
+            or (self.isTypeOf(RDBMS!RdbmsValueField) 
+            and field.isTypeOf(RDBMS!RdbmsValueField));
 }
 
+operation isMandatoryReviewRequired(previousField : RDBMS!RdbmsField, newField : RDBMS!RdbmsField) : Boolean {
+    if (previousField.isMandatoryChanged(newField)) {
+        return not previousField.mandatory and newField.mandatory;
+    }
+    return false;
+}
+
+operation isSqlTypeReviewRequired(previousField : RDBMS!RdbmsField, newField : RDBMS!RdbmsField) : Boolean {
+    return previousField.isSqlTypeChanged(newField);
+}
+
+operation isSizeReviewRequired(previousField : RDBMS!RdbmsField, newField : RDBMS!RdbmsField) : Boolean {
+    if (previousField.isSizeChanged(newField)) {
+        return previousField.size > newField.size;
+    }
+    return false;
+}
+operation isPrecisionReviewRequired(previousField : RDBMS!RdbmsField, newField : RDBMS!RdbmsField) : Boolean {
+    if (previousField.isPrecisionChanged(newField)) {
+        return previousField.precision > newField.precision;
+    }
+    return false;
+}
+
+operation isScaleReviewRequired(previousField : RDBMS!RdbmsField, newField : RDBMS!RdbmsField) : Boolean {
+    if (previousField.isScaleChanged(newField)) {
+        return previousField.scale > newField.scale;
+    }
+    return false;
+}
+
+operation isStorageByteReviewRequired(previousField : RDBMS!RdbmsField, newField : RDBMS!RdbmsField) : Boolean {
+    if (previousField.isStorageByteChanged(newField)) {
+        return previousField.storageByte > newField.storageByte;
+    }
+    return false;
+}
+
+operation isReviewRequired(previousField : RDBMS!RdbmsField, newField : RDBMS!RdbmsField) : Boolean {
+    return isMandatoryReviewRequired(previousField, newField) 
+            or isSqlTypeReviewRequired(previousField, newField) 
+            or isSizeReviewRequired(previousField, newField) 
+            or isPrecisionReviewRequired(previousField, newField) 
+            or isScaleReviewRequired(previousField, newField) 
+            or isStorageByteReviewRequired(previousField, newField);
+}
