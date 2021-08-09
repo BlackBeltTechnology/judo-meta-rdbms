@@ -7,13 +7,13 @@ import hu.blackbelt.judo.meta.rdbms.RdbmsJunctionTable;
 import hu.blackbelt.judo.meta.rdbms.RdbmsTable;
 import hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsForeignKeyBuilder;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
 
-import static hu.blackbelt.judo.meta.rdbms.runtime.RdbmsUtils.newRdbmsJunctionTableBuilderInit;
-import static hu.blackbelt.judo.meta.rdbms.runtime.RdbmsUtils.newRdbmsTableBuilderInit;
+import static hu.blackbelt.judo.meta.rdbms.runtime.RdbmsUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RdbmsUtilsTest {
@@ -231,6 +231,36 @@ public class RdbmsUtilsTest {
                         .orElseThrow(() -> new RuntimeException(RDBMS_JUNCT_TABLE_NAME + " not found"))
         );
 
+    }
+
+    @Test
+    @DisplayName("Test ValidateUniqueXmiids")
+    public void testValidateUniqueXmiids() {
+        RdbmsTable table1 = newRdbmsTableBuilderInit("T1").build();
+        RdbmsTable table2 = newRdbmsTableBuilderInit("T2").build();
+
+        RdbmsModel m = RdbmsModel.buildRdbmsModel().name("M").build();
+
+        m.addContent(table1);
+        m.addContent(table2);
+
+        RdbmsUtils rdbmsUtils = new RdbmsUtils();
+
+        // #1 - no resourceSet
+        IllegalStateException exception = assertThrows(IllegalStateException.class, rdbmsUtils::validateUniqueXmiids);
+        assertEquals(exception.getMessage(), "Model's ResourceSet is unknown (null)");
+
+        // #2 - non-unique
+        rdbmsUtils.setResourceSet(m.getResourceSet());
+        setId(table1, "ID");
+        setId(table2, "ID");
+
+        IllegalStateException exception2 = assertThrows(IllegalStateException.class, rdbmsUtils::validateUniqueXmiids);
+        assertEquals("There are non-unique xmiid-s\nXmiid " + getId(table1) + " must be unique\n", exception2.getMessage());
+
+        // #3 - unique
+        setId(table2, "ID2");
+        assertDoesNotThrow(rdbmsUtils::validateUniqueXmiids);
     }
 
 }
