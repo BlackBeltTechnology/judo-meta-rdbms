@@ -360,19 +360,6 @@ public class RdbmsUtils {
     }
 
     /**
-     * Get stream of source iterator.
-     *
-     * @param sourceIterator source iterator
-     * @param parallel       flag controlling returned stream (serial or parallel)
-     * @param <T>            type of source iterator
-     * @return return serial (parallel = <code>false</code>) or parallel (parallel = <code>true</code>) stream
-     */
-    static <T> Stream<T> asStream(Iterator<T> sourceIterator, boolean parallel) {
-        Iterable<T> iterable = () -> sourceIterator;
-        return StreamSupport.stream(iterable.spliterator(), parallel);
-    }
-
-    /**
      * Get id of {@link EObject} in XML if it has a resource
      *
      * @param eObject {@link EObject} with id
@@ -429,6 +416,19 @@ public class RdbmsUtils {
             nonUniqueXmiids.forEach(id -> builder.append("Xmiid ").append(id).append(" must be unique\n"));
             throw new IllegalStateException("There are non-unique xmiid-s\n" + builder.toString());
         }
+    }
+
+    /**
+     * Get stream of source iterator.
+     *
+     * @param sourceIterator source iterator
+     * @param parallel       flag controlling returned stream (serial or parallel)
+     * @param <T>            type of source iterator
+     * @return return serial (parallel = <code>false</code>) or parallel (parallel = <code>true</code>) stream
+     */
+    static <T> Stream<T> asStream(Iterator<T> sourceIterator, boolean parallel) {
+        Iterable<T> iterable = () -> sourceIterator;
+        return StreamSupport.stream(iterable.spliterator(), parallel);
     }
 
     /**
