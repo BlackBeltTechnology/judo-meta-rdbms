@@ -7,7 +7,9 @@ import hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsJunctionTableBuilder;
 import hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsTableBuilder;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,10 +18,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import static hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport.rdbmsModelResourceSupportBuilder;
 import static hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsBuilders.*;
@@ -56,6 +58,10 @@ public class RdbmsUtils {
 
     public void setFailOnError(final boolean failOnError) {
         this.failOnError = failOnError;
+    }
+
+    public void setResourceSet(ResourceSet resourceSet) {
+        this.resourceSet = resourceSet;
     }
 
     public RdbmsModelResourceSupport getRdbmsModelResourceSupport() {
@@ -351,6 +357,99 @@ public class RdbmsUtils {
         return getRdbmsJunctionTables().isPresent()
                ? getRdbmsJunctionTables().get().stream().filter(o -> rdbmsJunctionTableName.equals(o.getName())).findAny()
                : Optional.empty();
+    }
+
+    /**
+     * Get id of {@link EObject} in XML if it has a resource
+     *
+     * @param eObject {@link EObject} with id
+     * @return <i>eObject's</i> id if it has a resource, null otherwise
+     */
+    public static String getId(EObject eObject) {
+        XMLResource xmlResource = (XMLResource) eObject.eResource();
+        return xmlResource == null
+               ? null
+               : xmlResource.getID(eObject);
+    }
+
+    /**
+     * Set id of {@link EObject} in XML if it has a resource
+     *
+     * @param eObject {@link EObject} with id
+     * @param id      new id
+     * @throws IllegalStateException if <i>eObject</i> does not have a resource
+     */
+    public static void setId(EObject eObject, String id) {
+        XMLResource xmlResource = (XMLResource) eObject.eResource();
+        if (xmlResource == null) {
+            throw new IllegalStateException("Id " + id + " cannot be set: target object " + eObject + " does not have a resource");
+        }
+        xmlResource.setID(eObject, id);
+    }
+
+    /**
+     * Check if all {@link EObject}s' xmiid-s are unique
+     *
+     * @throws IllegalStateException if model's ResourceSet is unknown (null) or duplicates were found
+     * @see RdbmsUtils#RdbmsUtils(ResourceSet)
+     */
+    public void validateUniqueXmiids() {
+        if (resourceSet == null) {
+            throw new IllegalStateException("Model's ResourceSet is unknown (null)");
+        }
+
+        log.debug("Xmiid validation started...");
+        final List<String> ids = all()
+                .filter(o -> o instanceof EObject)
+                .map(o -> getId((EObject) o))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+        final Set<String> nonUniqueXmiids = ids.stream()
+                .filter(id -> {
+                    log.debug("Checking id: " + id);
+                    return ids.stream().filter(id::equals).count() > 1;
+                })
+                .collect(Collectors.toSet());
+
+        if (nonUniqueXmiids.size() != 0) {
+            final StringBuilder builder = new StringBuilder();
+            nonUniqueXmiids.forEach(id -> builder.append("Xmiid ").append(id).append(" must be unique\n"));
+            throw new IllegalStateException("There are non-unique xmiid-s\n" + builder.toString());
+        }
+    }
+
+    /**
+     * Get stream of source iterator.
+     *
+     * @param sourceIterator source iterator
+     * @param parallel       flag controlling returned stream (serial or parallel)
+     * @param <T>            type of source iterator
+     * @return return serial (parallel = <code>false</code>) or parallel (parallel = <code>true</code>) stream
+     */
+    static <T> Stream<T> asStream(Iterator<T> sourceIterator, boolean parallel) {
+        Iterable<T> iterable = () -> sourceIterator;
+        return StreamSupport.stream(iterable.spliterator(), parallel);
+    }
+
+    /**
+     * Get all model elements.
+     *
+     * @param <T> generic type of model elements
+     * @return model elements
+     */
+    <T> Stream<T> all() {
+        return asStream((Iterator<T>) resourceSet.getAllContents(), false);
+    }
+
+    /**
+     * Get model elements with specific type
+     *
+     * @param clazz class of model element types
+     * @param <T>   specific type
+     * @return all elements with clazz type
+     */
+    public <T> Stream<T> all(final Class<T> clazz) {
+        return all().filter(e -> clazz.isAssignableFrom(e.getClass())).map(e -> (T) e);
     }
 
 }
