@@ -7,14 +7,13 @@
     <parent>
         <groupId>hu.blackbelt.judo.meta</groupId>
         <artifactId>hu.blackbelt.judo.meta.rdbms</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../</relativePath>
+        <version>${revision}</version>
     </parent>
     
     <artifactId>hu.blackbelt.judo.meta.rdbms.feature</artifactId>
     <packaging>eclipse-feature</packaging>
 
-    <name>Judo :: Rdbms :: Model :: Eclipse feature</name>
-    <description>Judo Rdbms model feature</description>
+    <name>JUDO :: Rdbms :: Model :: Eclipse feature</name>
+    <description>JUDO Rdbms model feature</description>
     
 </project>

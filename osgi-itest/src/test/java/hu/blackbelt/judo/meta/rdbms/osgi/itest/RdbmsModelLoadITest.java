@@ -5,7 +5,6 @@ import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel;
 import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel.RdbmsValidationException;
 import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel.SaveArguments;
 import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsEpsilonValidator;
-import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel;
 import hu.blackbelt.osgi.utils.osgi.api.BundleTrackerManager;
 
 import org.eclipse.emf.common.util.URI;
@@ -18,12 +17,12 @@ import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerClass;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
-import org.osgi.service.log.LogService;
+import org.osgi.service.log.LoggerFactory;
 
 import javax.inject.Inject;
 import java.io.*;
 
-import static hu.blackbelt.judo.meta.rdbms.osgi.itest.RdbmsKarafFeatureProvider.*;
+import static hu.blackbelt.judo.meta.rdbms.osgi.itest.KarafFeatureProvider.*;
 import static org.junit.Assert.assertFalse;
 import static org.ops4j.pax.exam.CoreOptions.*;
 import static org.ops4j.pax.exam.OptionUtils.combine;
@@ -37,7 +36,7 @@ public class RdbmsModelLoadITest {
     private static final String DEMO = "northwind-rdbms";
 
     @Inject
-    LogService log;
+    LoggerFactory log;
 
     @Inject
     protected BundleTrackerManager bundleTrackerManager;
@@ -51,7 +50,7 @@ public class RdbmsModelLoadITest {
     @Configuration
     public Option[] config() throws IOException, RdbmsValidationException {
 
-        return combine(getRuntimeFeaturesForMetamodel(this.getClass()),
+        return combine(karafConfig(this.getClass()),
                 mavenBundle(maven()
                         .groupId("hu.blackbelt.judo.meta")
                         .artifactId("hu.blackbelt.judo.meta.rdbms.osgi")
@@ -94,7 +93,7 @@ public class RdbmsModelLoadITest {
                     RdbmsEpsilonValidator.calculateRdbmsValidationScriptURI());
 
         } catch (Exception e) {
-            log.log(LogService.LOG_ERROR, logger.getBuffer());
+            log.getLogger(getClass()).error(logger.getBuffer());
             assertFalse(true);
         }
     }

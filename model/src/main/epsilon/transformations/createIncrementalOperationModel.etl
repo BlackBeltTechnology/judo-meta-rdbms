@@ -8,15 +8,15 @@ pre {
 }
 
 post {
-    var previousModel = PREVIOUS!RdbmsModel.all.first();
-    var newModel = NEW!RdbmsModel.all.first();
-    var incrementalModel = INCREMENTAL!RdbmsModel.all.first();
-    var operationMeta = INCREMENTAL!RdbmsOperationMeta.all.first();
+    var previousModel = PREVIOUS!RdbmsModel.all().asSequence().first();
+    var newModel = NEW!RdbmsModel.all().asSequence().first();
+    var incrementalModel = INCREMENTAL!RdbmsModel.all().asSequence().first();
+    var operationMeta = INCREMENTAL!RdbmsOperationMeta.all().asSequence().first();
         
     operationMeta.incrementalModel = incrementalModel;
 
     // Removing operations which have no field and name does not changed
-    for (op in INCREMENTAL!RdbmsModifyTableOperation.all()) {
+    for (op in INCREMENTAL!RdbmsModifyTableOperation.all().asSequence()) {
         if (op.deleteFieldOperations.size() == 0 
                 and op.createFieldOperations.size() == 0 
                 and op.modifyFieldOperations.size() == 0 

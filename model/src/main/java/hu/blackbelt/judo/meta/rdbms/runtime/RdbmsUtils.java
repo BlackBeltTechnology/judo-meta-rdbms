@@ -28,7 +28,6 @@ import static hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsBuilders.*;
 
 public class RdbmsUtils {
     private static final Logger log = LoggerFactory.getLogger(RdbmsUtils.class);
-    private boolean failOnError;
     private ResourceSet resourceSet;
     private RdbmsModelResourceSupport rdbmsModelResourceSupport;
 
@@ -45,8 +44,6 @@ public class RdbmsUtils {
 
     public RdbmsUtils(final ResourceSet resourceSet, final boolean failOnError) {
         this.resourceSet = resourceSet;
-        this.failOnError = failOnError;
-
         rdbmsModelResourceSupport = rdbmsModelResourceSupportBuilder()
                 .resourceSet(resourceSet)
                 .build();
@@ -57,7 +54,6 @@ public class RdbmsUtils {
     //////////////////////////////////////////////////
 
     public void setFailOnError(final boolean failOnError) {
-        this.failOnError = failOnError;
     }
 
     public void setResourceSet(ResourceSet resourceSet) {
@@ -437,7 +433,8 @@ public class RdbmsUtils {
      * @param <T> generic type of model elements
      * @return model elements
      */
-    <T> Stream<T> all() {
+    @SuppressWarnings("unchecked")
+	<T> Stream<T> all() {
         return asStream((Iterator<T>) resourceSet.getAllContents(), false);
     }
 
@@ -448,7 +445,8 @@ public class RdbmsUtils {
      * @param <T>   specific type
      * @return all elements with clazz type
      */
-    public <T> Stream<T> all(final Class<T> clazz) {
+    @SuppressWarnings("unchecked")
+	public <T> Stream<T> all(final Class<T> clazz) {
         return all().filter(e -> clazz.isAssignableFrom(e.getClass())).map(e -> (T) e);
     }
 
