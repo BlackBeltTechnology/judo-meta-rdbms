@@ -742,7 +742,7 @@
             <id>modules</id>
             <activation>
                 <property>
-                    <name>skipModels</name>
+                    <name>skipModules</name>
                     <value>!true</value>
                 </property>
             </activation>
