@@ -62,21 +62,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.eclipse.emf</groupId>
-			<artifactId>org.eclipse.emf.common</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.emf</groupId>
-			<artifactId>org.eclipse.emf.ecore</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.emf</groupId>
-			<artifactId>org.eclipse.emf.ecore.xmi</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
 			<groupId>hu.blackbelt.osgi.utils</groupId>
 			<artifactId>osgi-api</artifactId>
 			<scope>compile</scope>

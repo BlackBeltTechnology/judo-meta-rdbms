@@ -54,15 +54,14 @@ public class KarafFeatureProvider {
     public static int getKarafPort() {
         String karafPort =  System.getProperty("karafPort");
         if (karafPort == null) {
-            throw new RuntimeException("Karaf port is not set");
+            return getFreePort();
         }
         return Integer.parseInt(karafPort);
     }
 
     public static Option[] karafConfig(Class<?> clazz) throws MalformedURLException {
-        String startPort = Integer.toString(getFreePort());
-        return combine(configureVmOptions(), new Option[] {
-                // KarafDistributionOption.debugConfiguration("5005", true),
+        String startPort = Integer.toString(getKarafPort());
+        return combine(configureVmOptions(), // KarafDistributionOption.debugConfiguration("5005", true),
                 karafDistributionConfiguration()
                         .frameworkUrl(karafUrl())
                         .unpackDirectory(new File("target", "exam"))
@@ -102,8 +101,7 @@ public class KarafFeatureProvider {
                                 .groupId(SERVICEMIX_BUNDLES_GROUPID)
                                 .artifactId(HAMCREST)
                                 .versionAsInProject().start()
-                )
-        });
+                ));
     }
 
     public static Option[] configureVmOptions() {
@@ -158,9 +156,9 @@ public class KarafFeatureProvider {
     /**
      * Explodes the dictionary into a ,-delimited list of key=value pairs
      */
-    public static String explode(Dictionary<?, ?> dictionary) {
-        Enumeration<?> keys = dictionary.keys();
-        StringBuffer result = new StringBuffer();
+    public static String explode(Dictionary<String, String> dictionary) {
+        Enumeration<String> keys = dictionary.keys();
+        StringBuilder result = new StringBuilder();
         while (keys.hasMoreElements()) {
             Object key = keys.nextElement();
             result.append(String.format("%s=%s", key, dictionary.get(key)));
@@ -176,8 +174,8 @@ public class KarafFeatureProvider {
      * is null
      */
     @SuppressWarnings("rawtypes")
-	public static Collection<ServiceReference> asCollection(ServiceReference[] references) {
-        return references != null ? Arrays.asList(references) : Collections.<ServiceReference> emptyList();
+    public static Collection<ServiceReference> asCollection(ServiceReference[] references) {
+        return references != null ? Arrays.asList(references) : Collections.emptyList();
     }
 
 
@@ -189,8 +187,9 @@ public class KarafFeatureProvider {
         return getOsgiService(bundleContext, type, null, SERVICE_TIMEOUT);
     }
 
+    @SuppressWarnings("unchecked")
     public static  <T> T getOsgiService(BundleContext bundleContext, Class<T> type, String filter, long timeout) {
-        ServiceTracker<?, ?> tracker = null;
+        ServiceTracker<T, T> tracker;
         try {
             String flt;
             if (filter != null) {
@@ -212,11 +211,11 @@ public class KarafFeatureProvider {
                 Dictionary<String, String> dic = bundleContext.getBundle().getHeaders();
                 System.err.println("Test bundle headers: " + explode(dic));
 
-                for (ServiceReference<?> ref : asCollection(bundleContext.getAllServiceReferences(null, null))) {
+                for (ServiceReference<T> ref : asCollection(bundleContext.getAllServiceReferences(null, null))) {
                     System.err.println("ServiceReference: " + ref);
                 }
 
-                for (ServiceReference<?> ref : asCollection(bundleContext.getAllServiceReferences(null, flt))) {
+                for (ServiceReference<T> ref : asCollection(bundleContext.getAllServiceReferences(null, flt))) {
                     System.err.println("Filtered ServiceReference: " + ref);
                 }
 
@@ -231,7 +230,7 @@ public class KarafFeatureProvider {
     }
 
 
-    public static File testTargetDir(Class clazz){
+    public static File testTargetDir(Class<?> clazz){
         String relPath = clazz.getProtectionDomain().getCodeSource().getLocation().getFile();
         File targetDir = new File(relPath);
         if(!targetDir.exists()) {
@@ -306,6 +305,4 @@ public class KarafFeatureProvider {
         long interval = Math.min(remaining, 1000);
         Thread.sleep(interval);
     }
-
-
 }
