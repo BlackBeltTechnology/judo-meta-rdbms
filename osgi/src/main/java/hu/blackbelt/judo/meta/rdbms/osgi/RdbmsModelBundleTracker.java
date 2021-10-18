@@ -111,7 +111,7 @@ public class RdbmsModelBundleTracker {
                                 registerRdbmsDataTypesMetamodel(rdbmsModel.getResourceSet());
                                 registerRdbmsTableMappingRulesMetamodel(rdbmsModel.getResourceSet());
 
-                                rdbmsModel.loadRdbmsModel(
+                                RdbmsModel.loadRdbmsModel(
                                         RdbmsModel.LoadArguments.rdbmsLoadArgumentsBuilder()
                                                 .inputStream(trackedBundle.getEntry(params.get("file")).openStream())
                                                 .name(params.get(RdbmsModel.NAME))

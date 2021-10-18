@@ -17,7 +17,6 @@ import java.util.Arrays;
 import hu.blackbelt.epsilon.runtime.execution.ExecutionContext;
 import hu.blackbelt.epsilon.runtime.execution.api.Log;
 import hu.blackbelt.epsilon.runtime.execution.exceptions.ScriptExecutionException;
-import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel;
 
 public class RdbmsEpsilonValidator {
 	

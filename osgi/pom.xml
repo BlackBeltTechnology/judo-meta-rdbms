@@ -6,21 +6,20 @@
 	<parent>
 		<groupId>hu.blackbelt.judo.meta</groupId>
 		<artifactId>hu.blackbelt.judo.meta.rdbms</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
-		<relativePath>../</relativePath>
+		<version>${revision}</version>
 	</parent>
 	<artifactId>hu.blackbelt.judo.meta.rdbms.osgi</artifactId>
 	<packaging>bundle</packaging>
 
-	<name>Judo :: Rdbms :: Model :: OSGi</name>
-	<description>Judo Rdbms Model OSGI Runtime</description>
+	<name>JUDO :: Rdbms :: Model :: OSGi</name>
+	<description>JUDO Rdbms Model OSGI Runtime</description>
 
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
-				<version>3.3.0</version>
+				<version>5.1.2</version>
 				<extensions>true</extensions>
 				<configuration>
 					<obrRepository>NONE</obrRepository>
@@ -47,15 +46,26 @@
 		<dependency>
 			<groupId>hu.blackbelt.epsilon</groupId>
 			<artifactId>epsilon-runtime-osgi</artifactId>
-			<version>${epsilon-runtime-version}</version>
 			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>hu.blackbelt.epsilon</groupId>
 			<artifactId>epsilon-runtime-execution</artifactId>
-			<version>${epsilon-runtime-version}</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>27.1-jre</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>hu.blackbelt.osgi.utils</groupId>
+			<artifactId>osgi-api</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
 	</dependencies>
 </project>

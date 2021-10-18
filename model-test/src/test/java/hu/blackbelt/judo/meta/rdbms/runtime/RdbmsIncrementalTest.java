@@ -7,9 +7,7 @@ import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel.RdbmsValidationException;
 import org.eclipse.epsilon.common.util.UriUtil;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -105,7 +103,7 @@ public class RdbmsIncrementalTest {
 
     }
 
-    private URI getUri(Class clazz, String file) throws URISyntaxException {
+    private URI getUri(Class<?> clazz, String file) throws URISyntaxException {
         URI psmRoot = clazz.getProtectionDomain().getCodeSource().getLocation().toURI();
         if (psmRoot.toString().endsWith(".jar")) {
             psmRoot = new URI("jar:" + psmRoot.toString() + "!/" + file);
