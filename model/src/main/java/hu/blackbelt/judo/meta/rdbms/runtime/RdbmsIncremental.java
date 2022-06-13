@@ -3,9 +3,8 @@ package hu.blackbelt.judo.meta.rdbms.runtime;
 import hu.blackbelt.epsilon.runtime.execution.ExecutionContext;
 import hu.blackbelt.epsilon.runtime.execution.api.Log;
 import hu.blackbelt.epsilon.runtime.execution.contexts.ProgramParameter;
-import hu.blackbelt.epsilon.runtime.execution.impl.Slf4jLog;
+import hu.blackbelt.epsilon.runtime.execution.impl.BufferedSlf4jLogger;
 import org.eclipse.epsilon.common.util.UriUtil;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URI;
@@ -19,14 +18,14 @@ import static java.util.Arrays.asList;
 
 public class RdbmsIncremental {
 
-    private static final Logger log = LoggerFactory.getLogger(RdbmsIncremental.class);
-
     public static void transformRdbmsIncrementalModel(RdbmsModel originalModel,
                                                       RdbmsModel newModel,
                                                       RdbmsModel incrementalRdbmsModel,
                                                       String dialect,
                                                       boolean mergeModels) throws Exception {
-        transformRdbmsIncrementalModel(originalModel, newModel, incrementalRdbmsModel, new Slf4jLog(log), calculateRdbmsTransformationScriptURI(), dialect, mergeModels);
+        try (Log bufferedLog = new BufferedSlf4jLogger(LoggerFactory.getLogger(RdbmsIncremental.class))) {
+            transformRdbmsIncrementalModel(originalModel, newModel, incrementalRdbmsModel, bufferedLog, calculateRdbmsTransformationScriptURI(), dialect, mergeModels);
+        }
     }
 
     public static void transformRdbmsIncrementalModel(RdbmsModel originalModel,
