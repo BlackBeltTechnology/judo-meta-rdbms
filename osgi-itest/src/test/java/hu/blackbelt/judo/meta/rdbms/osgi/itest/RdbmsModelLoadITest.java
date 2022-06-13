@@ -1,12 +1,12 @@
 package hu.blackbelt.judo.meta.rdbms.osgi.itest;
 
-import hu.blackbelt.epsilon.runtime.execution.impl.StringBuilderLogger;
+import hu.blackbelt.epsilon.runtime.execution.api.Log;
+import hu.blackbelt.epsilon.runtime.execution.impl.BufferedSlf4jLogger;
 import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel;
 import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel.RdbmsValidationException;
 import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel.SaveArguments;
-import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsEpsilonValidator;
 import hu.blackbelt.osgi.utils.osgi.api.BundleTrackerManager;
-
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.emf.common.util.URI;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,13 +17,13 @@ import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerClass;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
-import org.osgi.service.log.LoggerFactory;
 
 import javax.inject.Inject;
 import java.io.*;
 
-import static hu.blackbelt.judo.meta.rdbms.osgi.itest.KarafFeatureProvider.*;
-import static org.junit.Assert.assertFalse;
+import static hu.blackbelt.judo.meta.rdbms.osgi.itest.KarafFeatureProvider.karafConfig;
+import static hu.blackbelt.judo.meta.rdbms.runtime.RdbmsEpsilonValidator.calculateRdbmsValidationScriptURI;
+import static hu.blackbelt.judo.meta.rdbms.runtime.RdbmsEpsilonValidator.validateRdbms;
 import static org.ops4j.pax.exam.CoreOptions.*;
 import static org.ops4j.pax.exam.OptionUtils.combine;
 import static org.ops4j.pax.tinybundles.core.TinyBundles.bundle;
@@ -31,12 +31,10 @@ import static org.ops4j.pax.tinybundles.core.TinyBundles.withBnd;
 
 @RunWith(PaxExam.class)
 @ExamReactorStrategy(PerClass.class)
+@Slf4j
 public class RdbmsModelLoadITest {
 
     private static final String DEMO = "northwind-rdbms";
-
-    @Inject
-    LoggerFactory log;
 
     @Inject
     protected BundleTrackerManager bundleTrackerManager;
@@ -85,16 +83,9 @@ public class RdbmsModelLoadITest {
     }
 
     @Test
-    public void testModelValidation() {
-        StringBuilderLogger logger = new StringBuilderLogger(StringBuilderLogger.LogLevel.DEBUG);
-        try {
-            RdbmsEpsilonValidator.validateRdbms(logger,
-                    rdbmsModel,
-                    RdbmsEpsilonValidator.calculateRdbmsValidationScriptURI());
-
-        } catch (Exception e) {
-            log.getLogger(getClass()).error(logger.getBuffer());
-            assertFalse(true);
+    public void testModelValidation() throws Exception {
+        try (Log bufferedLog = new BufferedSlf4jLogger(log)) {
+            validateRdbms(bufferedLog, rdbmsModel, calculateRdbmsValidationScriptURI());
         }
     }
 }

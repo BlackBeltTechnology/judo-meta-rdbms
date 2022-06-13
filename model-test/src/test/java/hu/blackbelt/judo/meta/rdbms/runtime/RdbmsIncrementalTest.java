@@ -2,8 +2,10 @@ package hu.blackbelt.judo.meta.rdbms.runtime;
 
 import com.google.common.collect.ImmutableList;
 import hu.blackbelt.epsilon.runtime.execution.ExecutionContext;
-import hu.blackbelt.epsilon.runtime.execution.impl.Slf4jLog;
+import hu.blackbelt.epsilon.runtime.execution.api.Log;
+import hu.blackbelt.epsilon.runtime.execution.impl.BufferedSlf4jLogger;
 import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel.RdbmsValidationException;
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.epsilon.common.util.UriUtil;
 import org.junit.jupiter.api.Test;
 
@@ -22,6 +24,7 @@ import static java.lang.String.format;
 import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.fail;
 
+@Slf4j
 public class RdbmsIncrementalTest {
 
     private static final String ORIGINAL_MODEL_NAME = "OriginalModel";
@@ -34,27 +37,30 @@ public class RdbmsIncrementalTest {
         RdbmsModel newModel = buildRdbmsModel().name("NewModel").build();
 
         // Execution context
-        ExecutionContext excelToRdbmsEtlContext = executionContextBuilder()
-                .resourceSet(originalModel.getResourceSet())
-                .modelContexts(ImmutableList.of(
-                        excelModelContextBuilder()
-                                .name("EXCEL")
-                                .aliases(singletonList("XLS"))
-                                .excel(getUri(this.getClass(), "RdbmsIncrementalTests.xlsx").toString())
-                                .excelConfiguration(getUri(this.getClass(), "mapping.xml").toString())
-                                .build(),
-                        wrappedEmfModelContextBuilder()
-                                .name("ORIGINAL_MODEL")
-                                .aliases(singletonList("ORIGINAL"))
-                                .resource(originalModel.getResource())
-                                .build(),
-                        wrappedEmfModelContextBuilder()
-                                .name("NEW_MODEL")
-                                .aliases(singletonList("NEW"))
-                                .resource(newModel.getResource())
-                                .build()))
-
-                .build();
+        ExecutionContext excelToRdbmsEtlContext;
+        try (Log bufferedLog = new BufferedSlf4jLogger(log)) {
+            excelToRdbmsEtlContext = executionContextBuilder()
+                    .resourceSet(originalModel.getResourceSet())
+                    .log(bufferedLog)
+                    .modelContexts(ImmutableList.of(
+                            excelModelContextBuilder()
+                                    .name("EXCEL")
+                                    .aliases(singletonList("XLS"))
+                                    .excel(getUri(this.getClass(), "RdbmsIncrementalTests.xlsx").toString())
+                                    .excelConfiguration(getUri(this.getClass(), "mapping.xml").toString())
+                                    .build(),
+                            wrappedEmfModelContextBuilder()
+                                    .name("ORIGINAL_MODEL")
+                                    .aliases(singletonList("ORIGINAL"))
+                                    .resource(originalModel.getResource())
+                                    .build(),
+                            wrappedEmfModelContextBuilder()
+                                    .name("NEW_MODEL")
+                                    .aliases(singletonList("NEW"))
+                                    .resource(newModel.getResource())
+                                    .build()))
+                    .build();
+        }
 
         excelToRdbmsEtlContext.load();
 
@@ -76,22 +82,24 @@ public class RdbmsIncrementalTest {
         saveRdbms(incrementalRdbmsModel);
 
         // Execution context
-        ExecutionContext testIncrementalModelContext = executionContextBuilder()
-                .resourceSet(originalModel.getResourceSet())
-                .log(new Slf4jLog())
-                .modelContexts(ImmutableList.of(
-                        excelModelContextBuilder()
-                                .name("EXCEL")
-                                .aliases(singletonList("XLS"))
-                                .excel(getUri(this.getClass(), "RdbmsIncrementalTests.xlsx").toString())
-                                .excelConfiguration(getUri(this.getClass(), "mapping.xml").toString())
-                                .build(),
-                		wrappedEmfModelContextBuilder()
-                                .name("INCREMENTAL")
-                                .resource(incrementalRdbmsModel.getResource())
-                                .build()))
-
-                .build();
+        ExecutionContext testIncrementalModelContext;
+        try (Log bufferedLog = new BufferedSlf4jLogger(log)) {
+            testIncrementalModelContext = executionContextBuilder()
+                    .resourceSet(originalModel.getResourceSet())
+                    .log(bufferedLog)
+                    .modelContexts(ImmutableList.of(
+                            excelModelContextBuilder()
+                                    .name("EXCEL")
+                                    .aliases(singletonList("XLS"))
+                                    .excel(getUri(this.getClass(), "RdbmsIncrementalTests.xlsx").toString())
+                                    .excelConfiguration(getUri(this.getClass(), "mapping.xml").toString())
+                                    .build(),
+                            wrappedEmfModelContextBuilder()
+                                    .name("INCREMENTAL")
+                                    .resource(incrementalRdbmsModel.getResource())
+                                    .build()))
+                    .build();
+        }
 
         testIncrementalModelContext.load();
 
