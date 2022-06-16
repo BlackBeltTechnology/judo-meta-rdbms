@@ -1,14 +1,9 @@
 package hu.blackbelt.judo.meta.rdbms.runtime;
 
-import hu.blackbelt.epsilon.runtime.execution.api.Log;
-import hu.blackbelt.epsilon.runtime.execution.impl.Slf4jLog;
-import hu.blackbelt.judo.meta.rdbms.RdbmsForeignKey;
-import hu.blackbelt.judo.meta.rdbms.RdbmsJunctionTable;
-import hu.blackbelt.judo.meta.rdbms.RdbmsTable;
+import hu.blackbelt.judo.meta.rdbms.*;
 import hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsForeignKeyBuilder;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,9 +11,9 @@ import java.io.IOException;
 import static hu.blackbelt.judo.meta.rdbms.runtime.RdbmsUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+@Slf4j
 public class RdbmsUtilsTest {
 
-    private static final Log log = new Slf4jLog();
     private static final String TARGET_FOLDER = "target/test-classes";
 
     private static void saveModel(RdbmsModel rdbmsModel) {
