@@ -109,17 +109,19 @@ public class RdbmsUtils {
      * <p>Creates a new RdbmsTableBuilder.</p>
      * <p>Filled attributes are:</p>
      * <ol>
-     *     <li>ID field:</li>
+     *     <li>ID field:
      *          <ul>
      *              <li>Name</li>
      *              <li>UUID</li>
      *          </ul>
-     *     <li>Table:</li>
+     *     </li>
+     *     <li>Table:
      *          <ul>
      *              <li>Primary key</li>
      *              <li>Name</li>
      *              <li>UUID</li>
      *          </ul>
+     *      </li>
      * </ol>
      *
      * @param tableName RdbmsTable's name
@@ -251,19 +253,21 @@ public class RdbmsUtils {
     /**
      * <p>Creates a new RdbmsJunctionTableBuilder</p>
      * <ol>
-     *     <li>ID field:</li>
+     *     <li>ID field:
      *          <ul>
      *              <li>Name</li>
      *              <li>UUID</li>
      *          </ul>
-     *     <li>rdbmsForeignKey1 and rdbmsForeignKey2</li>
+     *     </li>
+     *     <li>rdbmsForeignKey1 and rdbmsForeignKey2:
      *          <ul>
      *              <li>Name</li>
      *              <li>UUID</li>
      *              <li>ReferenceKey</li>
      *              <li>ForeignKeySqlName</li>
      *          </ul>
-     *     <li>RdbmsJunctionTable</li>
+     *     </li>
+     *     <li>RdbmsJunctionTable:
      *          <ul>
      *              <li>Name</li>
      *              <li>UUID</li>
@@ -271,6 +275,7 @@ public class RdbmsUtils {
      *              <li>Field1</li>
      *              <li>Field2</li>
      *          </ul>
+     *     </li>
      * </ol>
      *
      * @param tableName   RdbmsJunctionTable's name
@@ -313,17 +318,19 @@ public class RdbmsUtils {
     /**
      * <p>Creates a new RdbmsJunctionTableBuilder</p>
      * <ol>
-     *     <li>ID field:</li>
+     *     <li>ID field:
      *          <ul>
      *              <li>Name</li>
      *              <li>UUID</li>
      *          </ul>
-     *     <li>RdbmsJunctionTable</li>
+     *     </li>
+     *     <li>RdbmsJunctionTable:
      *          <ul>
      *              <li>Name</li>
      *              <li>UUID</li>
      *              <li>PrimaryKey</li>
      *          </ul>
+     *     </li>
      * </ol>
      *
      * @param tableName RdbmsJunctionTable's name
