@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ <copyright>
+ </copyright>
+
+ $Id$
+-->
+<plugin>
+    <extension
+            point="org.eclipse.epsilon.evl.emf.validation">
+        <constraintsBinding
+                constraints="validations/rdbms-plugin-validation.evl"
+                modelName="RDBMS"
+                namespaceURI="http://blackbelt.hu/judo/meta/rdbms">
+            <!-- All packages have to register
+            <additionalNamespaceURI
+                    namespaceURI="http://blackbelt.hu/judo/meta/rdbms/subpackage">
+            </additionalNamespaceURI>
+            -->
+        </constraintsBinding>
+    </extension>
+    <extension
+            point="org.eclipse.ui.ide.markerResolution">
+        <markerResolutionGenerator
+                class="org.eclipse.epsilon.evl.emf.validation.EvlMarkerResolutionGenerator"
+                markerType="org.eclipse.emf.ecore.diagnostic">
+        </markerResolutionGenerator>
+        <markerResolutionGenerator
+                class="org.eclipse.epsilon.evl.emf.validation.EvlMarkerResolutionGenerator"
+                markerType="org.eclipse.emf.ecoretools.diagram.diagnostic">
+        </markerResolutionGenerator>
+    </extension>
+    <extension
+            point="org.eclipse.epsilon.common.dt.tool">
+        <tool
+                class="hu.blackbelt.judo.meta.rdbms.runtime.RdbmsUtils"
+                defaultName="rdbmsUtils"/>
+    </extension>
+
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated rdbms -->
+      <package
+            uri="http://blackbelt.hu/judo/meta/rdbms"
+            class="hu.blackbelt.judo.meta.rdbms.RdbmsPackage"
+            genModel="model/rdbms.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated rdbms -->
+      <parser
+            type="rdbms"
+            class="hu.blackbelt.judo.meta.rdbms.util.RdbmsResourceFactoryImpl"/>
+   </extension>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated rdbms-tablemappingrules -->
+      <package
+            uri="http://blackbelt.hu/judo/meta/rdbms/rules"
+            class="hu.blackbelt.judo.meta.rdbmsRules.RdbmsRulesPackage"
+            genModel="model/rdbms-tablemappingrules.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated rdbms-tablemappingrules -->
+      <parser
+            type="rdbms-tabslemappingrules"
+            class="hu.blackbelt.judo.meta.rdbmsRules.util.RdbmsRulesResourceFactoryImpl"/>
+   </extension>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated rdbms-namemapping -->
+      <package
+            uri="http://blackbelt.hu/judo/meta/rdbms/namemapping"
+            class="hu.blackbelt.judo.meta.rdbmsNameMapping.RdbmsNameMappingPackage"
+            genModel="model/rdbms-namemapping.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated rdbms-namemapping -->
+      <parser
+            type="rdbms-namemapping"
+            class="hu.blackbelt.judo.meta.rdbmsNameMapping.util.RdbmsNameMappingResourceFactoryImpl"/>
+   </extension>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated rdbms-datatypes -->
+      <package
+            uri="http://blackbelt.hu/judo/meta/rdbms/datatypes"
+            class="hu.blackbelt.judo.meta.rdbmsDataTypes.RdbmsDataTypesPackage"
+            genModel="model/rdbms-datatypes.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated rdbms-datatypes -->
+      <parser
+            type="rdbms-datatypes"
+            class="hu.blackbelt.judo.meta.rdbmsDataTypes.util.RdbmsDataTypesResourceFactoryImpl"/>
+   </extension>
+</plugin>

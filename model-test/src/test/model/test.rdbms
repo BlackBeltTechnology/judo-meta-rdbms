@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ASCII"?>
+<rdbms:RdbmsModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:rdbms="http://blackbelt.hu/judo/meta/rdbms">
+  <configuration dialect="postgresql"/>
+</rdbms:RdbmsModel>
