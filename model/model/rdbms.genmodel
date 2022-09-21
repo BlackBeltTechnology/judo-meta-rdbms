@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/hu.blackbelt.judo.meta.rdbms.model/src-gen" modelPluginID="hu.blackbelt.judo.meta.rdbms.model"
+    modelName="Rdbms" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    testsDirectory="" importerID="org.eclipse.emf.importer.ecore" featureDelegation="Dynamic"
+    complianceLevel="11.0" copyrightFields="false" operationReflection="true" importOrganizing="true"
+    oSGiCompatible="true" updateClasspath="false">
+  <foreignModel>rdbms.ecore</foreignModel>
+  <genPackages prefix="Rdbms" basePackage="hu.blackbelt.judo.meta" resource="XMI"
+      disposableProviderFactory="true" dataTypeConverters="true" extensibleProviderFactory="true"
+      childCreationExtenders="true" fileExtensions="rdbms" ecorePackage="rdbms.ecore#/">
+    <genClasses image="false" ecoreClass="rdbms.ecore#//RdbmsElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsElement/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsElement/uuid"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsElement/shortName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsElement/fullName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsElement/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsElement/sqlName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsElement/originalName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsElement/originalPackage"/>
+    </genClasses>
+    <genClasses ecoreClass="rdbms.ecore#//RdbmsTable">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsTable/primaryKey"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsTable/parents"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsTable/fields"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsTable/indexes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsTable/uniqueConstraints"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rdbms.ecore#//RdbmsField">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsField/mandatory"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsField/rdbmsTypeName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsField/size"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsField/precision"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsField/scale"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsField/storageByte"/>
+    </genClasses>
+    <genClasses ecoreClass="rdbms.ecore#//RdbmsForeignKey">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsForeignKey/referenceKey"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsForeignKey/inheritenceBased"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsForeignKey/foreignKeySqlName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsForeignKey/deleteOnCascade"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsForeignKey/deferred"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsForeignKey/readOnly"/>
+    </genClasses>
+    <genClasses ecoreClass="rdbms.ecore#//RdbmsUniqueConstraint">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsUniqueConstraint/fields"/>
+    </genClasses>
+    <genClasses ecoreClass="rdbms.ecore#//RdbmsJunctionTable">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsJunctionTable/field1"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsJunctionTable/field2"/>
+    </genClasses>
+    <genClasses ecoreClass="rdbms.ecore#//RdbmsIdentifierField">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsIdentifierField/foreignKeys"/>
+    </genClasses>
+    <genClasses ecoreClass="rdbms.ecore#//RdbmsModel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsModel/rdbmsTables"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsModel/configuration"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsModel/version"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsModel/tableOperations"/>
+    </genClasses>
+    <genClasses ecoreClass="rdbms.ecore#//RdbmsValueField">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsValueField/technical"/>
+    </genClasses>
+    <genClasses ecoreClass="rdbms.ecore#//RdbmsConfiguration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsConfiguration/dialect"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsConfiguration/features"/>
+    </genClasses>
+    <genClasses ecoreClass="rdbms.ecore#//RdbmsFeature">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsFeature/name"/>
+    </genClasses>
+    <genClasses ecoreClass="rdbms.ecore#//RdbmsModifyTableOperation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsModifyTableOperation/createFieldOperations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsModifyTableOperation/modifyFieldOperations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsModifyTableOperation/deleteFieldOperations"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsModifyTableOperation/previousTable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsModifyTableOperation/nameChanged"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rdbms.ecore#//RdbmsFieldOperation">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsFieldOperation/field"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsFieldOperation/reviewRequired"/>
+    </genClasses>
+    <genClasses ecoreClass="rdbms.ecore#//RdbmsCreateFieldOperation"/>
+    <genClasses ecoreClass="rdbms.ecore#//RdbmsModifyFieldOperation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsModifyFieldOperation/typeChanged"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsModifyFieldOperation/mandatoryChanged"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsModifyFieldOperation/previousField"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsModifyFieldOperation/sizeChanged"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsModifyFieldOperation/nameChanged"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsModifyFieldOperation/changedValueFieldToForeignKey"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsModifyFieldOperation/changedForeignKeyToValueField"/>
+    </genClasses>
+    <genClasses ecoreClass="rdbms.ecore#//RdbmsDeleteFieldOperation"/>
+    <genClasses ecoreClass="rdbms.ecore#//RdbmsIndex">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsIndex/fields"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdbms.ecore#//RdbmsIndex/unique"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rdbms.ecore#//RdbmsTableOperation">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsTableOperation/table"/>
+    </genClasses>
+    <genClasses ecoreClass="rdbms.ecore#//RdbmsCreateTableOperation"/>
+    <genClasses ecoreClass="rdbms.ecore#//RdbmsDeleteTableOperation"/>
+    <genClasses ecoreClass="rdbms.ecore#//RdbmsOperationMeta">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsOperationMeta/previousModel"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsOperationMeta/currentModel"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdbms.ecore#//RdbmsOperationMeta/incrementalModel"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

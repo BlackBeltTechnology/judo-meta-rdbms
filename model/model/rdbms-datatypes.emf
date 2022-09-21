@@ -1,0 +1,17 @@
+@namespace(uri="http://blackbelt.hu/judo/meta/rdbms/datatypes", prefix="rdbmsDataTypes")
+package rdbmsDataTypes;
+
+class TypeMappings {
+  val TypeMapping[*] typeMappings;
+}
+
+class TypeMapping {
+  attr String[1] asmType;
+  attr String[1] rdbmsType;
+  attr String rdbmsSize;
+  attr String rdbmsPrecision;
+  attr String rdbmsScale;
+  attr String rdbmsJdbcType;
+  attr Integer rdbmsSqlType;
+}
+

@@ -1,3 +1,24 @@
-# judo-meta-rdbms
+= judo-meta-rdbms
 
-RDBMS meta data. It is used to map PSM models to relational databases.
+image::https://github.com/BlackBeltTechnology/judo-meta-rdbms/actions/workflows/build.yml/badge.svg?branch=develop[link="https://github.com/BlackBeltTechnology/judo-meta-rdbms/actions/workflows/build.yml" float="center"]
+
+== Introduction
+
+This repository contains the RDBMS meta model.
+
+It acts as an eclipse plugin with features and sites, can be used standalone and in standarsd OSGi (without eclipse).
+
+Used for Liquibase (DDL) generation. Describes e.g.: tables, views, keys, etc..
+
+== Context
+
+This project is a building block of the https://github.com/BlackBeltTechnology/judo-community[judo-community] aggregator
+project. In order to better understand how this module fits into our ecosystem, please check the corresponding documentation!
+
+== Contributing to the project
+
+Everyone is welcome to contribute to JUDO! As a starter, please read the corresponding link:CONTRIBUTING.adoc[CONTRIBUTING] guide for details!
+
+== License
+
+This project is licensed under the https://www.eclipse.org/legal/epl-2.0/[Eclipse Public License - v 2.0].
