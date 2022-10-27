@@ -2,7 +2,7 @@
 <feature
       id="hu.blackbelt.judo.meta.rdbms.feature"
       label="JUDO RDBMS Model Feature"
-      version="1.0.1.qualifier"
+      version="1.0.2.qualifier"
       provider-name="BlackBelt Technology">
 
    <copyright url="https://judo.codes">
