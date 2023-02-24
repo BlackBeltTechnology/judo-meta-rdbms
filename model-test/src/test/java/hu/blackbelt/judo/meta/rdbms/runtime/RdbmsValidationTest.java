@@ -50,7 +50,6 @@ public class RdbmsValidationTest {
         
         rdbmsModel = RdbmsModel.buildRdbmsModel()
         		.rdbmsModelResourceSupport(rdbmsModelSupport)
-                .name("test")
                 .build();
     }
 
