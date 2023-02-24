@@ -106,9 +106,7 @@ public class RdbmsModelBundleTracker {
                     // Unpack model
                     try {
                         // Create empty RDBMS model
-                        RdbmsModel rdbmsModel = RdbmsModel.buildRdbmsModel()
-                                .name(params.get(RdbmsModel.NAME))
-                                .build();
+                        RdbmsModel rdbmsModel = RdbmsModel.buildRdbmsModel().build();
 
                         // The RDBMS model resourceset have to know the mapping models
                         registerRdbmsNameMappingMetamodel(rdbmsModel.getResourceSet());
@@ -117,16 +115,14 @@ public class RdbmsModelBundleTracker {
 
                         RdbmsModel.loadRdbmsModel(
                                 RdbmsModel.LoadArguments.rdbmsLoadArgumentsBuilder()
-                                        .inputStream(trackedBundle.getEntry(params.get("file")).openStream())
-                                        .name(params.get(RdbmsModel.NAME))
-                                        .version(trackedBundle.getVersion().toString()));
+                                        .resourceSet(rdbmsModel.getResourceSet())
+                                        .inputStream(trackedBundle.getEntry(params.get("file")).openStream()));
 
-                        log.info("Registering Rdbms model: " + rdbmsModel);
+                            log.info("Registering Rdbms model: " + rdbmsModel);
 
-                        ServiceRegistration<RdbmsModel> modelServiceRegistration = bundleContext.registerService(RdbmsModel.class, rdbmsModel, rdbmsModel.toDictionary());
-                        rdbmsModels.put(key, rdbmsModel);
-                        rdbmsModelRegistrations.put(key, modelServiceRegistration);
-
+                            ServiceRegistration<RdbmsModel> modelServiceRegistration = bundleContext.registerService(RdbmsModel.class, rdbmsModel, rdbmsModel.toDictionary());
+                            rdbmsModels.put(key, rdbmsModel);
+                            rdbmsModelRegistrations.put(key, modelServiceRegistration);
                     } catch (IOException | RdbmsModel.RdbmsValidationException e) {
                         log.error("Could not load Psm model: " + params.get(RdbmsModel.NAME) + " from bundle: " + trackedBundle.getBundleId(), e);
                     }

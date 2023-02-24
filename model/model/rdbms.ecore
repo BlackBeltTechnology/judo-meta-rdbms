@@ -69,6 +69,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tableOperations" upperBound="-1"
         eType="#//RdbmsTableOperation" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RdbmsValueField" eSuperTypes="#//RdbmsField">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="technical" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
