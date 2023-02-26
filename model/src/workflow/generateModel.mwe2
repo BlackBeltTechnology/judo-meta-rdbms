@@ -60,7 +60,19 @@ Workflow {
 
 	// JUDO RuntimeModel for model
 	component = hu.blackbelt.judo.eclipse.emf.genmodel.generator.runtimemodel.RuntimeModelGeneratorWorkflow {
+		genModelName = "Rdbms"
+		modelDir = "${rootPath}/${modelDir}"
+		javaGenPath = "${rootPath}/${javaGenPath}"
+		resolveModelName = "rdbmsModelResourceSupport.getStreamOfRdbmsRdbmsModel().findFirst().orElseThrow(() -> new IllegalStateException(\"Could not get RDBMS model\")).getName()"
+		resolveModelVersion = "rdbmsModelResourceSupport.getStreamOfRdbmsRdbmsModel().findFirst().orElseThrow(() -> new IllegalStateException(\"Could not get RDBMS model\")).getVersion()"
+	}
+
+	component = hu.blackbelt.judo.eclipse.emf.genmodel.generator.runtimemodel.RuntimeModelGeneratorWorkflow {
+		genModelName = "RdbmsDataTypes"
+		genModelName = "RdbmsNameMapping"
+		genModelName = "RdbmsTableMappingRules"
 		modelDir = "${rootPath}/${modelDir}"
 		javaGenPath = "${rootPath}/${javaGenPath}"
 	}
+
 }

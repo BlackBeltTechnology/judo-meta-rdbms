@@ -49,12 +49,14 @@ public class RdbmsIncrementalTest {
 
     private static final String ORIGINAL_MODEL_NAME = "OriginalModel";
     private static final String TARGET_TEST_CLASSES = "target/test-classes";
+    public static final String NEW_MODEL_NAME = "NewModel";
+    public static final String INCREMENTAL_MODEL_NAME = "Incremental";
 
     @Test
     public void executeExcel2RdbmsModel() throws Exception {
 
-        RdbmsModel originalModel = buildRdbmsModel().name(ORIGINAL_MODEL_NAME).build();
-        RdbmsModel newModel = buildRdbmsModel().name("NewModel").build();
+        RdbmsModel originalModel = buildRdbmsModel().build();
+        RdbmsModel newModel = buildRdbmsModel().build();
 
         // Execution context
         ExecutionContext excelToRdbmsEtlContext;
@@ -92,12 +94,22 @@ public class RdbmsIncrementalTest {
         excelToRdbmsEtlContext.close();
 
 
+        originalModel.getRdbmsModelResourceSupport().getStreamOfRdbmsRdbmsModel()
+                .findFirst().get().setName(ORIGINAL_MODEL_NAME);
+
+        newModel.getRdbmsModelResourceSupport().getStreamOfRdbmsRdbmsModel()
+                .findFirst().get().setName(NEW_MODEL_NAME);
+
+
         saveRdbms(originalModel);
         saveRdbms(newModel);
 
-		RdbmsModel incrementalRdbmsModel = buildRdbmsModel().name("Incremental").build();
+        RdbmsModel incrementalRdbmsModel = buildRdbmsModel().build();
 
         RdbmsIncremental.transformRdbmsIncrementalModel(originalModel, newModel, incrementalRdbmsModel, "hsqldb", true);
+
+        incrementalRdbmsModel.getRdbmsModelResourceSupport().getStreamOfRdbmsRdbmsModel()
+                .findFirst().get().setName(INCREMENTAL_MODEL_NAME);
 
         saveRdbms(incrementalRdbmsModel);
 

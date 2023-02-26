@@ -55,19 +55,9 @@ import static java.util.Optional.ofNullable;
 
 @Component(immediate = true)
 @Slf4j
-@Designate(ocd = RdbmsModelBundleTracker.TrackerConfig.class)
 public class RdbmsModelBundleTracker {
 
     public static final String RDBMS_MODELS = "Rdbms-Models";
-
-    @ObjectClassDefinition(name="Rdbms Model Bundle Tracker")
-    public @interface TrackerConfig {
-        @AttributeDefinition(
-                name = "Tags",
-                description = "Which tags are on the loaded model when there is no one defined in bundle"
-        )
-        String tags() default "";
-    }
 
     @Reference
     BundleTrackerManager bundleTrackerManager;
@@ -76,11 +66,8 @@ public class RdbmsModelBundleTracker {
 
     Map<String, RdbmsModel> rdbmsModels = new HashMap<>();
 
-    TrackerConfig config;
-
     @Activate
-    public void activate(final ComponentContext componentContext, final TrackerConfig trackerConfig) {
-        this.config = trackerConfig;
+    public void activate(final ComponentContext componentContext) {
         bundleTrackerManager.registerBundleCallback(this.getClass().getName(),
                 new RdbmsRegisterCallback(componentContext.getBundleContext()),
                 new RdbmsUnregisterCallback(),
@@ -116,40 +103,28 @@ public class RdbmsModelBundleTracker {
                 if (rdbmsModelRegistrations.containsKey(key)) {
                     log.error("Rdbms model already loaded: " + key);
                 } else {
-                    if (params.containsKey(RdbmsModel.META_VERSION_RANGE)) {
-                        VersionRange versionRange = new VersionRange(params.get(RdbmsModel.META_VERSION_RANGE).replaceAll("\"", ""));
-                        if (versionRange.includes(bundleContext.getBundle().getVersion())) {
-                            // Unpack model
-                            try {
-                                // Create empty RDBMS model
-                                RdbmsModel rdbmsModel = RdbmsModel.buildRdbmsModel()
-                                        .name(params.get(RdbmsModel.NAME))
-                                        .build();
+                    // Unpack model
+                    try {
+                        // Create empty RDBMS model
+                        RdbmsModel rdbmsModel = RdbmsModel.buildRdbmsModel().build();
 
-                                // The RDBMS model resourceset have to know the mapping models
-                                registerRdbmsNameMappingMetamodel(rdbmsModel.getResourceSet());
-                                registerRdbmsDataTypesMetamodel(rdbmsModel.getResourceSet());
-                                registerRdbmsTableMappingRulesMetamodel(rdbmsModel.getResourceSet());
+                        // The RDBMS model resourceset have to know the mapping models
+                        registerRdbmsNameMappingMetamodel(rdbmsModel.getResourceSet());
+                        registerRdbmsDataTypesMetamodel(rdbmsModel.getResourceSet());
+                        registerRdbmsTableMappingRulesMetamodel(rdbmsModel.getResourceSet());
 
-                                RdbmsModel.loadRdbmsModel(
-                                        RdbmsModel.LoadArguments.rdbmsLoadArgumentsBuilder()
-                                                .inputStream(trackedBundle.getEntry(params.get("file")).openStream())
-                                                .name(params.get(RdbmsModel.NAME))
-                                                .version(trackedBundle.getVersion().toString())
-                                                .checksum(Optional.ofNullable(params.get(RdbmsModel.CHECKSUM)).orElse("notset"))
-                                                .tags(Stream.of(ofNullable(params.get(RdbmsModel.TAGS)).orElse(config.tags()).split(",")).collect(Collectors.toSet()))
-                                                .acceptedMetaVersionRange(Optional.of(versionRange.toString()).orElse("[0,99)")));
+                        RdbmsModel.loadRdbmsModel(
+                                RdbmsModel.LoadArguments.rdbmsLoadArgumentsBuilder()
+                                        .resourceSet(rdbmsModel.getResourceSet())
+                                        .inputStream(trackedBundle.getEntry(params.get("file")).openStream()));
 
-                                log.info("Registering Rdbms model: " + rdbmsModel);
+                            log.info("Registering Rdbms model: " + rdbmsModel);
 
-                                ServiceRegistration<RdbmsModel> modelServiceRegistration = bundleContext.registerService(RdbmsModel.class, rdbmsModel, rdbmsModel.toDictionary());
-                                rdbmsModels.put(key, rdbmsModel);
-                                rdbmsModelRegistrations.put(key, modelServiceRegistration);
-
-                            } catch (IOException | RdbmsModel.RdbmsValidationException e) {
-                                log.error("Could not load Psm model: " + params.get(RdbmsModel.NAME) + " from bundle: " + trackedBundle.getBundleId(), e);
-                            }
-                        }
+                            ServiceRegistration<RdbmsModel> modelServiceRegistration = bundleContext.registerService(RdbmsModel.class, rdbmsModel, rdbmsModel.toDictionary());
+                            rdbmsModels.put(key, rdbmsModel);
+                            rdbmsModelRegistrations.put(key, modelServiceRegistration);
+                    } catch (IOException | RdbmsModel.RdbmsValidationException e) {
+                        log.error("Could not load Psm model: " + params.get(RdbmsModel.NAME) + " from bundle: " + trackedBundle.getBundleId(), e);
                     }
                 }
             }
