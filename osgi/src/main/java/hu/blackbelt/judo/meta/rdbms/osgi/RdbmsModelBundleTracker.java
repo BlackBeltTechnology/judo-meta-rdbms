@@ -124,7 +124,7 @@ public class RdbmsModelBundleTracker {
                             rdbmsModels.put(key, rdbmsModel);
                             rdbmsModelRegistrations.put(key, modelServiceRegistration);
                     } catch (IOException | RdbmsModel.RdbmsValidationException e) {
-                        log.error("Could not load Psm model: " + params.get(RdbmsModel.NAME) + " from bundle: " + trackedBundle.getBundleId(), e);
+                        log.error("Could not load Rdbms model: " + params.get(RdbmsModel.NAME) + " from bundle: " + trackedBundle.getBundleId(), e);
                     }
                 }
             }
