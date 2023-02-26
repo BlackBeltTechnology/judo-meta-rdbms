@@ -32,6 +32,7 @@ rule OperationModel
     transform s : NEW!RdbmsModel
     to t : INCREMENTAL!RdbmsModel {
         t.version = previousModel.version + "_" + newModel.version;
+        t.name = previousModel.name;
         t.configuration = new INCREMENTAL!RdbmsConfiguration();
         t.configuration.dialect = dialect;
         log.info("Created operation model: " + t.version);

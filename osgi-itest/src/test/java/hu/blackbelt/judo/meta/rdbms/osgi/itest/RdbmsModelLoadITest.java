@@ -22,9 +22,12 @@ package hu.blackbelt.judo.meta.rdbms.osgi.itest;
 
 import hu.blackbelt.epsilon.runtime.execution.api.Log;
 import hu.blackbelt.epsilon.runtime.execution.impl.BufferedSlf4jLogger;
+import hu.blackbelt.judo.meta.rdbms.RdbmsConfiguration;
 import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel;
 import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel.RdbmsValidationException;
 import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel.SaveArguments;
+import hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsConfigurationBuilder;
+import hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsModelBuilder;
 import hu.blackbelt.osgi.utils.osgi.api.BundleTrackerManager;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.emf.common.util.URI;
@@ -85,20 +88,27 @@ public class RdbmsModelLoadITest {
     private InputStream getRdbmsModelBundle() throws IOException, RdbmsValidationException {
     	
     	RdbmsModel rdbmsModel = RdbmsModel.buildRdbmsModel()
-    			.name(DEMO)
     			.uri(URI.createFileURI("test.model"))
     			.build();
-    	
+
+        rdbmsModel.getRdbmsModelResourceSupport().addContent(RdbmsModelBuilder.create()
+                        .withName("test")
+                        .withVersion("1.0.0")
+                        .withConfiguration(RdbmsConfigurationBuilder.create()
+                                .withDialect("hsqldb")
+                                .build())
+                .build());
+
     	ByteArrayOutputStream os = new ByteArrayOutputStream();
     	
     	rdbmsModel.saveRdbmsModel(SaveArguments.rdbmsSaveArgumentsBuilder().outputStream(os));
     	
         return bundle()
-                .add( "model/" + DEMO + ".judo-meta-rdbms",
+                .add( "model/" + rdbmsModel.getName() + "-rdbms.model",
                 		new ByteArrayInputStream(os.toByteArray()))
                 .set( Constants.BUNDLE_MANIFESTVERSION, "2")
-                .set( Constants.BUNDLE_SYMBOLICNAME, DEMO + "-rdbms" )
-                .set( "Rdbms-Models", "file=model/" + DEMO + ".judo-meta-rdbms;version=1.0.0;name=" + DEMO + ";checksum=notset;meta-version-range=\"[1.0.0,2)\"")
+                .set( Constants.BUNDLE_SYMBOLICNAME, rdbmsModel.getName() + "-rdbms" )
+                .set( "Rdbms-Models", "name=" + rdbmsModel.getName() + ";file=model/" + rdbmsModel.getName() + "-rdbms.model")
                 .build( withBnd());
     }
 
