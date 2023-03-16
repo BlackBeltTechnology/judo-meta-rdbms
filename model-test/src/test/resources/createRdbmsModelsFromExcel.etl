@@ -113,7 +113,7 @@ rule transformNewId
         var table = XLS!TablesNew.allInstances.selectOne(table | table.uuid == f.table_uuid).equivalent("transformNewTable");
         table.primaryKey = t;
         table.fields.add(t);
-        
+
 }
 
 rule transformNewForeignKey
@@ -132,5 +132,5 @@ rule transformNewForeignKey
         XLS!TablesNew.allInstances.selectOne(table | table.uuid == f.table_uuid).equivalent("transformNewTable").fields.add(t);
         t.referenceKey = XLS!CasesNew.allInstances.selectOne(field | field.uuid == f.type).equivalent("transformNewId");
         t.foreignKeySqlName = "FK_"+t.sqlName;
-        
+
 }
