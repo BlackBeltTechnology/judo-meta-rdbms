@@ -9,13 +9,13 @@ package hu.blackbelt.judo.meta.rdbms.osgi.itest;
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
- * 
+ *
  * This Source Code may also be made available under the following Secondary
  * Licenses when the conditions for such availability set forth in the Eclipse
  * Public License, v. 2.0 are satisfied: GNU General Public License, version 2
  * with the GNU Classpath Exception which is
  * available at https://www.gnu.org/software/classpath/license.html.
- * 
+ *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  * #L%
  */
@@ -86,10 +86,10 @@ public class RdbmsModelLoadITest {
     }
 
     private InputStream getRdbmsModelBundle() throws IOException, RdbmsValidationException {
-    	
-    	RdbmsModel rdbmsModel = RdbmsModel.buildRdbmsModel()
-    			.uri(URI.createFileURI("test.model"))
-    			.build();
+
+        RdbmsModel rdbmsModel = RdbmsModel.buildRdbmsModel()
+                .uri(URI.createFileURI("test.model"))
+                .build();
 
         rdbmsModel.getRdbmsModelResourceSupport().addContent(RdbmsModelBuilder.create()
                         .withName("test")
@@ -99,13 +99,13 @@ public class RdbmsModelLoadITest {
                                 .build())
                 .build());
 
-    	ByteArrayOutputStream os = new ByteArrayOutputStream();
-    	
-    	rdbmsModel.saveRdbmsModel(SaveArguments.rdbmsSaveArgumentsBuilder().outputStream(os));
-    	
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+        rdbmsModel.saveRdbmsModel(SaveArguments.rdbmsSaveArgumentsBuilder().outputStream(os));
+
         return bundle()
                 .add( "model/" + rdbmsModel.getName() + "-rdbms.model",
-                		new ByteArrayInputStream(os.toByteArray()))
+                        new ByteArrayInputStream(os.toByteArray()))
                 .set( Constants.BUNDLE_MANIFESTVERSION, "2")
                 .set( Constants.BUNDLE_SYMBOLICNAME, rdbmsModel.getName() + "-rdbms" )
                 .set( "Rdbms-Models", "name=" + rdbmsModel.getName() + ";file=model/" + rdbmsModel.getName() + "-rdbms.model")
