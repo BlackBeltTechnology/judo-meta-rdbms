@@ -26,19 +26,19 @@ operation RDBMS!RdbmsField isStorageByteChanged(field : RDBMS!RdbmsField) : Bool
 }
 
 operation RDBMS!RdbmsField isAnyChanged(field : RDBMS!RdbmsField) : Boolean {
-    return self.isSqlNameChanged(field) 
-            or self.isMandatoryChanged(field) 
-            or self.isSqlTypeChanged(field) 
-            or self.isSizeChanged(field) 
-            or self.isPrecisionChanged(field) 
-            or self.isScaleChanged(field) 
+    return self.isSqlNameChanged(field)
+            or self.isMandatoryChanged(field)
+            or self.isSqlTypeChanged(field)
+            or self.isSizeChanged(field)
+            or self.isPrecisionChanged(field)
+            or self.isScaleChanged(field)
             or self.isStorageByteChanged(field);
 }
 
 operation RDBMS!RdbmsField isSameFieldType(field : RDBMS!RdbmsField) : Boolean {
-    return (self.isTypeOf(RDBMS!RdbmsIdentifierField) 
-            and field.isTypeOf(RDBMS!RdbmsIdentifierField)) 
-            or (self.isTypeOf(RDBMS!RdbmsValueField) 
+    return (self.isTypeOf(RDBMS!RdbmsIdentifierField)
+            and field.isTypeOf(RDBMS!RdbmsIdentifierField))
+            or (self.isTypeOf(RDBMS!RdbmsValueField)
             and field.isTypeOf(RDBMS!RdbmsValueField));
 }
 
@@ -81,10 +81,10 @@ operation isStorageByteReviewRequired(previousField : RDBMS!RdbmsField, newField
 }
 
 operation isReviewRequired(previousField : RDBMS!RdbmsField, newField : RDBMS!RdbmsField) : Boolean {
-    return isMandatoryReviewRequired(previousField, newField) 
-            or isSqlTypeReviewRequired(previousField, newField) 
-            or isSizeReviewRequired(previousField, newField) 
-            or isPrecisionReviewRequired(previousField, newField) 
-            or isScaleReviewRequired(previousField, newField) 
+    return isMandatoryReviewRequired(previousField, newField)
+            or isSqlTypeReviewRequired(previousField, newField)
+            or isSizeReviewRequired(previousField, newField)
+            or isPrecisionReviewRequired(previousField, newField)
+            or isScaleReviewRequired(previousField, newField)
             or isStorageByteReviewRequired(previousField, newField);
 }
