@@ -9,13 +9,13 @@ package hu.blackbelt.judo.meta.rdbms.runtime;
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
- * 
+ *
  * This Source Code may also be made available under the following Secondary
  * Licenses when the conditions for such availability set forth in the Eclipse
  * Public License, v. 2.0 are satisfied: GNU General Public License, version 2
  * with the GNU Classpath Exception which is
  * available at https://www.gnu.org/software/classpath/license.html.
- * 
+ *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  * #L%
  */
@@ -39,19 +39,19 @@ import hu.blackbelt.epsilon.runtime.execution.api.Log;
 import hu.blackbelt.epsilon.runtime.execution.exceptions.ScriptExecutionException;
 
 public class RdbmsEpsilonValidator {
-	
-	public static void validateRdbms(Log log,
+
+    public static void validateRdbms(Log log,
             RdbmsModel rdbmsModel,
             URI scriptRoot) throws ScriptExecutionException, URISyntaxException {
-		validateRdbms(log, rdbmsModel, scriptRoot, emptyList(), emptyList());
-	}
-	
-	public static void validateRdbms(Log log,
+        validateRdbms(log, rdbmsModel, scriptRoot, emptyList(), emptyList());
+    }
+
+    public static void validateRdbms(Log log,
             RdbmsModel rdbmsModel,
             URI scriptRoot,
             Collection<String> expectedErrors,
             Collection<String> expectedWarnings) throws ScriptExecutionException, URISyntaxException {
-		ExecutionContext executionContext = executionContextBuilder()
+        ExecutionContext executionContext = executionContextBuilder()
                 .log(log)
                 .resourceSet(rdbmsModel.getResourceSet())
                 .metaModels(emptyList())
@@ -64,28 +64,28 @@ public class RdbmsEpsilonValidator {
                                 .build()))
                 .injectContexts(singletonMap("rdbmsUtils", new RdbmsUtils()))
                 .build();
-		
-		 try {
-	            // run the model / metadata loading
-	            executionContext.load();
 
-	            // Transformation script
-	            executionContext.executeProgram(
-	                    evlExecutionContextBuilder()
-	                            .source(UriUtil.resolve("rdbms.evl", scriptRoot))
-	                            .expectedErrors(expectedErrors)
-	                            .expectedWarnings(expectedWarnings)
-	                            .build());
+         try {
+                // run the model / metadata loading
+                executionContext.load();
 
-	        } finally {
-	            executionContext.commit();
-	            try {
-	                executionContext.close();
-	            } catch (Exception e) {}
-	        }
-	}
-	
-	public static URI calculateRdbmsValidationScriptURI() throws URISyntaxException {
+                // Transformation script
+                executionContext.executeProgram(
+                        evlExecutionContextBuilder()
+                                .source(UriUtil.resolve("rdbms.evl", scriptRoot))
+                                .expectedErrors(expectedErrors)
+                                .expectedWarnings(expectedWarnings)
+                                .build());
+
+            } finally {
+                executionContext.commit();
+                try {
+                    executionContext.close();
+                } catch (Exception e) {}
+            }
+    }
+
+    public static URI calculateRdbmsValidationScriptURI() throws URISyntaxException {
         URI rdbmsRoot = RdbmsModel.class.getProtectionDomain().getCodeSource().getLocation().toURI();
         if (rdbmsRoot.toString().endsWith(".jar")) {
             rdbmsRoot = new URI("jar:" + rdbmsRoot.toString() + "!/validations/");
