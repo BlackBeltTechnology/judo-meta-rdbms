@@ -12,14 +12,14 @@ post {
     var newModel = NEW!RdbmsModel.all().asSequence().first();
     var incrementalModel = INCREMENTAL!RdbmsModel.all().asSequence().first();
     var operationMeta = INCREMENTAL!RdbmsOperationMeta.all().asSequence().first();
-        
+
     operationMeta.incrementalModel = incrementalModel;
 
     // Removing operations which have no field and name does not changed
     for (op in INCREMENTAL!RdbmsModifyTableOperation.all().asSequence()) {
-        if (op.deleteFieldOperations.size() == 0 
-                and op.createFieldOperations.size() == 0 
-                and op.modifyFieldOperations.size() == 0 
+        if (op.deleteFieldOperations.size() == 0
+                and op.createFieldOperations.size() == 0
+                and op.modifyFieldOperations.size() == 0
                 and not op.nameChanged) {
             INCREMENTAL!RdbmsModel.all.first().tableOperations.remove(op);
         }
@@ -120,7 +120,7 @@ rule ModifyJunctionTableOperationForExistingTable
 rule CreateNewValueFieldOnExistingTable
     transform f : NEW!RdbmsValueField
     to t : INCREMENTAL!RdbmsCreateFieldOperation {
-        guard : previousModel.tableExists(f.eContainer) 
+        guard : previousModel.tableExists(f.eContainer)
                 and not previousModel.tableOf(f.eContainer).fieldExists(f)
         newModel.tableOf(f.eContainer).equivalent("ModifyTableOperationForExistingTable").createFieldOperations.add(t);
         t.uuid =  f.uuid + "-CreateValueField";
@@ -133,8 +133,8 @@ rule CreateNewValueFieldOnExistingTable
 rule DeletePreviousValueFieldOnExistingTable
     transform f : PREVIOUS!RdbmsValueField
     to t : INCREMENTAL!RdbmsDeleteFieldOperation {
-        guard : newModel.tableExists(f.eContainer) 
-                and (newModel.tableOf(f.eContainer).fields.size() > 0 
+        guard : newModel.tableExists(f.eContainer)
+                and (newModel.tableOf(f.eContainer).fields.size() > 0
                 and not newModel.tableOf(f.eContainer).fieldExists(f))
         newModel.tableOf(f.eContainer).equivalent("ModifyTableOperationForExistingTable").deleteFieldOperations.add(t);
         t.uuid =  f.uuid + "-DeleteValueField";
@@ -147,7 +147,7 @@ rule DeletePreviousValueFieldOnExistingTable
 rule CreateNewForeignKeyOnExistingTable
     transform f : NEW!RdbmsForeignKey
     to t : INCREMENTAL!RdbmsCreateFieldOperation {
-        guard : previousModel.tableExists(f.eContainer) 
+        guard : previousModel.tableExists(f.eContainer)
                 and not previousModel.tableOf(f.eContainer).fieldExists(f)
         newModel.tableOf(f.eContainer).equivalent("ModifyTableOperationForExistingTable").createFieldOperations.add(t);
         t.uuid =  f.uuid + "-CreateForeignKey";
@@ -160,7 +160,7 @@ rule CreateNewForeignKeyOnExistingTable
 rule DeletePreviousForeignKeyOnExistingTable
     transform f : PREVIOUS!RdbmsForeignKey
     to t : INCREMENTAL!RdbmsDeleteFieldOperation {
-        guard : newModel.tableExists(f.eContainer) 
+        guard : newModel.tableExists(f.eContainer)
                 and not newModel.tableOf(f.eContainer).fieldExists(f)
         newModel.tableOf(f.eContainer).equivalent("ModifyTableOperationForExistingTable").deleteFieldOperations.add(t);
         t.uuid =  f.uuid + "-DeleteForeignKey";
@@ -173,7 +173,7 @@ rule DeletePreviousForeignKeyOnExistingTable
 rule CreateNewIdentifierFieldOnExistingTable
     transform f : NEW!RdbmsIdentifierField
     to t : INCREMENTAL!RdbmsCreateFieldOperation {
-        guard : previousModel.tableExists(f.eContainer) 
+        guard : previousModel.tableExists(f.eContainer)
                 and not previousModel.tableOf(f.eContainer).fieldExists(f)
         newModel.tableOf(f.eContainer).equivalent("ModifyTableOperationForExistingTable").createFieldOperations.add(t);
         t.uuid =  f.uuid + "-CreateIdentifierField";
@@ -199,9 +199,9 @@ rule DeletePreviousIdentifierFieldOnExistingTable
 rule ModifyExistingValueField
     transform f : PREVIOUS!RdbmsValueField
     to t : INCREMENTAL!RdbmsModifyFieldOperation {
-        guard : newModel.tableExists(f.eContainer) 
-                and newModel.tableOf(f.eContainer).fieldExists(f) 
-                and (f.isAnyChanged(newModel.tableOf(f.eContainer).fieldOf(f)) 
+        guard : newModel.tableExists(f.eContainer)
+                and newModel.tableOf(f.eContainer).fieldExists(f)
+                and (f.isAnyChanged(newModel.tableOf(f.eContainer).fieldOf(f))
                 or not newModel.tableOf(f.eContainer).fieldOf(f).isTypeOf(NEW!RdbmsValueField))
         var n : RDBMS!RdbmsField = newModel.tableOf(f.eContainer).fieldOf(f);
 
@@ -223,9 +223,9 @@ rule ModifyExistingValueField
             log.info("    Type changed: " + f.rdbmsTypeName + " -> " + n.rdbmsTypeName);
         } else if (f.isSizeChanged(n) or f.isPrecisionChanged(n) or f.isScaleChanged(n) or f.isStorageByteChanged(n)) {
             t.sizeChanged = true;
-            log.info("    Type changed: Size: " + f.size  + " -> " + n.size 
-                + " Precision: " + f.precision  + " -> " + n.precision 
-                + " Scale: " + f.scale  + " -> " + n.scale 
+            log.info("    Type changed: Size: " + f.size  + " -> " + n.size
+                + " Precision: " + f.precision  + " -> " + n.precision
+                + " Scale: " + f.scale  + " -> " + n.scale
                 + " StorageByte: " + f.storageByte  + " -> " + n.storageByte);
         }
 
@@ -237,7 +237,7 @@ rule ModifyExistingValueField
         if (f.isMandatoryChanged(n)) {
             t.mandatoryChanged = true;
         }
-        
+
         if (not newModel.tableOf(f.eContainer).fieldOf(f).isTypeOf(NEW!RdbmsValueField)){
             t.reviewRequired = true;
         } else {
@@ -249,9 +249,9 @@ rule ModifyExistingValueField
 rule ModifyExistingIdentifierField
     transform f : PREVIOUS!RdbmsIdentifierField
     to t : INCREMENTAL!RdbmsModifyFieldOperation {
-        guard : newModel.tableExists(f.eContainer) 
-                    and newModel.tableOf(f.eContainer).fieldExists(f) 
-                    and (f.isAnyChanged(newModel.tableOf(f.eContainer).fieldOf(f)) 
+        guard : newModel.tableExists(f.eContainer)
+                    and newModel.tableOf(f.eContainer).fieldExists(f)
+                    and (f.isAnyChanged(newModel.tableOf(f.eContainer).fieldOf(f))
                     or not newModel.tableOf(f.eContainer).fieldOf(f).isTypeOf(NEW!RdbmsIdentifierField))
         var n : RDBMS!RdbmsField = newModel.tableOf(f.eContainer).fieldOf(f);
 
@@ -268,9 +268,9 @@ rule ModifyExistingIdentifierField
             log.info("    Type changed: " + f.rdbmsTypeName + " -> " + n.rdbmsTypeName);
         } else if (f.isSizeChanged(n) or f.isPrecisionChanged(n) or f.isScaleChanged(n) or f.isStorageByteChanged(n)) {
             t.sizeChanged = true;
-            log.info("    Type changed: Size: " + f.size  + " -> " + n.size 
-                + " Precision: " + f.precision  + " -> " + n.precision 
-                + " Scale: " + f.scale  + " -> " + n.scale 
+            log.info("    Type changed: Size: " + f.size  + " -> " + n.size
+                + " Precision: " + f.precision  + " -> " + n.precision
+                + " Scale: " + f.scale  + " -> " + n.scale
                 + " StorageByte: " + f.storageByte  + " -> " + n.storageByte);
         }
 
@@ -282,7 +282,7 @@ rule ModifyExistingIdentifierField
         if (f.isMandatoryChanged(n)) {
             t.mandatoryChanged = true;
         }
-        
+
         if (not newModel.tableOf(f.eContainer).fieldOf(f).isTypeOf(NEW!RdbmsIdentifierField)){
             t.reviewRequired = true;
         } else {
@@ -293,9 +293,9 @@ rule ModifyExistingIdentifierField
 rule ModifyExistingForeignKey
     transform f : PREVIOUS!RdbmsForeignKey
     to t : INCREMENTAL!RdbmsModifyFieldOperation {
-        guard : newModel.tableExists(f.eContainer) 
-                and newModel.tableOf(f.eContainer).fieldExists(f) 
-                and (f.isAnyChanged(newModel.tableOf(f.eContainer).fieldOf(f)) 
+        guard : newModel.tableExists(f.eContainer)
+                and newModel.tableOf(f.eContainer).fieldExists(f)
+                and (f.isAnyChanged(newModel.tableOf(f.eContainer).fieldOf(f))
                 or not newModel.tableOf(f.eContainer).fieldOf(f).isTypeOf(NEW!RdbmsForeignKey))
         var n : RDBMS!RdbmsField = newModel.tableOf(f.eContainer).fieldOf(f);
 
@@ -321,14 +321,14 @@ rule ModifyExistingForeignKey
         if (f.isSqlTypeChanged(n)) {
             t.typeChanged = true;
             log.info("    Type changed: " + f.rdbmsTypeName + " -> " + n.rdbmsTypeName);
-        } else if (f.isSizeChanged(n) 
-                    or f.isPrecisionChanged(n) 
-                    or f.isScaleChanged(n) 
+        } else if (f.isSizeChanged(n)
+                    or f.isPrecisionChanged(n)
+                    or f.isScaleChanged(n)
                     or f.isStorageByteChanged(n)) {
             t.sizeChanged = true;
-            log.info("    Type changed: Size: " + f.size  + " -> " + n.size 
-                + " Precision: " + f.precision  + " -> " + n.precision 
-                + " Scale: " + f.scale  + " -> " + n.scale 
+            log.info("    Type changed: Size: " + f.size  + " -> " + n.size
+                + " Precision: " + f.precision  + " -> " + n.precision
+                + " Scale: " + f.scale  + " -> " + n.scale
                 + " StorageByte: " + f.storageByte  + " -> " + n.storageByte);
         }
 
@@ -340,7 +340,7 @@ rule ModifyExistingForeignKey
         if (f.isMandatoryChanged(n)) {
             t.mandatoryChanged = true;
         }
-        
+
         if (not newModel.tableOf(f.eContainer).fieldOf(f).isTypeOf(NEW!RdbmsForeignKey)){
             t.reviewRequired = true;
         } else {
@@ -349,11 +349,11 @@ rule ModifyExistingForeignKey
 }
 
 rule RenameExistingTable
-	transform s : NEW!RdbmsTable
-	to t : INCREMENTAL!RdbmsModifyTableOperation
-	extends ModifyTableOperationForExistingTable {
-    	guard : previousModel.tableExists(s) 
-    			and previousModel.tableOf(s).isSqlNameChanged(s)
+    transform s : NEW!RdbmsTable
+    to t : INCREMENTAL!RdbmsModifyTableOperation
+    extends ModifyTableOperationForExistingTable {
+        guard : previousModel.tableExists(s)
+                and previousModel.tableOf(s).isSqlNameChanged(s)
         s.equivalent("ModifyTableOperationForExistingTable").nameChanged = true;
         log.info("    Sql name changed: " + previousModel.tableOf(s).sqlName + " -> " + s.sqlName);
 }
