@@ -1,5 +1,10 @@
 package hu.blackbelt.judo.meta.rdbms.runtime;
 
+import hu.blackbelt.judo.meta.rdbms.RdbmsForeignKey;
+import hu.blackbelt.judo.meta.rdbms.RdbmsJunctionTable;
+import hu.blackbelt.judo.meta.rdbms.RdbmsTable;
+import hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsBuilders;
+
 /*-
  * #%L
  * JUDO :: Rdbms :: Model
@@ -20,7 +25,6 @@ package hu.blackbelt.judo.meta.rdbms.runtime;
  * #L%
  */
 
-import hu.blackbelt.judo.meta.rdbms.*;
 import hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsForeignKeyBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
@@ -35,6 +39,15 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RdbmsUtilsTest {
 
     private static final String TARGET_FOLDER = "target/test-classes";
+
+    private static void setModel(RdbmsModel rdbmsModel, String name) {
+        rdbmsModel.addContent(RdbmsBuilders.newRdbmsModelBuilder()
+        		.withConfiguration(RdbmsBuilders.newRdbmsConfigurationBuilder()
+        				.withDialect("test")
+        				.build())
+        		.withName(name).build());
+	
+    }
 
     private static void saveModel(RdbmsModel rdbmsModel) {
         try {
@@ -101,10 +114,11 @@ public class RdbmsUtilsTest {
         final String RDBMS_TABLE_NAME = "Tables.TestTable";
         final String RDBMS_MODEL_NAME = "TestGetTableModel";
         RdbmsModel rdbmsModel = RdbmsModel.buildRdbmsModel()
-                .name(RDBMS_MODEL_NAME)
                 .build();
 
+        setModel(rdbmsModel, RDBMS_MODEL_NAME);
         RdbmsUtils rdbmsUtils = new RdbmsUtils(rdbmsModel.getResourceSet());
+        
 
         // ASSERTIONS - check optional.empty
         assertFalse(rdbmsUtils.getRdbmsTables().isPresent());
@@ -128,8 +142,8 @@ public class RdbmsUtilsTest {
         final String RDBMS_TABLE_NAME = "Tables.TestTable";
         final String RDBMS_MODEL_NAME = "TestGetFieldModel";
         RdbmsModel rdbmsModel = RdbmsModel.buildRdbmsModel()
-                .name(RDBMS_MODEL_NAME)
                 .build();
+        setModel(rdbmsModel, RDBMS_MODEL_NAME);
 
         RdbmsUtils rdbmsUtils = new RdbmsUtils(rdbmsModel.getResourceSet());
 
@@ -158,8 +172,8 @@ public class RdbmsUtilsTest {
         final String RDBMS_TABLE_NAME1 = RDBMS_TABLE_NAME + "1";
 
         RdbmsModel rdbmsModel = RdbmsModel.buildRdbmsModel()
-                .name(RDBMS_MODEL_NAME)
                 .build();
+        setModel(rdbmsModel, RDBMS_MODEL_NAME);
 
         RdbmsTable rdbmsTable = newRdbmsTableBuilderInit(RDBMS_TABLE_NAME).build();
         rdbmsModel.addContent(rdbmsTable);
@@ -210,8 +224,8 @@ public class RdbmsUtilsTest {
         final String RDBMS_MODEL_NAME = "TestGetJunctionTableModel";
 
         final RdbmsModel rdbmsModel = RdbmsModel.buildRdbmsModel()
-                .name(RDBMS_MODEL_NAME)
                 .build();
+        setModel(rdbmsModel, RDBMS_MODEL_NAME);
 
         RdbmsUtils rdbmsUtils = new RdbmsUtils(rdbmsModel.getResourceSet());
 
@@ -254,7 +268,7 @@ public class RdbmsUtilsTest {
         RdbmsTable table1 = newRdbmsTableBuilderInit("T1").build();
         RdbmsTable table2 = newRdbmsTableBuilderInit("T2").build();
 
-        RdbmsModel m = RdbmsModel.buildRdbmsModel().name("M").build();
+        RdbmsModel m = RdbmsModel.buildRdbmsModel().build();
 
         m.addContent(table1);
         m.addContent(table2);

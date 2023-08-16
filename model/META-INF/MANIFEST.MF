@@ -6,9 +6,9 @@ Bundle-Version: 1.0.2.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Activator: hu.blackbelt.judo.eclipse.rdbms.Activator
-Require-Bundle: org.eclipse.core.runtime,
+Require-Bundle: org.eclipse.core.runtime;resolution:=optional;x-installation:=greedy,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
  org.eclipse.ui,
