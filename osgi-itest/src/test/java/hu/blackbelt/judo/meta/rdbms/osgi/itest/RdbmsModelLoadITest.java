@@ -20,7 +20,7 @@ package hu.blackbelt.judo.meta.rdbms.osgi.itest;
  * #L%
  */
 
-import hu.blackbelt.epsilon.runtime.execution.api.Log;
+import org.slf4j.Logger;
 import hu.blackbelt.epsilon.runtime.execution.impl.BufferedSlf4jLogger;
 import hu.blackbelt.judo.meta.rdbms.RdbmsConfiguration;
 import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel;
@@ -114,7 +114,7 @@ public class RdbmsModelLoadITest {
 
     @Test
     public void testModelValidation() throws Exception {
-        try (Log bufferedLog = new BufferedSlf4jLogger(log)) {
+        try (BufferedSlf4jLogger bufferedLog = new BufferedSlf4jLogger(log)) {
             validateRdbms(bufferedLog, rdbmsModel, calculateRdbmsValidationScriptURI());
         }
     }
