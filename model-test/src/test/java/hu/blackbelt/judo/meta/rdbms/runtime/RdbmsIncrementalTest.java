@@ -22,7 +22,7 @@ package hu.blackbelt.judo.meta.rdbms.runtime;
 
 import com.google.common.collect.ImmutableList;
 import hu.blackbelt.epsilon.runtime.execution.ExecutionContext;
-import hu.blackbelt.epsilon.runtime.execution.api.Log;
+import org.slf4j.Logger;
 import hu.blackbelt.epsilon.runtime.execution.impl.BufferedSlf4jLogger;
 import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel.RdbmsValidationException;
 import lombok.extern.slf4j.Slf4j;
@@ -60,7 +60,7 @@ public class RdbmsIncrementalTest {
 
         // Execution context
         ExecutionContext excelToRdbmsEtlContext;
-        try (Log bufferedLog = new BufferedSlf4jLogger(log)) {
+        try (BufferedSlf4jLogger bufferedLog = new BufferedSlf4jLogger(log)) {
             excelToRdbmsEtlContext = executionContextBuilder()
                     .resourceSet(originalModel.getResourceSet())
                     .log(bufferedLog)
@@ -115,7 +115,7 @@ public class RdbmsIncrementalTest {
 
         // Execution context
         ExecutionContext testIncrementalModelContext;
-        try (Log bufferedLog = new BufferedSlf4jLogger(log)) {
+        try (BufferedSlf4jLogger bufferedLog = new BufferedSlf4jLogger(log)) {
             testIncrementalModelContext = executionContextBuilder()
                     .resourceSet(originalModel.getResourceSet())
                     .log(bufferedLog)

@@ -35,18 +35,18 @@ import org.eclipse.epsilon.common.util.UriUtil;
 import java.util.Arrays;
 
 import hu.blackbelt.epsilon.runtime.execution.ExecutionContext;
-import hu.blackbelt.epsilon.runtime.execution.api.Log;
+import org.slf4j.Logger;
 import hu.blackbelt.epsilon.runtime.execution.exceptions.ScriptExecutionException;
 
 public class RdbmsEpsilonValidator {
 
-    public static void validateRdbms(Log log,
+    public static void validateRdbms(Logger log,
             RdbmsModel rdbmsModel,
             URI scriptRoot) throws ScriptExecutionException, URISyntaxException {
         validateRdbms(log, rdbmsModel, scriptRoot, emptyList(), emptyList());
     }
 
-    public static void validateRdbms(Log log,
+    public static void validateRdbms(Logger log,
             RdbmsModel rdbmsModel,
             URI scriptRoot,
             Collection<String> expectedErrors,
