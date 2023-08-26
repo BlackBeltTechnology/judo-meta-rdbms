@@ -21,7 +21,7 @@ package hu.blackbelt.judo.meta.rdbms.runtime;
  */
 
 import hu.blackbelt.epsilon.runtime.execution.ExecutionContext;
-import hu.blackbelt.epsilon.runtime.execution.api.Log;
+import org.slf4j.Logger;
 import hu.blackbelt.epsilon.runtime.execution.contexts.ProgramParameter;
 import hu.blackbelt.epsilon.runtime.execution.impl.BufferedSlf4jLogger;
 import org.eclipse.epsilon.common.util.UriUtil;
@@ -43,7 +43,7 @@ public class RdbmsIncremental {
                                                       RdbmsModel incrementalRdbmsModel,
                                                       String dialect,
                                                       boolean mergeModels) throws Exception {
-        try (Log bufferedLog = new BufferedSlf4jLogger(LoggerFactory.getLogger(RdbmsIncremental.class))) {
+        try (BufferedSlf4jLogger bufferedLog = new BufferedSlf4jLogger(LoggerFactory.getLogger(RdbmsIncremental.class))) {
             transformRdbmsIncrementalModel(originalModel, newModel, incrementalRdbmsModel, bufferedLog, calculateRdbmsTransformationScriptURI(), dialect, mergeModels);
         }
     }
@@ -51,7 +51,7 @@ public class RdbmsIncremental {
     public static void transformRdbmsIncrementalModel(RdbmsModel originalModel,
                                                       RdbmsModel newModel,
                                                       RdbmsModel incrementalRdbmsModel,
-                                                      Log log,
+                                                      Logger log,
                                                       String dialect,
                                                       boolean mergeModels) throws Exception {
         transformRdbmsIncrementalModel(originalModel, newModel, incrementalRdbmsModel, log, calculateRdbmsTransformationScriptURI(), dialect, mergeModels);
@@ -61,7 +61,7 @@ public class RdbmsIncremental {
     public static void transformRdbmsIncrementalModel(RdbmsModel originalModel,
                                                       RdbmsModel newModel,
                                                       RdbmsModel incrementalRdbmsModel,
-                                                      Log log,
+                                                      Logger log,
                                                       URI scriptUri,
                                                       String dialect, boolean mergeModels) throws Exception {
 
