@@ -63,7 +63,7 @@ post {
         log.error("Not listed elements were modified: " + modifiedElements.keySet());
     }
 
-    if(testOK) {
+    if (testOK) {
         log.info("----- TEST PASSED -----");
     } else {
         log.error("----- TEST FAILED -----");

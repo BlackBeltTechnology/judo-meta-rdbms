@@ -131,15 +131,14 @@ public class RdbmsIncrementalTest {
                                     .resource(incrementalRdbmsModel.getResource())
                                     .build()))
                     .build();
+            testIncrementalModelContext.load();
+            try {
+                testIncrementalModelContext.executeProgram(etlExecutionContextBuilder().source(UriUtil.resolve("testIncrementalModel.etl", root)).build());
+            } finally {
+                testIncrementalModelContext.commit();
+                testIncrementalModelContext.close();
+            }
         }
-
-        testIncrementalModelContext.load();
-
-
-        testIncrementalModelContext.executeProgram(etlExecutionContextBuilder().source(UriUtil.resolve("testIncrementalModel.etl", root)).build());
-
-        testIncrementalModelContext.commit();
-        testIncrementalModelContext.close();
 
     }
 

@@ -1,0 +1,12 @@
+operation Any setId(id: String) {
+    self.eResource.setId(self, id);
+}
+
+operation Any getId() : String {
+    if (self.eResource.isDefined() and self.eResource.getId().isDefined()) {
+        return self.eResource.getId(self);
+    } else {
+        return self.uuid;
+    }
+}
+
