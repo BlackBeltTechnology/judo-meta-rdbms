@@ -1,3 +1,11 @@
+operation Any setId(id: String) {
+    self.eResource.setId(self, id);
+}
+
+operation Any getId() : String {
+    return self.eResource.getId(self);
+}
+
 pre {
    var newModel = new NEW!RdbmsModel();
    newModel.version = "2.0";
@@ -16,6 +24,7 @@ rule transformOriginalTable
         originalModel.rdbmsTables.add(t);
         t.name = f.name;
         t.uuid = f.uuid;
+        t.setId(f.uuid);
         t.sqlName = f.sql_name;
 }
 
@@ -26,6 +35,7 @@ rule transformOriginalValue
         t.name = f.name;
         t.sqlName =f.sql_name;
         t.uuid = f.uuid;
+        t.setId(f.uuid);
         t.mandatory = f.mandatory.asBoolean();
         t.rdbmsTypeName = f.type_name;
         t.size = f.size.asInteger();
@@ -42,6 +52,7 @@ rule transformOriginalId
         t.name = f.name;
         t.sqlName = f.sql_name;
         t.uuid = f.uuid;
+        t.setId(f.uuid);
         t.mandatory = f.mandatory.asBoolean();
         t.rdbmsTypeName = f.type_name;
         t.size = f.size.asInteger();
@@ -60,6 +71,7 @@ rule transformOriginalForeignKey
         t.name = f.name;
         t.sqlName = f.sql_name;
         t.uuid = f.uuid;
+        t.setId(f.uuid);
         t.mandatory = f.mandatory.asBoolean();
         t.rdbmsTypeName = f.type_name;
         t.size = f.size.asInteger();
@@ -78,6 +90,7 @@ rule transformNewTable
         newModel.rdbmsTables.add(t);
         t.name = f.name;
         t.uuid = f.uuid;
+        t.setId(f.uuid);
         t.sqlName = f.sql_name;
 }
 
@@ -88,6 +101,7 @@ rule transformNewValue
         t.name = f.name;
         t.sqlName = f.sql_name;
         t.uuid = f.uuid;
+        t.setId(f.uuid);
         t.mandatory = f.mandatory.asBoolean();
         t.rdbmsTypeName = f.type_name;
         t.size = f.size.asInteger();
@@ -104,6 +118,7 @@ rule transformNewId
         t.name = f.name;
         t.sqlName = f.sql_name;
         t.uuid = f.uuid;
+        t.setId(f.uuid);
         t.mandatory = f.mandatory.asBoolean();
         t.rdbmsTypeName = f.type_name;
         t.size = f.size.asInteger();
@@ -123,6 +138,7 @@ rule transformNewForeignKey
         t.name = f.name;
         t.sqlName = f.sql_name;
         t.uuid = f.uuid;
+        t.setId(f.uuid);
         t.mandatory = f.mandatory.asBoolean();
         t.rdbmsTypeName = f.type_name;
         t.size = f.size.asInteger();

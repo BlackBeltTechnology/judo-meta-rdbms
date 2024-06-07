@@ -1,3 +1,4 @@
+import "rdbms/utils/id.eol";
 import "rdbms/utils/field.eol";
 import "rdbms/utils/model.eol";
 import "rdbms/utils/table.eol";
@@ -139,7 +140,6 @@ rule DeletePreviousValueFieldOnExistingTable
         newModel.tableOf(f.eContainer).equivalent("ModifyTableOperationForExistingTable").deleteFieldOperations.add(t);
         t.uuid =  f.uuid + "-DeleteValueField";
         t.name = "Delete " + f.name;
-
         t.field = f;
         log.info("Delete value field on existing table: " + f.uuid);
 }
@@ -166,7 +166,6 @@ rule DeletePreviousForeignKeyOnExistingTable
         t.uuid =  f.uuid + "-DeleteForeignKey";
         t.field = f;
         t.name = "Delete " + f.name;
-
         log.info("Delete foreign key on existing table: " + f.uuid);
 }
 
@@ -192,7 +191,6 @@ rule DeletePreviousIdentifierFieldOnExistingTable
         t.uuid =  f.uuid + "-DeleteIdentifierField";
         t.field = f;
         t.name = "Delete " + f.name;
-
         log.info("Delete identifier field on existing table: " + f.uuid);
 }
 
@@ -299,12 +297,10 @@ rule ModifyExistingForeignKey
                 or not newModel.tableOf(f.eContainer).fieldOf(f).isTypeOf(NEW!RdbmsForeignKey))
         var n : RDBMS!RdbmsField = newModel.tableOf(f.eContainer).fieldOf(f);
 
-        var ee = newModel.tableOf(f.eContainer);
-
-        if (ee.isTypeOf(RDBMS!RdbmsTable)) {
-            ee.equivalent("ModifyTableOperationForExistingTable").modifyFieldOperations.add(t);
+        if (previousFieldTable.isTypeOf(RDBMS!RdbmsTable)) {
+            previousFieldTable.equivalent("ModifyTableOperationForExistingTable").modifyFieldOperations.add(t);
         } else {
-            ee.equivalent("ModifyJunctionTableOperationForExistingTable").modifyFieldOperations.add(t);
+            previousFieldTable.equivalent("ModifyJunctionTableOperationForExistingTable").modifyFieldOperations.add(t);
         }
         t.uuid =  f.uuid + "-ModifyField";
         t.field = n;
@@ -314,7 +310,7 @@ rule ModifyExistingForeignKey
         log.info("Modify field: " + f.uuid);
 
         if (not n.isTypeOf(NEW!RdbmsForeignKey)) {
-               t.changedForeignKeyToValueField = true;
+                t.changedForeignKeyToValueField = true;
             log.info("    Foreign key changed to Value field");
         }
 
