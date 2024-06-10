@@ -296,7 +296,7 @@ rule ModifyExistingForeignKey
                 and (f.isAnyChanged(newModel.tableOf(f.eContainer).fieldOf(f))
                 or not newModel.tableOf(f.eContainer).fieldOf(f).isTypeOf(NEW!RdbmsForeignKey))
         var n : RDBMS!RdbmsField = newModel.tableOf(f.eContainer).fieldOf(f);
-
+        var previousFieldTable = newModel.tableOf(f.eContainer);
         if (previousFieldTable.isTypeOf(RDBMS!RdbmsTable)) {
             previousFieldTable.equivalent("ModifyTableOperationForExistingTable").modifyFieldOperations.add(t);
         } else {
