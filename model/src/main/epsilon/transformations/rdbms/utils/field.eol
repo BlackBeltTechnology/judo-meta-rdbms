@@ -81,10 +81,10 @@ operation isStorageByteReviewRequired(previousField : RDBMS!RdbmsField, newField
 }
 
 operation isReviewRequired(previousField : RDBMS!RdbmsField, newField : RDBMS!RdbmsField) : Boolean {
-    return isMandatoryReviewRequired(previousField, newField)
+    return (not ignoreReview) and (isMandatoryReviewRequired(previousField, newField)
             or isSqlTypeReviewRequired(previousField, newField)
             or isSizeReviewRequired(previousField, newField)
             or isPrecisionReviewRequired(previousField, newField)
             or isScaleReviewRequired(previousField, newField)
-            or isStorageByteReviewRequired(previousField, newField);
+            or isStorageByteReviewRequired(previousField, newField));
 }

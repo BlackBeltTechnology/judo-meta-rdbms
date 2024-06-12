@@ -20,6 +20,7 @@ package hu.blackbelt.judo.meta.rdbms.runtime;
  * #L%
  */
 
+import com.google.common.collect.ImmutableMap;
 import hu.blackbelt.epsilon.runtime.execution.ExecutionContext;
 import org.slf4j.Logger;
 import hu.blackbelt.epsilon.runtime.execution.contexts.ProgramParameter;
@@ -51,19 +52,48 @@ public class RdbmsIncremental {
     public static void transformRdbmsIncrementalModel(RdbmsModel originalModel,
                                                       RdbmsModel newModel,
                                                       RdbmsModel incrementalRdbmsModel,
+                                                      String dialect,
+                                                      boolean mergeModels,
+                                                      boolean ignoreReview) throws Exception {
+        try (BufferedSlf4jLogger bufferedLog = new BufferedSlf4jLogger(LoggerFactory.getLogger(RdbmsIncremental.class))) {
+            transformRdbmsIncrementalModel(originalModel, newModel, incrementalRdbmsModel, bufferedLog, calculateRdbmsTransformationScriptURI(), dialect, mergeModels, ignoreReview);
+        }
+    }
+
+    public static void transformRdbmsIncrementalModel(RdbmsModel originalModel,
+                                                      RdbmsModel newModel,
+                                                      RdbmsModel incrementalRdbmsModel,
+                                                      Logger log,
+                                                      String dialect,
+                                                      boolean mergeModels,
+                                                      boolean ignoreReview) throws Exception {
+        transformRdbmsIncrementalModel(originalModel, newModel, incrementalRdbmsModel, log, calculateRdbmsTransformationScriptURI(), dialect, mergeModels, false);
+    }
+
+    public static void transformRdbmsIncrementalModel(RdbmsModel originalModel,
+                                                      RdbmsModel newModel,
+                                                      RdbmsModel incrementalRdbmsModel,
                                                       Logger log,
                                                       String dialect,
                                                       boolean mergeModels) throws Exception {
         transformRdbmsIncrementalModel(originalModel, newModel, incrementalRdbmsModel, log, calculateRdbmsTransformationScriptURI(), dialect, mergeModels);
     }
 
-
     public static void transformRdbmsIncrementalModel(RdbmsModel originalModel,
                                                       RdbmsModel newModel,
                                                       RdbmsModel incrementalRdbmsModel,
                                                       Logger log,
                                                       URI scriptUri,
-                                                      String dialect, boolean mergeModels) throws Exception {
+                                                      String dialect,
+                                                      boolean mergeModels) throws Exception {
+        transformRdbmsIncrementalModel(originalModel, newModel, incrementalRdbmsModel, log, calculateRdbmsTransformationScriptURI(), dialect, mergeModels, false);
+    }
+    public static void transformRdbmsIncrementalModel(RdbmsModel originalModel,
+                                                      RdbmsModel newModel,
+                                                      RdbmsModel incrementalRdbmsModel,
+                                                      Logger log,
+                                                      URI scriptUri,
+                                                      String dialect, boolean mergeModels, boolean ignoreReview) throws Exception {
 
         // Execution context
         ExecutionContext executionContext = executionContextBuilder()
@@ -84,6 +114,9 @@ public class RdbmsIncremental {
                                 .name("INCREMENTAL")
                                 .resource(incrementalRdbmsModel.getResource())
                                 .build()))
+                .injectContexts(ImmutableMap.<String, Object>builder()
+                        .put("ignoreReview", ignoreReview)
+                        .build())
                 .build();
 
         // run the model / metadata loading
