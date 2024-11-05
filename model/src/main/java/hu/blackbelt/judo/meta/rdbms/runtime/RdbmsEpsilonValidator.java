@@ -60,6 +60,7 @@ public class RdbmsEpsilonValidator {
                                 .log(log)
                                 .name("RDBMS")
                                 .validateModel(false)
+                                .useCache(true)
                                 .resource(rdbmsModel.getResource())
                                 .build()))
                 .injectContexts(singletonMap("rdbmsUtils", new RdbmsUtils()))
