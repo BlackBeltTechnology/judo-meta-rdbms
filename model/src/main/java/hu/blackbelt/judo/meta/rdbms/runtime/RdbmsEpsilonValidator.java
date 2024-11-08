@@ -47,10 +47,18 @@ public class RdbmsEpsilonValidator {
     }
 
     public static void validateRdbms(Logger log,
+                                     RdbmsModel rdbmsModel,
+                                     URI scriptRoot,
+                                     Collection<String> expectedErrors,
+                                     Collection<String> expectedWarnings) throws ScriptExecutionException, URISyntaxException {
+        validateRdbms(log, rdbmsModel, scriptRoot, expectedErrors, expectedWarnings, false);
+    }
+
+    public static void validateRdbms(Logger log,
             RdbmsModel rdbmsModel,
             URI scriptRoot,
             Collection<String> expectedErrors,
-            Collection<String> expectedWarnings) throws ScriptExecutionException, URISyntaxException {
+            Collection<String> expectedWarnings, Boolean useCache) throws ScriptExecutionException, URISyntaxException {
         ExecutionContext executionContext = executionContextBuilder()
                 .log(log)
                 .resourceSet(rdbmsModel.getResourceSet())
@@ -62,6 +70,7 @@ public class RdbmsEpsilonValidator {
                                 .validateModel(false)
                                 .useCache(true)
                                 .resource(rdbmsModel.getResource())
+                                .useCache(useCache)
                                 .build()))
                 .injectContexts(singletonMap("rdbmsUtils", new RdbmsUtils()))
                 .build();
@@ -76,6 +85,7 @@ public class RdbmsEpsilonValidator {
                                 .source(UriUtil.resolve("rdbms.evl", scriptRoot))
                                 .expectedErrors(expectedErrors)
                                 .expectedWarnings(expectedWarnings)
+                                .parallel(true)
                                 .build());
 
             } finally {
