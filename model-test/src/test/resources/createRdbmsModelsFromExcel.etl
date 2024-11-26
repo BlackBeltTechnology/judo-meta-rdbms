@@ -1,9 +1,39 @@
 operation Any setId(id: String) {
-    self.eResource.setId(self, id);
+    if (id.isUndefined()) {
+        throw "ID is not defined" + self;
+    }
+    if (self.isUndefined()) {
+        throw "Could not determinate ID of " + self;
+    }
+    var r = self.eResource;
+    if (r.isUndefined()) {
+        throw "Object is not added to resource " + self;
+    }
+    if (__originalMap.containsKey(self)) {
+        __originalMap.put(self, id);
+    }
+    if (__cacheMap.containsKey(self.getId())) {
+        __cacheMap.remove(self.getId());
+        __cacheMap.put(id, self);
+    }
+    r.setId(self, id);
 }
 
 operation Any getId() : String {
-    return self.eResource.getId(self);
+    if (self.isUndefined()) {
+        throw "Could not determinate ID of " + self;
+    }
+    var r = self.eResource;
+    if (r.isUndefined()) {
+        throw "Object is not added to resource " + self;
+    }
+
+    return r.getId(self);
+}
+
+operation String purify() : String {
+    // e.g. xmiids do not like such characters
+    return self.replace("::", "/");
 }
 
 pre {
@@ -15,6 +45,9 @@ pre {
    originalModel.version = "1.0";
    originalModel.configuration = new ORIGINAL!RdbmsConfiguration();
    originalModel.configuration.dialect = "hsqldb";
+
+   var __cacheMap = new ConcurrentMap();
+   var __originalMap = new ConcurrentMap();
 }
 
 rule transformOriginalTable
