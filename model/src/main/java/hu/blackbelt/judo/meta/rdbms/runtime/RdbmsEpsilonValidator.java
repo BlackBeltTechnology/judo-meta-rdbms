@@ -68,7 +68,6 @@ public class RdbmsEpsilonValidator {
                                 .log(log)
                                 .name("RDBMS")
                                 .validateModel(false)
-                                .useCache(true)
                                 .resource(rdbmsModel.getResource())
                                 .useCache(useCache)
                                 .build()))
