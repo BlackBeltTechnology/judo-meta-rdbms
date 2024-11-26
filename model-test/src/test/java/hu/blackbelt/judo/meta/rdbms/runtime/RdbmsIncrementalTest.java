@@ -62,7 +62,6 @@ public class RdbmsIncrementalTest {
         ExecutionContext excelToRdbmsEtlContext;
         try (BufferedSlf4jLogger bufferedLog = new BufferedSlf4jLogger(log)) {
             excelToRdbmsEtlContext = executionContextBuilder()
-//                    .resourceSet(originalModel.getResourceSet())
                     .log(bufferedLog)
                     .modelContexts(ImmutableList.of(
                             excelModelContextBuilder()
@@ -75,13 +74,13 @@ public class RdbmsIncrementalTest {
                                     .name("ORIGINAL_MODEL")
                                     .aliases(singletonList("ORIGINAL"))
                                     .resource(originalModel.getResource())
-                                    .useCache(false)
+                                    .useCache(true)
                                     .build(),
                             wrappedEmfModelContextBuilder()
                                     .name("NEW_MODEL")
                                     .aliases(singletonList("NEW"))
                                     .resource(newModel.getResource())
-                                    .useCache(false)
+                                    .useCache(true)
                                     .build()))
                     .build();
         }
@@ -133,7 +132,7 @@ public class RdbmsIncrementalTest {
                             wrappedEmfModelContextBuilder()
                                     .name("INCREMENTAL")
                                     .resource(incrementalRdbmsModel.getResource())
-                                    .useCache(false)
+                                    .useCache(true)
                                     .build()))
                     .build();
             testIncrementalModelContext.load();
