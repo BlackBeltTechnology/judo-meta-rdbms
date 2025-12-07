@@ -113,6 +113,9 @@
 		<sonar.java.source>${java.version}</sonar.java.source>
 		<jacoco.version>0.8.12</jacoco.version>
 
+		<!-- Zeta validation framework -->
+		<judo-zeta-version>1.0.0.20251207_081454_0779b890_develop</judo-zeta-version>
+
 	</properties>
 
 
@@ -329,7 +332,7 @@
 					</executions>
 				</plugin>
 
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
+				<!--This plugin's configuration is used to store Eclipse m2e settings
 					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
@@ -760,6 +763,23 @@
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-classic</artifactId>
 				<version>${logback-version}</version>
+			</dependency>
+
+			<!-- Zeta validation framework -->
+			<dependency>
+				<groupId>hu.blackbelt.judo.zeta</groupId>
+				<artifactId>hu.blackbelt.judo.zeta.annotations</artifactId>
+				<version>${judo-zeta-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>hu.blackbelt.judo.zeta</groupId>
+				<artifactId>hu.blackbelt.judo.zeta.common</artifactId>
+				<version>${judo-zeta-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>hu.blackbelt.judo.zeta</groupId>
+				<artifactId>hu.blackbelt.judo.zeta.validation-core</artifactId>
+				<version>${judo-zeta-version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
