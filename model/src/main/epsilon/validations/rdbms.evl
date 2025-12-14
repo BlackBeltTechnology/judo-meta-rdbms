@@ -1,1 +1,177 @@
+// RDBMS Model Validation Rules
+// These EVL rules must produce identical results to the Java validation rules in
+// hu.blackbelt.judo.meta.rdbms.validation.rules package
 
+pre {
+    var RDBMS = RDBMS!RdbmsPackage.eINSTANCE;
+}
+
+// ============================================================================
+// RdbmsElement Constraints
+// ============================================================================
+
+context RDBMS!RdbmsElement {
+
+    // Constraint: Element name must not be empty
+    constraint RdbmsElementNameNotEmpty {
+        check: self.name.isDefined() and self.name.trim().length() > 0
+        message: "RDBMS element name must not be empty"
+    }
+
+    // Constraint: Element UUID must not be empty
+    constraint RdbmsElementUuidNotEmpty {
+        check: self.uuid.isDefined() and self.uuid.trim().length() > 0
+        message: "RDBMS element '" + self.name + "' UUID must not be empty"
+    }
+
+    // Constraint: Element name must be unique within the model
+    constraint RdbmsElementNameIsUnique {
+        guard: self.satisfies("RdbmsElementNameNotEmpty")
+        check {
+            var resource = self.eResource();
+            if (resource.isUndefined()) {
+                return true;
+            }
+            var allElements = resource.getAllContents().select(e | e.isKindOf(RDBMS!RdbmsElement));
+            return not allElements.excluding(self).exists(e | e.name == self.name);
+        }
+        message: "RDBMS element name '" + self.name + "' is not unique"
+    }
+}
+
+// ============================================================================
+// RdbmsTable Constraints
+// ============================================================================
+
+context RDBMS!RdbmsTable {
+
+    // Constraint: Table must have a primary key
+    constraint RdbmsTableHasPrimaryKey {
+        check: self.primaryKey.isDefined()
+        message: "RDBMS table '" + self.name + "' must have a primary key"
+    }
+
+    // Constraint: Primary key must not be null
+    constraint RdbmsTablePrimaryKeyNotNull {
+        check: self.primaryKey.isDefined()
+        message: "RDBMS table '" + self.name + "' primary key reference is null"
+    }
+
+    // Critique: Table name should follow naming convention (uppercase with underscores)
+    critique RdbmsTableNameConvention {
+        check {
+            var name = self.sqlName;
+            if (name.isUndefined() or name.trim().length() == 0) {
+                name = self.name;
+            }
+            if (name.isUndefined() or name.trim().length() == 0) {
+                return true;
+            }
+            return name.matches("^[A-Z][A-Z0-9_]*$");
+        }
+        message: "RDBMS table name '" + self.sqlName + "' does not follow naming convention (expected uppercase with underscores)"
+    }
+}
+
+// ============================================================================
+// RdbmsField Constraints
+// ============================================================================
+
+context RDBMS!RdbmsField {
+
+    // Constraint: Field must have a valid type
+    constraint RdbmsFieldHasValidType {
+        check: self.rdbmsTypeName.isDefined() and self.rdbmsTypeName.trim().length() > 0
+        message: "RDBMS field '" + self.name + "' must have a valid type"
+    }
+
+    // Critique: Field name should follow naming convention (lowercase with underscores)
+    critique RdbmsFieldNameConvention {
+        check {
+            var name = self.sqlName;
+            if (name.isUndefined() or name.trim().length() == 0) {
+                name = self.name;
+            }
+            if (name.isUndefined() or name.trim().length() == 0) {
+                return true;
+            }
+            return name.matches("^[a-z][a-z0-9_]*$");
+        }
+        message: "RDBMS field name '" + self.sqlName + "' does not follow naming convention (expected lowercase with underscores)"
+    }
+}
+
+// ============================================================================
+// RdbmsForeignKey Constraints
+// ============================================================================
+
+context RDBMS!RdbmsForeignKey {
+
+    // Constraint: Foreign key must reference a table
+    constraint RdbmsForeignKeyHasReference {
+        check: self.referenceKey.isDefined()
+        message: "RDBMS foreign key '" + self.name + "' must reference a table"
+    }
+}
+
+// ============================================================================
+// RdbmsIndex Constraints
+// ============================================================================
+
+context RDBMS!RdbmsIndex {
+
+    // Constraint: Index must have fields defined
+    constraint RdbmsIndexHasFields {
+        check: self.fields.isDefined() and self.fields.size() > 0
+        message: "RDBMS index '" + self.name + "' must have at least one field"
+    }
+}
+
+// ============================================================================
+// RdbmsUniqueConstraint Constraints
+// ============================================================================
+
+context RDBMS!RdbmsUniqueConstraint {
+
+    // Constraint: Unique constraint must have fields defined
+    constraint RdbmsUniqueConstraintHasFields {
+        check: self.fields.isDefined() and self.fields.size() > 0
+        message: "RDBMS unique constraint '" + self.name + "' must have at least one field"
+    }
+}
+
+// ============================================================================
+// RdbmsJunctionTable Constraints
+// ============================================================================
+
+context RDBMS!RdbmsJunctionTable {
+
+    // Constraint: Junction table must have both foreign key fields
+    constraint RdbmsJunctionTableHasBothFields {
+        check: self.field1.isDefined() and self.field2.isDefined()
+        message {
+            var missingFields = "";
+            if (self.field1.isUndefined() and self.field2.isUndefined()) {
+                missingFields = "field1 and field2";
+            } else if (self.field1.isUndefined()) {
+                missingFields = "field1";
+            } else {
+                missingFields = "field2";
+            }
+            return "RDBMS junction table '" + self.name + "' is missing " + missingFields;
+        }
+    }
+}
+
+// ============================================================================
+// RdbmsConfiguration Constraints
+// ============================================================================
+
+context RDBMS!RdbmsConfiguration {
+
+    // Constraint: Configuration must specify a dialect
+    constraint RdbmsConfigurationHasDialect {
+        check: self.dialect.isDefined() and self.dialect.trim().length() > 0
+        message: "RDBMS configuration must specify a dialect"
+    }
+}

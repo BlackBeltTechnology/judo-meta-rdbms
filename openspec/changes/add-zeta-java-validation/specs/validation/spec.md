@@ -106,3 +106,116 @@ The project documentation SHALL describe the Java validation framework usage and
 - **GIVEN** the project `README.adoc`
 - **WHEN** a developer reads it
 - **THEN** they find a section describing validation capabilities with links to detailed docs
+
+---
+
+### Requirement: RdbmsElement Validation Rules
+
+The validation framework SHALL enforce constraints on RdbmsElement instances.
+
+#### Scenario: Element name must not be empty
+- **GIVEN** an RdbmsElement with empty or null name
+- **WHEN** validation is executed
+- **THEN** constraint `RdbmsElementNameNotEmpty` fails with ERROR severity
+
+#### Scenario: Element UUID must not be empty
+- **GIVEN** an RdbmsElement with empty or null UUID
+- **WHEN** validation is executed
+- **THEN** constraint `RdbmsElementUuidNotEmpty` fails with ERROR severity
+
+#### Scenario: Element name must be unique
+- **GIVEN** two RdbmsElements with the same name
+- **WHEN** validation is executed
+- **THEN** constraint `RdbmsElementNameIsUnique` fails with ERROR severity
+
+---
+
+### Requirement: RdbmsTable Validation Rules
+
+The validation framework SHALL enforce constraints on RdbmsTable instances.
+
+#### Scenario: Table must have a primary key
+- **GIVEN** an RdbmsTable without a primary key defined
+- **WHEN** validation is executed
+- **THEN** constraint `RdbmsTableHasPrimaryKey` fails with ERROR severity
+
+#### Scenario: Primary key must not be null
+- **GIVEN** an RdbmsTable with primary key set to null
+- **WHEN** validation is executed
+- **THEN** constraint `RdbmsTablePrimaryKeyNotNull` fails with ERROR severity
+
+#### Scenario: Table name follows naming convention
+- **GIVEN** an RdbmsTable with name not following convention (e.g., lowercase, no spaces)
+- **WHEN** validation is executed
+- **THEN** critique `RdbmsTableNameConvention` fails with WARNING severity
+
+---
+
+### Requirement: RdbmsField Validation Rules
+
+The validation framework SHALL enforce constraints on RdbmsField instances.
+
+#### Scenario: Field must have a valid type
+- **GIVEN** an RdbmsField without a type or with invalid type
+- **WHEN** validation is executed
+- **THEN** constraint `RdbmsFieldHasValidType` fails with ERROR severity
+
+#### Scenario: Field name follows naming convention
+- **GIVEN** an RdbmsField with name not following convention
+- **WHEN** validation is executed
+- **THEN** critique `RdbmsFieldNameConvention` fails with WARNING severity
+
+---
+
+### Requirement: RdbmsForeignKey Validation Rules
+
+The validation framework SHALL enforce constraints on RdbmsForeignKey instances.
+
+#### Scenario: Foreign key must reference a table
+- **GIVEN** an RdbmsForeignKey without a reference table
+- **WHEN** validation is executed
+- **THEN** constraint `RdbmsForeignKeyHasReference` fails with ERROR severity
+
+---
+
+### Requirement: RdbmsIndex Validation Rules
+
+The validation framework SHALL enforce constraints on RdbmsIndex instances.
+
+#### Scenario: Index must have fields defined
+- **GIVEN** an RdbmsIndex with no fields
+- **WHEN** validation is executed
+- **THEN** constraint `RdbmsIndexHasFields` fails with ERROR severity
+
+---
+
+### Requirement: RdbmsUniqueConstraint Validation Rules
+
+The validation framework SHALL enforce constraints on RdbmsUniqueConstraint instances.
+
+#### Scenario: Unique constraint must have fields
+- **GIVEN** an RdbmsUniqueConstraint with no fields defined
+- **WHEN** validation is executed
+- **THEN** constraint `RdbmsUniqueConstraintHasFields` fails with ERROR severity
+
+---
+
+### Requirement: RdbmsJunctionTable Validation Rules
+
+The validation framework SHALL enforce constraints on RdbmsJunctionTable instances.
+
+#### Scenario: Junction table must have both fields
+- **GIVEN** an RdbmsJunctionTable missing one or both foreign key fields
+- **WHEN** validation is executed
+- **THEN** constraint `RdbmsJunctionTableHasBothFields` fails with ERROR severity
+
+---
+
+### Requirement: RdbmsConfiguration Validation Rules
+
+The validation framework SHALL enforce constraints on RdbmsConfiguration instances.
+
+#### Scenario: Configuration must specify dialect
+- **GIVEN** an RdbmsConfiguration without a dialect specified
+- **WHEN** validation is executed
+- **THEN** constraint `RdbmsConfigurationHasDialect` fails with ERROR severity

@@ -18,6 +18,30 @@ The current RDBMS metamodel validation relies solely on EVL (Epsilon Validation 
 - Create validation rule classes using Zeta annotations
 - Use constants for all constraint names, guard methods, and validation messages
 
+### Validation Rules Implementation
+Implement 13 validation rules defined in `RdbmsValidationConstants.java`:
+
+**Constraints (ERROR level) - 11 rules:**
+| Constant | Target | Description |
+|----------|--------|-------------|
+| RdbmsElementNameNotEmpty | RdbmsElement | Element name must not be empty |
+| RdbmsElementUuidNotEmpty | RdbmsElement | Element UUID must not be empty |
+| RdbmsElementNameIsUnique | RdbmsElement | Element name must be unique |
+| RdbmsTableHasPrimaryKey | RdbmsTable | Table must have a primary key |
+| RdbmsTablePrimaryKeyNotNull | RdbmsTable | Primary key must not be null |
+| RdbmsFieldHasValidType | RdbmsField | Field must have a valid type |
+| RdbmsForeignKeyHasReference | RdbmsForeignKey | Foreign key must reference a table |
+| RdbmsIndexHasFields | RdbmsIndex | Index must have fields defined |
+| RdbmsUniqueConstraintHasFields | RdbmsUniqueConstraint | Unique constraint must have fields |
+| RdbmsJunctionTableHasBothFields | RdbmsJunctionTable | Junction table must have both fields |
+| RdbmsConfigurationHasDialect | RdbmsConfiguration | Configuration must specify dialect |
+
+**Critiques (WARNING level) - 2 rules:**
+| Constant | Target | Description |
+|----------|--------|-------------|
+| RdbmsTableNameConvention | RdbmsTable | Table name follows naming convention |
+| RdbmsFieldNameConvention | RdbmsField | Field name follows naming convention |
+
 ### Test Infrastructure
 - Add `ValidatorType` enum (EVL, JAVA) for test parametrization
 - Modify `RdbmsValidationTest` base class for dual validation support
@@ -49,4 +73,3 @@ The current RDBMS metamodel validation relies solely on EVL (Epsilon Validation 
 
 - Removing EVL validation (both systems run in parallel)
 - Changing validation semantics (Java must produce identical results to EVL)
-- Adding new validation rules (only migrating existing empty rules)
