@@ -14,10 +14,11 @@ The RDBMS metamodel currently has an empty EVL validation file (`rdbms.evl`). Th
 - Enable parameterized tests that run both validators
 - Add performance benchmarking capability
 - Document validation patterns
+- Implement all 13 validation rules (11 constraints + 2 critiques)
+- Maintain EVL/Java parity for dual validation testing
 
 ## Non-Goals
 
-- Implement specific validation rules (framework only)
 - Remove or deprecate EVL validation
 - Change existing test assertions
 
@@ -247,12 +248,12 @@ void testPerformanceWith10000Elements() {
 - Enums - Less flexible for message interpolation
 **Rationale**: Compile-time safety, easy refactoring, grep-friendly
 
-### Decision 4: Framework-Only Initial Implementation
-**Choice**: Set up framework without implementing actual rules
+### Decision 4: Full Validation Rules Implementation
+**Choice**: Implement all 13 validation rules in both Java and EVL
 **Alternatives**:
-- Implement all rules immediately - Larger change scope
-- Wait for rules to be needed - Delays infrastructure
-**Rationale**: Empty `rdbms.evl` means no rules to migrate yet; framework enables future work
+- Framework-only implementation - Defers value delivery
+- Java-only rules - Breaks dual validation testing requirement
+**Rationale**: Provides immediate validation value; EVL parity ensures both validators produce identical results
 
 ## Risks and Mitigations
 

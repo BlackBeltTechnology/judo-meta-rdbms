@@ -47,32 +47,97 @@
 - [x] 5.5 Update `README.adoc` with validation section
 - [x] 5.6 Add links to Zeta documentation (don't duplicate content)
 
-## 6. Verification
+## 6. Verification (Infrastructure)
 - [x] 6.1 Run `mvn clean install` to verify full build
 - [x] 6.2 Verify all existing tests pass
 - [x] 6.3 Verify new parameterized tests run for both EVL and JAVA
 - [x] 6.4 Verify performance test executes and logs results
 - [x] 6.5 Review generated documentation
 
+## 7. Validation Rules Implementation - Constraints (ERROR level)
+- [x] 7.1 Implement `RdbmsElementNameNotEmpty` - Element name must not be empty
+- [x] 7.2 Implement `RdbmsElementUuidNotEmpty` - Element UUID must not be empty
+- [x] 7.3 Implement `RdbmsElementNameIsUnique` - Element name must be unique
+- [x] 7.4 Implement `RdbmsTableHasPrimaryKey` - Table must have a primary key
+- [x] 7.5 Implement `RdbmsTablePrimaryKeyNotNull` - Primary key must not be null
+- [x] 7.6 Implement `RdbmsFieldHasValidType` - Field must have a valid type
+- [x] 7.7 Implement `RdbmsForeignKeyHasReference` - Foreign key must reference a table
+- [x] 7.8 Implement `RdbmsIndexHasFields` - Index must have fields defined
+- [x] 7.9 Implement `RdbmsUniqueConstraintHasFields` - Unique constraint must have fields
+- [x] 7.10 Implement `RdbmsJunctionTableHasBothFields` - Junction table must have both fields
+- [x] 7.11 Implement `RdbmsConfigurationHasDialect` - Configuration must specify dialect
+
+## 8. Validation Rules Implementation - Critiques (WARNING level)
+- [x] 8.1 Implement `RdbmsTableNameConvention` - Table name follows naming convention
+- [x] 8.2 Implement `RdbmsFieldNameConvention` - Field name follows naming convention
+
+## 9. Tests for Validation Rules
+- [x] 9.1 Add tests for RdbmsElement validations (name not empty, UUID not empty, name unique)
+- [x] 9.2 Add tests for RdbmsTable validations (has primary key, primary key not null)
+- [x] 9.3 Add tests for RdbmsField validations (has valid type)
+- [x] 9.4 Add tests for RdbmsForeignKey validations (has reference)
+- [x] 9.5 Add tests for RdbmsIndex validations (has fields)
+- [x] 9.6 Add tests for RdbmsUniqueConstraint validations (has fields)
+- [x] 9.7 Add tests for RdbmsJunctionTable validations (has both fields)
+- [x] 9.8 Add tests for RdbmsConfiguration validations (has dialect)
+- [x] 9.9 Add tests for naming convention critiques (table, field)
+
+## 10. EVL Parity
+- [x] 10.1 Add corresponding EVL rules to `rdbms.evl` for all constraints
+- [x] 10.2 Add corresponding EVL critiques to `rdbms.evl` for all warnings
+- [x] 10.3 Verify EVL and Java validators produce identical results
+
+## 11. Final Verification
+- [x] 11.1 Run `mvn clean install` to verify full build
+- [x] 11.2 Verify all parameterized tests pass for both EVL and JAVA validators
+- [x] 11.3 Update documentation with implemented rules
+- [x] 11.4 Review and update performance test if needed
+
 ## Dependencies Between Tasks
 - 1.x must complete before 2.x and 3.x
 - 2.x and 3.x can proceed in parallel after 1.x
 - 4.x depends on 2.x and 3.x completion
 - 5.x can start after 2.x and 3.x (documents what was built)
-- 6.x is final verification after all others
+- 6.x is verification of infrastructure
+- 7.x and 8.x depend on 6.x completion (framework must be working)
+- 9.x depends on 7.x and 8.x (tests validate the implementations)
+- 10.x depends on 7.x and 8.x (EVL rules mirror Java rules)
+- 11.x is final verification after all others
 
-## Completion Summary
+## Phase 1 Completion Summary (Infrastructure)
 
 **Status: COMPLETED**
 
-All tasks have been implemented and verified:
+All infrastructure tasks have been implemented and verified:
 - Build: SUCCESS
 - Tests: 13 passed, 0 failures
 - Performance test shows EVL ~18ms vs Java ~15ms for 10,000 elements
 
+## Phase 2 Completion Summary (Validation Rules)
+
+**Status: COMPLETED**
+
+All validation rules have been implemented:
+- Total planned rules: 13 (11 constraints + 2 critiques)
+- Implemented rules: 13
+- Build: SUCCESS
+
+### Java Validation Classes Created
+- `RdbmsElementValidations.java` - Name/UUID/uniqueness constraints
+- `RdbmsTableValidations.java` - Primary key constraints and name convention
+- `RdbmsFieldValidations.java` - Type constraint and name convention
+- `RdbmsForeignKeyValidations.java` - Reference constraint
+- `RdbmsIndexValidations.java` - Fields constraint
+- `RdbmsUniqueConstraintValidations.java` - Fields constraint
+- `RdbmsJunctionTableValidations.java` - Both fields constraint
+- `RdbmsConfigurationValidations.java` - Dialect constraint
+
+### EVL Parity
+- All 13 rules implemented in `rdbms.evl`
+- Both validators produce identical results
+
 ## Notes
-- Current `rdbms.evl` is empty - no actual validation rules to migrate
-- Framework setup enables future rule additions
-- Both validators produce empty results for valid models
+- Framework infrastructure is complete and working
 - Added `hu.blackbelt.judo.zeta.common` dependency (contains ModelProvider, ExtensionMethodRegistry)
 - RdbmsValidator includes `RdbmsModelProvider` adapter for Zeta's ModelProvider interface
+- All validation rules implemented in both Java and EVL for dual validation testing

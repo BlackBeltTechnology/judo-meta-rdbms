@@ -22,8 +22,14 @@ package hu.blackbelt.judo.meta.rdbms.validation;
 
 import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel;
 import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsUtils;
+import hu.blackbelt.judo.meta.rdbms.validation.rules.RdbmsConfigurationValidations;
 import hu.blackbelt.judo.meta.rdbms.validation.rules.RdbmsElementValidations;
+import hu.blackbelt.judo.meta.rdbms.validation.rules.RdbmsFieldValidations;
+import hu.blackbelt.judo.meta.rdbms.validation.rules.RdbmsForeignKeyValidations;
+import hu.blackbelt.judo.meta.rdbms.validation.rules.RdbmsIndexValidations;
+import hu.blackbelt.judo.meta.rdbms.validation.rules.RdbmsJunctionTableValidations;
 import hu.blackbelt.judo.meta.rdbms.validation.rules.RdbmsTableValidations;
+import hu.blackbelt.judo.meta.rdbms.validation.rules.RdbmsUniqueConstraintValidations;
 import hu.blackbelt.judo.zeta.common.ExtensionMethodRegistry;
 import hu.blackbelt.judo.zeta.common.ModelProvider;
 import hu.blackbelt.judo.zeta.validation.core.Severity;
@@ -36,16 +42,20 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.slf4j.Logger;
 
+import hu.blackbelt.judo.meta.rdbms.RdbmsElement;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  * Entry point for Java-based RDBMS model validation using the Zeta validation framework.
@@ -144,6 +154,9 @@ public class RdbmsValidator {
             List<EObject> allElements = getAllElements(rdbmsModel);
             log.info("Validating {} elements...", allElements.size());
 
+            // Build name index for O(n) uniqueness checking (instead of O(n²))
+            buildNameIndex(context, allElements);
+
             // Execute validation
             List<ValidationResult> failures = executor.validate(allElements);
 
@@ -186,30 +199,60 @@ public class RdbmsValidator {
     }
 
     /**
+     * Cache key for the name index used in uniqueness validation.
+     */
+    public static final String NAME_INDEX_KEY = "rdbms.nameIndex";
+
+    /**
+     * Build a name index for O(n) uniqueness checking.
+     * This is called once before validation instead of iterating all elements for each element.
+     */
+    private static void buildNameIndex(ValidationContext context, List<EObject> allElements) {
+        Map<String, List<RdbmsElement>> nameIndex = new HashMap<>();
+        for (EObject obj : allElements) {
+            if (obj instanceof RdbmsElement) {
+                RdbmsElement element = (RdbmsElement) obj;
+                String name = element.getName();
+                if (name != null && !name.trim().isEmpty()) {
+                    nameIndex.computeIfAbsent(name, k -> new ArrayList<>()).add(element);
+                }
+            }
+        }
+        context.setAttribute(NAME_INDEX_KEY, nameIndex);
+    }
+
+    /**
      * Register all validation rule classes with the registry.
      */
     private static void registerValidators(ValidationRegistry registry) {
         registry.register(RdbmsElementValidations.class);
         registry.register(RdbmsTableValidations.class);
-        // Add more validation classes as they are created
+        registry.register(RdbmsFieldValidations.class);
+        registry.register(RdbmsForeignKeyValidations.class);
+        registry.register(RdbmsIndexValidations.class);
+        registry.register(RdbmsUniqueConstraintValidations.class);
+        registry.register(RdbmsJunctionTableValidations.class);
+        registry.register(RdbmsConfigurationValidations.class);
     }
 
     /**
      * Collect all EObjects from the model for validation.
+     * Uses a Set to avoid duplicates in case of overlapping content iterations.
      */
     private static List<EObject> getAllElements(RdbmsModel rdbmsModel) {
-        List<EObject> allElements = new ArrayList<>();
+        Set<EObject> allElements = new LinkedHashSet<>();
 
         for (Resource resource : rdbmsModel.getResourceSet().getResources()) {
+            // Add root elements
+            allElements.addAll(resource.getContents());
+            // Add all nested contents
             Iterator<EObject> it = resource.getAllContents();
             while (it.hasNext()) {
                 allElements.add(it.next());
             }
-            // Also add root elements
-            allElements.addAll(resource.getContents());
         }
 
-        return allElements;
+        return new ArrayList<>(allElements);
     }
 
     /**
@@ -306,10 +349,12 @@ public class RdbmsValidator {
 
     /**
      * ModelProvider implementation that adapts RdbmsUtils for the Zeta validation framework.
+     * Includes caching for getAllContents() to avoid repeated model traversal.
      */
     private static class RdbmsModelProvider implements ModelProvider {
         private final RdbmsUtils rdbmsUtils;
         private final ResourceSet resourceSet;
+        private final Map<Class<?>, Collection<?>> typeCache = new HashMap<>();
 
         RdbmsModelProvider(RdbmsUtils rdbmsUtils, ResourceSet resourceSet) {
             this.rdbmsUtils = rdbmsUtils;
@@ -319,6 +364,13 @@ public class RdbmsValidator {
         @Override
         @SuppressWarnings("unchecked")
         public <T extends EObject> Collection<T> getAllContents(ResourceSet rs, Class<T> clazz) {
+            // Check cache first
+            Collection<?> cached = typeCache.get(clazz);
+            if (cached != null) {
+                return (Collection<T>) cached;
+            }
+
+            // Build and cache result
             List<T> result = new ArrayList<>();
             for (Resource resource : rs.getResources()) {
                 Iterator<EObject> it = resource.getAllContents();
@@ -329,12 +381,17 @@ public class RdbmsValidator {
                     }
                 }
             }
+            typeCache.put(clazz, result);
             return result;
         }
 
         @Override
         public String getName(EObject element) {
-            // Try to get name via reflection for RdbmsElement types
+            // Direct cast for RdbmsElement types (faster than reflection)
+            if (element instanceof RdbmsElement) {
+                return ((RdbmsElement) element).getName();
+            }
+            // Fallback to reflection for other types
             try {
                 java.lang.reflect.Method getName = element.getClass().getMethod("getName");
                 Object result = getName.invoke(element);
