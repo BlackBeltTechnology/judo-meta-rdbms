@@ -2,10 +2,6 @@
 // These EVL rules must produce identical results to the Java validation rules in
 // hu.blackbelt.judo.meta.rdbms.validation.rules package
 
-pre {
-    var RDBMS = RDBMS!RdbmsPackage.eINSTANCE;
-}
-
 // ============================================================================
 // RdbmsElement Constraints
 // ============================================================================
