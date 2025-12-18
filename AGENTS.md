@@ -61,6 +61,26 @@ judo-meta-rdbms/
 | `feature/` | eclipse-feature | Bundles model and plugins |
 | `site/` | eclipse-repository | P2 update site for Eclipse distribution |
 
+## CLI Integration Layer
+
+This metamodel integrates with the **JUDO Model CLI** (`judo-model-cli`) to provide GraphQL querying capabilities:
+
+| Component | Location | Purpose |
+|-----------|----------|---------|
+| `RdbmsModelSchema` | `model/src-gen/java/.../cli/` | ModelSchema implementation providing GraphQL operations for RDBMS queries |
+| `RdbmsFqnResolverImpl` | `model/src-gen/java/.../cli/` | Resolves RDBMS Fully Qualified Names (format: `T_CUSTOMER#NAME`) |
+| `RdbmsValidatorImpl` | `model/src-gen/java/.../cli/` | Integrates EVL/Zeta validation with CLI |
+
+**CLI Capabilities:**
+- **GraphQL Queries**: `{ rdbms { count(type: "RdbmsTable") } }`, `{ tables { fqn name } }`
+- **RDBMS Queries**: Access all RDBMS elements (RdbmsTable, RdbmsField, RdbmsForeignKey, RdbmsIndex, etc.)
+- **Validation**: `validate` command using EVL or Zeta validation framework
+- **Transformation Tracing**: Track RDBMS elements back to PSM and ASM models
+
+**Generated Files**: CLI integration classes are generated via `model/src/workflow/generateModel.mwe2` using the template in `emf-genmodel-generator/cli/ModelSchemaGenerator.xtend`.
+
+**See Also**: [judo-model-cli/AGENTS.md](../../judo-model-cli/AGENTS.md) for complete CLI documentation.
+
 ## RDBMS Metamodel Structure
 
 The core metamodel defines these packages:
@@ -238,3 +258,4 @@ void testConstraint(ValidatorType type) throws Exception {
 - `openspec/AGENTS.md` - OpenSpec workflow for spec-driven development
 - `docs/validation/README.md` - Validation rules overview
 - `docs/validation/java-validation-framework.md` - Java validation framework
+- [judo-model-cli/AGENTS.md](../../judo-model-cli/AGENTS.md) - JUDO Model CLI documentation

@@ -18,6 +18,29 @@ This project is a building block of the [judo-community](https://github.com/Blac
 
 Everyone is welcome to contribute to JUDO! As a starter, please read the corresponding [CONTRIBUTING](CONTRIBUTING.md) guide for details!
 
+## CLI Integration
+
+This metamodel provides CLI support classes for use with [judo-model-cli](https://github.com/BlackBeltTechnology/judo-model-cli):
+
+**CLI Classes**:
+- `RdbmsFqnResolverImpl` - Resolves fully qualified names for RDBMS elements (hand-written)
+- `RdbmsValidatorImpl` - Validates RDBMS models via CLI (hand-written)
+- `RdbmsModelSchema` - GraphQL schema for querying RDBMS models (generated in `model/src-gen/`)
+
+**FQN Format**: `schema.table_name` (e.g., `public.customer`)
+
+**Example CLI Queries**:
+```bash
+# Count tables in RDBMS model
+judo-model-cli -m model.rdbms graphql '{ rdbms { count(type: "RdbmsTable") } }'
+
+# List views
+judo-model-cli -m model.rdbms graphql '{ rdbms { list(type: "RdbmsView", limit: 10) { __fqn __type } } }'
+
+# Get table by FQN
+judo-model-cli -m model.rdbms graphql '{ rdbms { get(fqn: "public.customer") { __fqn ... on RdbmsTable { sqlName } } } }'
+```
+
 ## Validation
 
 The RDBMS metamodel supports dual validation:
