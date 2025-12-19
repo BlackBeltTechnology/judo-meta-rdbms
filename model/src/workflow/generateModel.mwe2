@@ -75,4 +75,13 @@ Workflow {
 		javaGenPath = "${rootPath}/${javaGenPath}"
 	}
 
+	// Judo CLI for model
+	component = hu.blackbelt.eclipse.emf.genmodel.generator.cli.CliGeneratorWorkflow {
+		genModelName = "Rdbms"
+		modelDir = "${rootPath}/${modelDir}"
+		javaGenPath = "${rootPath}/${javaGenPath}"
+		resolverClass = "hu.blackbelt.judo.meta.rdbms.cli.RdbmsFqnResolverImpl"
+		validatorClass = "hu.blackbelt.judo.meta.rdbms.cli.RdbmsValidatorImpl"
+	}
+
 }
