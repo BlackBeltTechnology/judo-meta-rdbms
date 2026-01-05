@@ -149,18 +149,24 @@ public class RdbmsFqnResolverImpl implements FqnResolver {
             }
         }
 
-        // Generic RdbmsElement - use fullName or uuid
+        // Generic RdbmsElement (RdbmsIndex, RdbmsUniqueConstraint, etc.)
+        // Priority: fullName > name > uuid (uuid often contains xmi:id patterns)
         if (eObject instanceof RdbmsElement) {
             RdbmsElement rdbmsElement = (RdbmsElement) eObject;
             String fullName = rdbmsElement.getFullName();
             if (fullName != null && !fullName.isBlank()) {
                 return Optional.of(fullName);
             }
+            // For elements like RdbmsIndex, name contains the proper FQN (e.g., "rackinspect.entities.Country#code")
+            String name = rdbmsElement.getName();
+            if (name != null && !name.isBlank()) {
+                return Optional.of(name);
+            }
+            // Only use uuid as last resort (may contain xmi:id patterns)
             String uuid = rdbmsElement.getUuid();
             if (uuid != null && !uuid.isBlank()) {
                 return Optional.of(uuid);
             }
-            return Optional.ofNullable(rdbmsElement.getName());
         }
 
         // Fallback: use URI
