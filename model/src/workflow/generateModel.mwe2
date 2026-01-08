@@ -74,5 +74,4 @@ Workflow {
 		modelDir = "${rootPath}/${modelDir}"
 		javaGenPath = "${rootPath}/${javaGenPath}"
 	}
-
 }

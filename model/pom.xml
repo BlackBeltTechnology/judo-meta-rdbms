@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
+<?xml version="1.0" encoding="UTF-8" ?>
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -11,7 +13,7 @@
     </parent>
     <artifactId>hu.blackbelt.judo.meta.rdbms.model</artifactId>
     <packaging>eclipse-plugin</packaging>
-    
+
     <name>JUDO :: Rdbms :: Model :: Eclipse plugin</name>
     <description>JUDO Rdbms model eclipse plugin</description>
 
@@ -31,15 +33,19 @@
                             <goal>java</goal>
                         </goals>
                         <configuration>
-                            <mainClass>org.eclipse.emf.mwe2.launch.runtime.Mwe2Launcher</mainClass>
+                            <mainClass
+                            >org.eclipse.emf.mwe2.launch.runtime.Mwe2Launcher</mainClass>
                             <arguments>
-                                <argument>/${project.basedir}/src/workflow/generateModel.mwe2</argument>
+                                <argument
+                                >/${project.basedir}/src/workflow/generateModel.mwe2</argument>
                                 <argument>-p</argument>
                                 <argument>rootPath=${project.basedir}</argument>
                             </arguments>
                             <classpathScope>compile</classpathScope>
-                            <includePluginDependencies>true</includePluginDependencies>
-                            <cleanupDaemonThreads>false</cleanupDaemonThreads><!-- see https://bugs.eclipse.org/bugs/show_bug.cgi?id=475098#c3 -->
+                            <includePluginDependencies
+                            >true</includePluginDependencies>
+                            <cleanupDaemonThreads
+                            >false</cleanupDaemonThreads><!-- see https://bugs.eclipse.org/bugs/show_bug.cgi?id=475098#c3 -->
                         </configuration>
                     </execution>
                 </executions>
@@ -48,6 +54,12 @@
                         <groupId>org.eclipse.emf</groupId>
                         <artifactId>org.eclipse.emf.mwe2.launch</artifactId>
                         <version>${emf-mwe2-launch-version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>hu.blackbelt.eclipse</groupId>
+                        <artifactId
+                        >hu.blackbelt.eclipse.emf.genmodel.generator.cli</artifactId>
+                        <version>${emf-genmodel-generator-version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -170,6 +182,31 @@
         <dependency>
             <groupId>hu.blackbelt.epsilon</groupId>
             <artifactId>epsilon-runtime-execution</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Zeta validation framework -->
+        <dependency>
+            <groupId>hu.blackbelt.judo.zeta</groupId>
+            <artifactId>hu.blackbelt.judo.zeta.annotations</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>hu.blackbelt.judo.zeta</groupId>
+            <artifactId>hu.blackbelt.judo.zeta.common</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>hu.blackbelt.judo.zeta</groupId>
+            <artifactId>hu.blackbelt.judo.zeta.validation-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Model CLI API for implementing ModelSchema interface -->
+        <dependency>
+            <groupId>hu.blackbelt.judo.cli</groupId>
+            <artifactId>judo-cli-api</artifactId>
+            <version>${judo-cli-api-version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
