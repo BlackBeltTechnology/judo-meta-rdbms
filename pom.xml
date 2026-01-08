@@ -1,8 +1,4 @@
-<project
-    xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
     <groupId>hu.blackbelt.judo.meta</groupId>
@@ -24,8 +20,7 @@
 	<scm>
 		<connection>scm:git:git@github.com:${project-repositoryId}.git</connection>
 		<!--suppress UnresolvedMavenProperty -->
-		<developerConnection
-        >scm:git:ssh://${git.username}@github.com:${project-repositoryId}.git
+		<developerConnection>scm:git:ssh://${git.username}@github.com:${project-repositoryId}.git
         </developerConnection>
 		<url>http://github.com/${project-repositoryId}</url>
 	</scm>
@@ -53,8 +48,7 @@
 		<revision>1.0.2-SNAPSHOT</revision>
         <qualifier>-SNAPSHOT</qualifier>
         <project-shortname>judo-meta-rdbms</project-shortname>
-        <project-repositoryId
-        >BlackBeltTechnology/judo-meta-rdbms</project-repositoryId>
+        <project-repositoryId>BlackBeltTechnology/judo-meta-rdbms</project-repositoryId>
         <osgi-default-import>
             org.osgi.framework;version="[1.8,2.0)",
             !lombok,
@@ -75,10 +69,8 @@
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
 
-		<epsilon-runtime-version
-        >2.8.0.20251022_112123_14c440b1_develop</epsilon-runtime-version>
-		<epsilon-runtime-eclipse-version
-        >2.8.0.20251022_112418_29e91090_develop</epsilon-runtime-eclipse-version>
+		<epsilon-runtime-version>2.8.0.20251022_112123_14c440b1_develop</epsilon-runtime-version>
+		<epsilon-runtime-eclipse-version>2.8.0.20251022_112418_29e91090_develop</epsilon-runtime-eclipse-version>
 
 		<src.dir>src/main</src.dir>
 
@@ -87,18 +79,15 @@
 		<tycho-version>4.0.13</tycho-version>
 
 		<emf-genmodel-generator-version>1.1.1.20251219_022403_f595745d_feature_JNG_6354_CliUpdates</emf-genmodel-generator-version>
-		<judo-genmodel-generator-version
-        >1.1.2.20251205_154407_83ad88a7_develop</judo-genmodel-generator-version>
-		<judo-epp-common-version
-        >4.35.0.20250605_190936_39ca7ff3_develop</judo-epp-common-version>
+		<judo-genmodel-generator-version>1.1.2.20251205_154407_83ad88a7_develop</judo-genmodel-generator-version>
+		<judo-epp-common-version>4.35.0.20250605_190936_39ca7ff3_develop</judo-epp-common-version>
 
 		<xtext-version>2.39.0</xtext-version>
 		<emf-mwe2-launch-version>2.13.0</emf-mwe2-launch-version>
 		<slf4j-version>2.0.16</slf4j-version>
 		<surefire-version>3.5.1</surefire-version>
 		<!--suppress UnresolvedMavenProperty -->
-		<logback-test-config
-        >${maven.multiModuleProjectDirectory}/logback-test.xml</logback-test-config>
+		<logback-test-config>${maven.multiModuleProjectDirectory}/logback-test.xml</logback-test-config>
 		<logback-version>1.5.12</logback-version>
 		<lombok-version>1.18.34</lombok-version>
 
@@ -107,8 +96,7 @@
 		<cxf-version>3.4.4</cxf-version>
 
 		<osgi-utils-version>1.1.1.20251022_091331_32e8ad08_develop</osgi-utils-version>
-		<karaf-features-version
-        >2.0.2.20251022_061140_127091e3_develop</karaf-features-version>
+		<karaf-features-version>2.0.2.20251022_061140_127091e3_develop</karaf-features-version>
 		<pax-exam-version>4.13.5</pax-exam-version>
 
 		<!-- Define overridable properties for tycho-surefire-plugin -->
@@ -128,36 +116,32 @@
 		<!-- Zeta validation framework -->
 		<judo-zeta-version>1.0.0.20251215_001216_39824811_feature_JNG_6349_AddZetaValidatiob</judo-zeta-version>
 
-		<cli-api-version>1.0.0.20251219_204658_f3a6b892_develop</cli-api-version>
+		<judo-cli-api-version>1.0.0-SNAPSHOT</judo-cli-api-version>
 	</properties>
 
 
 	<repositories>
 		<repository>
 			<id>judo-epp-commons</id>
-			<url
-            >mvn:hu.blackbelt.judo.eclipse.epp:hu.blackbelt.judo.eclipse.epp.package.common.site:${judo-epp-common-version}:zip</url>
+			<url>mvn:hu.blackbelt.judo.eclipse.epp:hu.blackbelt.judo.eclipse.epp.package.common.site:${judo-epp-common-version}:zip</url>
 			<layout>p2</layout>
 		</repository>
 
 		<repository>
 			<id>epsilon-runtime-eclipse</id>
-			<url
-            >mvn:hu.blackbelt.epsilon:hu.blackbelt.epsilon.runtime.site:${epsilon-runtime-eclipse-version}:zip:site</url>
+			<url>mvn:hu.blackbelt.epsilon:hu.blackbelt.epsilon.runtime.site:${epsilon-runtime-eclipse-version}:zip:site</url>
 			<layout>p2</layout>
 		</repository>
 
 		<repository>
 			<id>emf-genmodel-generator</id>
-			<url
-            >mvn:hu.blackbelt.eclipse:hu.blackbelt.eclipse.emf.genmodel.generator.site:${emf-genmodel-generator-version}:zip</url>
+			<url>mvn:hu.blackbelt.eclipse:hu.blackbelt.eclipse.emf.genmodel.generator.site:${emf-genmodel-generator-version}:zip</url>
 			<layout>p2</layout>
 		</repository>
 
 		<repository>
 			<id>judo-genmodel-generator</id>
-			<url
-            >mvn:hu.blackbelt.judo:hu.blackbelt.judo.eclipse.emf.genmodel.generator.site:${judo-genmodel-generator-version}:zip</url>
+			<url>mvn:hu.blackbelt.judo:hu.blackbelt.judo.eclipse.emf.genmodel.generator.site:${judo-genmodel-generator-version}:zip</url>
 			<layout>p2</layout>
 		</repository>
 
@@ -703,8 +687,7 @@
 					<version>${tycho-version}</version>
 					<configuration>
 						<!-- THE FOLLOWING LINE MUST NOT BE BROKEN BY AUTOFORMATTING -->
-						<argLine
-                        >${jacoco.agent} ${platformSystemProperties} ${systemProperties} ${moduleProperties} ${additionalTestArguments}</argLine>
+						<argLine>${jacoco.agent} ${platformSystemProperties} ${systemProperties} ${moduleProperties} ${additionalTestArguments}</argLine>
 						<failIfNoTests>false</failIfNoTests>
 						<useUIHarness>false</useUIHarness>
 						<providerHint>junit5</providerHint>
@@ -903,13 +886,11 @@
 			<distributionManagement>
 				<snapshotRepository>
 					<id>dummy-distribution</id>
-					<url
-                    >file:///tmp/${project.groupId}-${project.artifactId}-${project.version}/maven-snapshot/</url>
+					<url>file:///tmp/${project.groupId}-${project.artifactId}-${project.version}/maven-snapshot/</url>
 				</snapshotRepository>
 				<repository>
 					<id>dummy-distribution</id>
-					<url
-                    >file:///tmp/${project.groupId}-${project.artifactId}-${project.version}/maven-release/</url>
+					<url>file:///tmp/${project.groupId}-${project.artifactId}-${project.version}/maven-release/</url>
 				</repository>
 			</distributionManagement>
 		</profile>

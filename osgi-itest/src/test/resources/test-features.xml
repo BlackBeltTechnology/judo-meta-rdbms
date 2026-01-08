@@ -54,7 +54,7 @@
         <bundle>mvn:hu.blackbelt.judo.zeta/hu.blackbelt.judo.zeta.common/${judo-zeta-version}</bundle>
         <bundle>mvn:hu.blackbelt.judo.zeta/hu.blackbelt.judo.zeta.validation-core/${judo-zeta-version}</bundle>
         <!-- CLI API bundle -->
-        <bundle>mvn:hu.blackbelt.judo.cli/judo-model-cli-api/${cli-api-version}</bundle>
+        <bundle>mvn:hu.blackbelt.judo.cli/judo-cli-api/${judo-cli-api-version}</bundle>
     </feature>
 
 </features>
