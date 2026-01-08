@@ -114,7 +114,7 @@
 		<jacoco.version>0.8.12</jacoco.version>
 
 		<!-- Zeta validation framework -->
-		<judo-zeta-version>1.0.0.20251207_081454_0779b890_develop</judo-zeta-version>
+		<judo-zeta-version>1.0.0.20260107_002619_f839417a_feature_JNG_6349_AddZetaValidatiob</judo-zeta-version>
 
 		<judo-cli-api-version>1.0.0.20260108_122217_1b5b40eb_develop</judo-cli-api-version>
 	</properties>
