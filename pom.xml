@@ -113,6 +113,7 @@
 		<sonar.java.source>${java.version}</sonar.java.source>
 		<jacoco.version>0.8.12</jacoco.version>
 
+		<judo-cli-api-version>1.0.0.20260113_114916_434f9e7d_develop</judo-cli-api-version>
 	</properties>
 
 
@@ -329,7 +330,7 @@
 					</executions>
 				</plugin>
 
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
+				<!--This plugin's configuration is used to store Eclipse m2e settings
 					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
@@ -761,6 +762,11 @@
 				<artifactId>logback-classic</artifactId>
 				<version>${logback-version}</version>
 			</dependency>
+			<dependency>
+                <groupId>hu.blackbelt.judo.cli</groupId>
+                <artifactId>judo-cli-api</artifactId>
+                <version>${judo-cli-api-version}</version>
+            </dependency>
 		</dependencies>
 	</dependencyManagement>
 
