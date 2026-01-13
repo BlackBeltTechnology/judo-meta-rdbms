@@ -113,10 +113,7 @@
 		<sonar.java.source>${java.version}</sonar.java.source>
 		<jacoco.version>0.8.12</jacoco.version>
 
-		<!-- Zeta validation framework -->
-		<judo-zeta-version>1.0.0.20260107_002619_f839417a_feature_JNG_6349_AddZetaValidatiob</judo-zeta-version>
-
-		<judo-cli-api-version>1.0.0.20260108_122217_1b5b40eb_develop</judo-cli-api-version>
+		<judo-cli-api-version>1.0.0-SNAPSHOT</judo-cli-api-version>
 	</properties>
 
 
@@ -765,23 +762,11 @@
 				<artifactId>logback-classic</artifactId>
 				<version>${logback-version}</version>
 			</dependency>
-
-			<!-- Zeta validation framework -->
 			<dependency>
-				<groupId>hu.blackbelt.judo.zeta</groupId>
-				<artifactId>hu.blackbelt.judo.zeta.annotations</artifactId>
-				<version>${judo-zeta-version}</version>
-			</dependency>
-			<dependency>
-				<groupId>hu.blackbelt.judo.zeta</groupId>
-				<artifactId>hu.blackbelt.judo.zeta.common</artifactId>
-				<version>${judo-zeta-version}</version>
-			</dependency>
-			<dependency>
-				<groupId>hu.blackbelt.judo.zeta</groupId>
-				<artifactId>hu.blackbelt.judo.zeta.validation-core</artifactId>
-				<version>${judo-zeta-version}</version>
-			</dependency>
+                <groupId>hu.blackbelt.judo.cli</groupId>
+                <artifactId>judo-cli-api</artifactId>
+                <version>${judo-cli-api-version}</version>
+            </dependency>
 		</dependencies>
 	</dependencyManagement>
 
