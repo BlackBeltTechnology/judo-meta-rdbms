@@ -31,6 +31,24 @@ Key facts:
 - [feature/feature.xml](feature/feature.xml): Eclipse feature definition for P2 installation
 - [site/category.xml](site/category.xml): Eclipse update site compiling all versions for distribution
 
+## Depends on
+
+- [judo-cli-api](../judo-cli-api): models/judo-cli-api
+- [osgi-utils](../../runtime/osgi-utils): runtime/osgi-utils
+- [epsilon-runtime](../../tools/epsilon-runtime): tools/epsilon-runtime
+
+## Used by
+
+- [judo-model-cli](../../runtime/judo-model-cli): runtime/judo-model-cli
+- [judo-platform](../../runtime/judo-platform): runtime/judo-platform
+- [judo-rdbms-schema](../../runtime/judo-rdbms-schema): runtime/judo-rdbms-schema
+- [judo-runtime-core](../../runtime/judo-runtime-core): runtime/judo-runtime-core
+- [judo-runtime-core-esm-itest](../../runtime/judo-runtime-core-esm-itest): runtime/judo-runtime-core-esm-itest
+- [judo-services](../../runtime/judo-services): runtime/judo-services
+- [judo-tatami](../../runtime/judo-tatami): runtime/judo-tatami
+- [judo-tatami-base](../../runtime/judo-tatami-base): runtime/judo-tatami-base
+- [judo-tatami-jsl](../../runtime/judo-tatami-jsl): runtime/judo-tatami-jsl
+
 ## Optional
 
 - [.github/workflows/build.yml](.github/workflows/build.yml): CI/CD build pipeline
