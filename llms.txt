@@ -1,0 +1,54 @@
+# JUDO Meta RDBMS
+
+> EMF metamodel for relational database schemas with incremental schema evolution tracking, Epsilon-based validation, and Eclipse/OSGi packaging.
+
+Key facts:
+- Java 21, Maven 3.9.4+ with Tycho 4.0.13
+- 6 modules (model, test, OSGi bundle, OSGi integration test, Eclipse feature, update site)
+- EMF (Ecore) metamodel with Epsilon ETL/EVL transformations and MWE2 code generation
+- Eclipse plugin and standalone OSGi bundle packaging
+- License: Eclipse Public License 2.0 (EPL-2.0)
+
+## Docs
+
+- [README.md](README.md): Project overview with metamodel and runtime flow diagrams
+- [AGENTS.md](AGENTS.md): Developer guide with build commands, architecture, and coding conventions
+- [CONTRIBUTING.md](CONTRIBUTING.md): Development setup, code generation, build lifecycle, and submission guidelines
+- [.github/CIFLOW.md](.github/CIFLOW.md): Git branching strategy, version numbering, and CI/CD workflow diagrams
+
+## Modules — Core
+
+- [model/pom.xml](model/pom.xml): Eclipse plugin containing the Ecore metamodel definitions, EMF-generated code, Epsilon validation/transformation scripts, and hand-written runtime support
+- [model-test/pom.xml](model-test/pom.xml): JUnit 5 tests for EVL validation, utility functions, incremental transformation, and execution context
+
+## Modules — OSGi
+
+- [osgi/pom.xml](osgi/pom.xml): Repackages the model as an OSGi bundle with dynamic model loading via bundle tracker
+- [osgi-itest/pom.xml](osgi-itest/pom.xml): Karaf/Pax Exam integration tests verifying OSGi service registration and bundle lifecycle
+
+## Modules — Eclipse Packaging
+
+- [feature/feature.xml](feature/feature.xml): Eclipse feature definition for P2 installation
+- [site/category.xml](site/category.xml): Eclipse update site compiling all versions for distribution
+
+## Depends on
+
+- [judo-cli-api](../judo-cli-api): models/judo-cli-api
+- [osgi-utils](../../runtime/osgi-utils): runtime/osgi-utils
+- [epsilon-runtime](../../tools/epsilon-runtime): tools/epsilon-runtime
+
+## Used by
+
+- [judo-model-cli](../../runtime/judo-model-cli): runtime/judo-model-cli
+- [judo-platform](../../runtime/judo-platform): runtime/judo-platform
+- [judo-rdbms-schema](../../runtime/judo-rdbms-schema): runtime/judo-rdbms-schema
+- [judo-runtime-core](../../runtime/judo-runtime-core): runtime/judo-runtime-core
+- [judo-runtime-core-esm-itest](../../runtime/judo-runtime-core-esm-itest): runtime/judo-runtime-core-esm-itest
+- [judo-services](../../runtime/judo-services): runtime/judo-services
+- [judo-tatami](../../runtime/judo-tatami): runtime/judo-tatami
+- [judo-tatami-base](../../runtime/judo-tatami-base): runtime/judo-tatami-base
+- [judo-tatami-jsl](../../runtime/judo-tatami-jsl): runtime/judo-tatami-jsl
+
+## Optional
+
+- [.github/workflows/build.yml](.github/workflows/build.yml): CI/CD build pipeline
