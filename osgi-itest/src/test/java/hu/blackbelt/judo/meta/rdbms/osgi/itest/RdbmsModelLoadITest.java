@@ -28,6 +28,7 @@ import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel.RdbmsValidationException;
 import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel.SaveArguments;
 import hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsConfigurationBuilder;
 import hu.blackbelt.judo.meta.rdbms.util.builder.RdbmsModelBuilder;
+import hu.blackbelt.judo.meta.rdbms.validation.RdbmsValidator;
 import hu.blackbelt.osgi.utils.osgi.api.BundleTrackerManager;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.emf.common.util.URI;
@@ -117,5 +118,10 @@ public class RdbmsModelLoadITest {
         try (BufferedSlf4jLogger bufferedLog = new BufferedSlf4jLogger(log)) {
             validateRdbms(bufferedLog, rdbmsModel, calculateRdbmsValidationScriptURI());
         }
+    }
+
+    @Test
+    public void testJavaModelValidation() throws Exception {
+        RdbmsValidator.validateRdbms(log, rdbmsModel);
     }
 }
