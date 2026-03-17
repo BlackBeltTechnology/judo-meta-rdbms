@@ -1,240 +1,185 @@
-# Judo RDBMS Meta - Project Documentation
+# JUDO Meta RDBMS - Project Documentation
 
 ## Project Overview
 
-**Repository:** BlackBeltTechnology/judo-meta-rdbms  
-**License:** Eclipse Public License 2.0 (EPL-2.0)  
-**Java Version:** 21  
-**Build System:** Maven 3.9.4+ with Tycho (Eclipse build tooling)
 
-This is an Eclipse/Tycho-based metamodel project that:
-1. **Defines** a comprehensive RDBMS (Relational Database Management System) metamodel via EMF/Ecore
-2. **Generates** Java code from the model using MWE2 workflows
-3. **Provides** both Eclipse plugin and OSGi standalone runtime
-4. **Implements** validation using both EVL (Epsilon) and Java (Zeta framework)
-5. **Distributes** via both Maven Central and Eclipse P2 repositories
+**Repository:** BlackBeltTechnology/judo-meta-rdbms
+**License:** Eclipse Public License 2.0 (EPL-2.0)
+**Java Version:** 21
+**Build System:** Maven 3.9.4+ with Tycho 4.0.13
+
+1. Defines an EMF (Eclipse Modeling Framework) metamodel for relational database schemas — tables, fields, foreign keys, indexes, constraints, and junction tables
+2. Provides incremental schema evolution tracking via operation models (create/modify/delete table and field operations) using Epsilon ETL transformations
+3. Validates RDBMS models using Epsilon EVL (validation language) scripts with CLI integration
+4. Packages as both an Eclipse plugin (with feature/update site) and a standalone OSGi bundle for use in transformation pipelines
+5. Generates Java code (builders, helpers, runtime support) from Ecore models via MWE2 workflows
+
+## Code Instructions
+
+1. First think through the problem, read the codebase for relevant files.
+2. Before you make any major changes, check in with me and I will verify the plan.
+3. Please every step of the way just give me a high level explanation of what changes you made.
+4. Make every task and code change you do as simple as possible. We want to avoid making any massive or complex changes. Every change should impact as little code as possible. Everything is about simplicity.
+5. Maintain a documentation file that describes how the architecture of the app works inside and out.
+6. Never speculate about code you have not opened. If the user references a specific file, you MUST read the file before answering. Make sure to investigate and read relevant files BEFORE answering questions about the codebase. Never make any claims about code before investigating unless you are certain of the correct answer - give grounded and hallucination-free answers.
+7. For implementation use TDD (Test-Driven Development): write or update tests first to define the expected behaviour, verify they fail, then write the minimal implementation to make them pass.
+8. Use DRY (Don't Repeat Yourself): extract reusable logic into separate classes, utilities, or components. If the same pattern appears in multiple places, refactor it into a shared helper.
 
 ## Directory Structure
 
 ```
 judo-meta-rdbms/
-├── model/                          # Core RDBMS metamodel (Ecore)
-│   ├── model/                      # Ecore models and genmodels
-│   ├── src/main/java/              # Runtime classes and validation
-│   │   └── hu/blackbelt/judo/meta/rdbms/
-│   │       ├── runtime/            # RdbmsModel, RdbmsUtils, etc.
-│   │       └── validation/         # Java validation framework
-│   │           ├── RdbmsValidator.java
-│   │           ├── RdbmsValidationConstants.java
-│   │           └── rules/          # Validation rule classes
-│   └── src/main/epsilon/           # EVL validation rules
-├── model-test/                     # Unit tests for metamodel
-├── osgi/                           # OSGi bundle repackaging
-├── osgi-itest/                     # OSGi integration tests (Pax Exam)
-├── feature/                        # Eclipse feature
-├── site/                           # Eclipse P2 update site
-├── docs/                           # Documentation
-│   └── validation/                 # Validation documentation
-└── openspec/                       # OpenSpec change management
+├── model/                    # Core Eclipse plugin: Ecore metamodel + generated + runtime code
+│   ├── model/                # 4 Ecore files + GenModels defining the RDBMS metamodel
+│   ├── src/main/java/        # Hand-written runtime code (utils, validation, CLI, incremental)
+│   ├── src-gen/              # EMF-generated Java code (DO NOT EDIT)
+│   ├── src/main/epsilon/     # EVL validation + ETL transformation scripts
+│   └── src/workflow/         # MWE2 code generation workflow
+├── model-test/               # JUnit 5 unit tests
+├── osgi/                     # OSGi bundle repackaging with bundle tracking
+├── osgi-itest/               # Karaf/Pax Exam integration tests
+├── feature/                  # Eclipse feature definition
+├── site/                     # Eclipse update site
+├── .github/workflows/        # CI/CD pipelines (build, release, merge)
+└── openspec/                 # OpenSpec configuration and specifications
 ```
 
 ## Core Modules
 
-### Model Definition Layer
+### Model Layer
 
 | Module | Type | Purpose |
 |--------|------|---------|
-| `model/` | eclipse-plugin | Core RDBMS metamodel via Ecore. Generates EMF code, builders, helpers. Contains validation rules. |
-| `model-test/` | test | Unit tests for RDBMS metamodel using JUnit 5 and Epsilon runtime |
+| `model/` | Eclipse plugin | Contains the Ecore metamodel definitions (`rdbms.ecore`, `rdbms-datatypes.ecore`, `rdbms-namemapping.ecore`, `rdbms-tablemappingrules.ecore`), EMF-generated Java code in `src-gen/`, hand-written runtime support in `src/main/java/`, Epsilon validation/transformation scripts, and MWE2 code generation workflow |
+| `model-test/` | Test module | JUnit 5 tests covering EVL validation (`RdbmsValidationTest`), utility functions (`RdbmsUtilsTest`), incremental model transformation (`RdbmsIncrementalTest`), and execution context (`RdbmsExecutionContextTest`) |
 
-### Runtime/OSGi Layer
-
-| Module | Type | Purpose |
-|--------|------|---------|
-| `osgi/` | bundle | Repackages model for OSGi environments using Apache Felix Bundle Plugin |
-| `osgi-itest/` | test | Pax Exam integration tests for Karaf container (4.4.7) |
-
-### Distribution Layer
+### OSGi Layer
 
 | Module | Type | Purpose |
 |--------|------|---------|
-| `feature/` | eclipse-feature | Bundles model and plugins |
-| `site/` | eclipse-repository | P2 update site for Eclipse distribution |
+| `osgi/` | OSGi bundle | Repackages the model as an OSGi bundle. Provides `RdbmsModelBundleTracker` that dynamically loads RDBMS models from bundles with `Rdbms-Models` manifest headers and registers them as OSGi services |
+| `osgi-itest/` | Integration test | Runs tests inside a Karaf 4.4.7 container using Pax Exam 4.13.5 to verify OSGi service registration and bundle lifecycle |
 
-## RDBMS Metamodel Structure
+### Eclipse Packaging
 
-The core metamodel defines these packages:
-
-| Package | Purpose |
-|---------|---------|
-| `rdbms` | Core RDBMS elements (tables, fields, keys, indexes) |
-| `rdbms.rules` | Table mapping rules |
-| `rdbms.namemapping` | Name mapping definitions |
-| `rdbms.datatypes` | RDBMS data type definitions |
-
-### Key Model Elements
-
-- **RdbmsElement** - Base element with name and UUID
-- **RdbmsTable** - Database table definition
-- **RdbmsField** - Table field (column)
-- **RdbmsIdentifierField** - Primary key field
-- **RdbmsValueField** - Data value field
-- **RdbmsForeignKey** - Foreign key relationship
-- **RdbmsJunctionTable** - Many-to-many junction table
-- **RdbmsIndex** - Table index definition
-
-## Validation Framework
-
-The project supports dual validation using both EVL (Epsilon) and Java (Zeta):
-
-### EVL Validation (Epsilon)
-- Located in `model/src/main/epsilon/validations/rdbms.evl`
-- Interpreted at runtime
-- Used by `RdbmsEpsilonValidator`
-
-### Java Validation (Zeta Framework)
-- Located in `model/src/main/java/hu/blackbelt/judo/meta/rdbms/validation/`
-- Compile-time type safety
-- Better IDE support (autocompletion, debugging)
-- Better performance through parallel execution
-- Used by `RdbmsValidator`
-
-### Validation Classes
-
-| Class | Purpose |
-|-------|---------|
-| `RdbmsValidator` | Entry point for Java validation |
-| `RdbmsValidationConstants` | Constraint name constants |
-| `RdbmsElementValidations` | Validation rules for RdbmsElement |
-| `RdbmsTableValidations` | Validation rules for RdbmsTable |
-
-### Zeta Annotations Used
-
-```java
-@ValidationContext(RdbmsElement.class)  // Target EClass
-@Constraint(name = "...", message = "...")  // Error-level rule
-@Critique(name = "...", message = "...")    // Warning-level rule
-@Guard(method = "guardMethodName")          // Guard predicate
-@Satisfies(constraints = {"..."})           // Dependencies
-```
+| Module | Type | Purpose |
+|--------|------|---------|
+| `feature/` | Eclipse feature | Eclipse feature definition for P2 installation |
+| `site/` | Eclipse update site | Compiles all versions as an update site. Versions are encoded in URLs; use profile `update-category-versions` to update |
 
 ## Technology Stack
 
 ### Core Technologies
-- **Eclipse Modeling Framework (EMF)** 2.38.0+ - Metamodel foundation
-- **Ecore** - Model definition language
-- **MWE2** (Model Workflow Engine) 2.13.0 - Code generation workflows
-- **Epsilon** 2.8.0 - Model validation (EVL)
-- **Zeta** 1.0.0 - Java validation framework
-- **Tycho** 4.0.13 - Eclipse plugin build
-
-### Runtime
-- **Apache Karaf** 4.4.7 - OSGi container
-- **Apache Felix** 6.0.0 - OSGi bundle plugin
-- **Pax Exam** 4.13.5 - OSGi testing
+- **EMF (Eclipse Modeling Framework) 2.38+** — Ecore metamodel definition, XMI serialization, code generation
+- **Epsilon Runtime 2.8+** — EVL for model validation, ETL for model-to-model transformations, EOL for utility scripts
+- **MWE2 (Modeling Workflow Engine)** — Orchestrates code generation from Ecore/GenModel files
+- **Tycho 4.0.13** — Maven integration for Eclipse plugin builds (handles MANIFEST.MF, P2, features, update sites)
+- **OSGi 7.0.0** — Runtime modularity framework
 
 ### Build & Quality
-- **Maven** 3.9.4+
-- **JaCoCo** 0.8.12 - Code coverage
-- **Lombok** 1.18.34 - Annotation processing
+- **Maven 3.9.4+** with `${revision}` CI-friendly versioning and flatten-maven-plugin
+- **JUnit 5 (Jupiter) 5.9.1** — Unit testing
+- **Pax Exam 4.13.5 + Karaf 4.4.7** — OSGi integration testing
+- **JaCoCo 0.8.12** — Code coverage
+- **SonarQube 3.9.1** — Static analysis
+- **Lombok 1.18.34** — Annotation processing (not used in Eclipse plugin modules due to Tycho incompatibility)
+
+### Code Generation Pipeline
+- **EMF GenModel Generator 1.1.1+** — Generates Helper and Builder classes from GenModels
+- **JUDO GenModel Generator 1.1.2+** — Generates RuntimeModel support classes with model name/version resolvers
+- **XText 2.39.0** — Language infrastructure for MWE2 workflow execution
 
 ## Build Commands
 
-```bash
-# Standard build
-mvn clean install
-
-# Skip tests
-mvn clean install -DskipTests
-
-# Run specific test module
-mvn test -pl model-test
-
-# Run only validation tests
-mvn test -pl model-test -Dtest=RdbmsValidationTest
-
-# Run performance tests
-mvn test -pl model-test -Dtest=RdbmsValidationPerformanceTest
+```sh
+mvn clean install                # Full build (all modules)
+mvn clean test                   # Run tests only
+mvn clean install -DskipTests    # Build without tests
+mvn clean install -Dmaven.test.skip  # Skip test compilation and execution
 ```
 
-## Testing
-
-### Test Classes
-
-| Class | Purpose |
-|-------|---------|
-| `RdbmsValidationTest` | Dual EVL/Java validation tests |
-| `RdbmsValidationPerformanceTest` | Performance comparison |
-| `AbstractRdbmsValidationTest` | Base class for validation tests |
-| `ValidatorType` | Enum for EVL/JAVA selection |
-| `RdbmsUtilsTest` | Utility class tests |
-| `RdbmsIncrementalTest` | Incremental model tests |
-
-### Dual Validation Testing Pattern
-
-```java
-@ParameterizedTest(name = "testConstraint [{0}]")
-@EnumSource(ValidatorType.class)
-void testConstraint(ValidatorType type) throws Exception {
-    this.validatorType = type;
-    initModel();
-    
-    // Build model...
-    
-    runValidation(
-        ImmutableList.of("ExpectedError"),
-        ImmutableList.of()
-    );
-}
+Single test:
+```sh
+mvn -pl model-test test -Dtest=RdbmsValidationTest
 ```
+
+Maven wrapper is available:
+```sh
+./mvnw clean install
+```
+
+### Maven Profiles
+
+| Profile | Purpose |
+|---------|---------|
+| `modules` | Activates all submodules (default, unless `-DskipModules=true`) |
+| `sign-artifacts` | GPG-signs artifacts for release deployment |
+| `release-dummy` | Deploys to local `/tmp/` directory for testing |
+| `release-judong` | Deploys to internal JUDO Nexus (`nexus.judo.technology`) |
+| `release-central` | Deploys to Maven Central via Sonatype OSSRH |
+| `generate-github-asciidoc-diagrams` | Generates PlantUML diagrams from documentation |
+| `update-source-code-license` | Updates EPL-2.0 license headers across source files |
 
 ## Key Configuration Files
 
 | File | Purpose |
 |------|---------|
-| `pom.xml` | Parent POM with module definitions |
-| `model/META-INF/MANIFEST.MF` | OSGi bundle manifest |
-| `model/model/rdbms.ecore` | Core metamodel definition |
-| `model/model/rdbms.genmodel` | EMF code generation model |
+| `pom.xml` | Parent POM with all dependency versions, plugin configurations, and profiles |
+| `model/model/rdbms.ecore` | Core RDBMS metamodel (tables, fields, keys, operations) |
+| `model/model/rdbms-datatypes.ecore` | ASM-to-RDBMS type mapping model |
+| `model/model/rdbms-namemapping.ecore` | FQN-to-SQL name mapping model |
+| `model/model/rdbms-tablemappingrules.ecore` | Table relationship mapping rules |
+| `model/src/workflow/generateModel.mwe2` | MWE2 code generation workflow |
+| `model/src/main/epsilon/validations/rdbms.evl` | Core EVL validation rules |
+| `model/src/main/epsilon/transformations/createIncrementalOperationModel.etl` | ETL for incremental schema diff |
+| `logback-test.xml` | Test logging configuration |
+| `.mvn/wrapper/maven-wrapper.properties` | Maven wrapper configuration |
 
-## Dependencies
+## Key Runtime Classes
 
-### Zeta Validation Framework
-```xml
-<judo-zeta-version>1.0.0.20251207_081454_0779b890_develop</judo-zeta-version>
+| Class | Package | Purpose |
+|-------|---------|---------|
+| `RdbmsUtils` | `runtime` | Model querying: get tables, fields, foreign keys, junction tables; ID management; builder initialization |
+| `RdbmsIncremental` | `runtime` | Executes ETL transformation to compute schema diffs between model versions |
+| `RdbmsEpsilonValidator` | `runtime` | Runs EVL validation scripts against RDBMS models |
+| `CheckRdbmsModelCompatibility` | `runtime` | Compares two models and generates compatibility reports |
+| `RdbmsCloneUtil` | `runtime` | Deep-clones RDBMS models |
+| `RdbmsModelStreamProvider` | `runtime` | Serializes models to InputStreams |
+| `RdbmsValidatorImpl` | `cli` | CLI integration — implements `ModelValidator` interface, delegates to `RdbmsEpsilonValidator` |
+| `RdbmsFqnResolverImpl` | `cli` | CLI integration — implements `FqnResolver` for FQN-to-model-element resolution |
+| `RdbmsModelBundleTracker` | `osgi` | OSGi bundle tracker — loads models from bundles with `Rdbms-Models` manifest header |
 
-<!-- Annotations -->
-<dependency>
-    <groupId>hu.blackbelt.judo.zeta</groupId>
-    <artifactId>hu.blackbelt.judo.zeta.annotations</artifactId>
-</dependency>
+## Development Environment
 
-<!-- Common (ModelProvider, ExtensionMethodRegistry) -->
-<dependency>
-    <groupId>hu.blackbelt.judo.zeta</groupId>
-    <artifactId>hu.blackbelt.judo.zeta.common</artifactId>
-</dependency>
+**Required:**
+- Java 21 JDK
+- Maven 3.9.4+
 
-<!-- Validation Core -->
-<dependency>
-    <groupId>hu.blackbelt.judo.zeta</groupId>
-    <artifactId>hu.blackbelt.judo.zeta.validation-core</artifactId>
-</dependency>
-```
+**Eclipse IDE (optional):**
+- m2e, Epsilon, Modeling Tools plugins
+- XTend, XText, MWE, MWE2 (for code generation)
 
-## Development Guidelines
+## Git Workflow
 
-1. **Understand EMF/Ecore patterns** before modifying model code
-2. **Respect Tycho build constraints** when modifying Eclipse plugins
-3. **Validation rules** - Two implementations available:
-   - **EVL (Epsilon):** Located in `model/src/main/epsilon/validations/`
-   - **Java (Zeta):** Located in `model/src/main/java/hu/blackbelt/judo/meta/rdbms/validation/`
-4. **Use constants** for constraint names (see `RdbmsValidationConstants`)
-5. **Use OpenSpec** for significant changes - See `openspec/AGENTS.md`
+- **Main Branch:** `develop`
+- **Release Branch:** `master` (contains latest released sources)
+- **Versioning:** `${revision}` property in pom.xml, currently `1.0.2-SNAPSHOT`
+- **Branch naming:** `feature/JNG-NUMBER_summary`, `bugfix/JNG-NUMBER_summary`, `release/X.Y.Z`
+- **Rule:** Every commit must reference a JIRA ticket (`JNG-xxx`)
+- **CI:** GitHub Actions on `judong` runner with JDK 21 (Zulu distribution)
+
+## Important Notes
+
+1. **Never edit `src-gen/` files** — they are regenerated by the MWE2 workflow from Ecore models. All hand-written code belongs in `model/src/main/java/`
+2. **Tycho version duality** — Maven uses `-SNAPSHOT`, Eclipse uses `.qualifier`. The Tycho Versions Plugin handles conversion automatically at build time
+3. **Lombok restriction** — Tycho does not support Lombok directly. No Lombok is used in Eclipse plugin modules; all code there is generated
+4. **Incremental model** — The project tracks schema evolution through `RdbmsOperationMeta` linking previous, current, and incremental models. The ETL transformation (`createIncrementalOperationModel.etl`) computes diffs
+5. **Four Ecore files** compose the full metamodel: `rdbms.ecore` (core), `rdbms-datatypes.ecore` (type mappings), `rdbms-namemapping.ecore` (name resolution), `rdbms-tablemappingrules.ecore` (relationship mapping)
+6. **OSGi bundle tracking** — The `RdbmsModelBundleTracker` in the `osgi` module dynamically discovers and loads RDBMS models from bundles via the `Rdbms-Models` manifest header
+7. **Epsilon scripts** — Validation rules are in `rdbms.evl` and `rdbms-plugin-validation.evl`; incremental transformation is in `createIncrementalOperationModel.etl`; utility operations are in various `.eol` files
 
 ## Related Documentation
 
-- `README.adoc` - Project overview
-- `openspec/AGENTS.md` - OpenSpec workflow for spec-driven development
-- `docs/validation/README.md` - Validation rules overview
-- `docs/validation/java-validation-framework.md` - Java validation framework
+- [README.md](README.md) — Project overview with metamodel and runtime flow diagrams
+- [CONTRIBUTING.md](CONTRIBUTING.md) — Development setup, code generation, build lifecycle, and submission guidelines
+- [.github/CIFLOW.md](.github/CIFLOW.md) — Git branching strategy, version numbering, and CI/CD workflow diagrams

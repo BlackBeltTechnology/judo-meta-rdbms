@@ -1,134 +1,158 @@
 # Contributing to JUDO
 
-## Installing the correct versions of Java, Maven and necessary dependencies
+## Development Requirements
 
-Please make sure your development environment complies with the requirements discussed under the relevant section of the parent project's [CONTRIBUTING](https://github.com/BlackBeltTechnology/judo-community/blob/develop/CONTRIBUTING.adoc) guide.
+Your development environment must match the requirements described in the parent project's [CONTRIBUTING guide](https://github.com/BlackBeltTechnology/judo-community/blob/develop/CONTRIBUTING.adoc):
+
+- **Java:** JDK 21
+- **Maven:** 3.9.4+
+- **Build tooling:** Tycho 4.0.13 (for Eclipse plugin builds)
 
 ## Code Structure
 
-This project follows a standard Java project structure, governed by Maven, with potential Maven submodules.
+This project uses Maven with Tycho for Eclipse-flavored builds. Modules are grouped into three layers:
 
-**Eclipse-related submodules:**
+### Model Modules
 
-* `/feature`: Eclipse feature repository - allows us to use this as a feature for eclipse installation
-* `/site`: Eclipse Update Site - all built versions are compiled as an update site.
-* `/targetdefinition`: Eclipse target definition defines the P2 repositories for all the required MANIFEST features.
+| Module | Purpose |
+|--------|---------|
+| `model/` | Eclipse plugin containing the Ecore metamodel definitions, EMF-generated Java code (`src-gen/`), and hand-written runtime support code (`src/main/java/`) |
+| `model-test/` | JUnit 5 unit tests for model validation, utilities, incremental transformations, and execution context |
 
-The Judo update sites are based on versions, therefore all versions have their own update sites. This results in versions being coded in the URL. The category definition in tycho is loaded as an extension, because there is no way to replace the version numbers before tycho is activated.
+### OSGi Modules
 
-For this reason, a profile is created which can replace the versions with the dependency versions defined in the parent.
+| Module | Purpose |
+|--------|---------|
+| `osgi/` | Repackages the model as an OSGi bundle with additional services (bundle tracking, service registration) for use in transformation pipelines outside Eclipse |
+| `osgi-itest/` | Integration tests running inside a Karaf container via Pax Exam |
 
-The following command can be used to update the versions:
+### Eclipse Packaging
 
-```
+| Module | Purpose |
+|--------|---------|
+| `feature/` | Eclipse feature definition for installing the plugin |
+| `site/` | Eclipse update site — all built versions are compiled here. Versions are encoded in URLs, so a special profile handles version substitution |
+
+To update site category versions:
+
+```sh
 mvn clean install -P update-category-versions -f site/pom.xml
 ```
 
-**Model modules:**
+## Code Generation
 
-* `/model`: Eclipse plugin. It contains the model and ecore generated java classes. Builder and Helpers added with MWE2 workflow.
-* `/model-test`: Module containing model tests
+```mermaid
+flowchart LR
+    ECORE["4 Ecore files"] --> MWE2["MWE2 Workflow"]
+    MWE2 --> CLEAN["Clean src-gen/"]
+    CLEAN --> EMF_GEN["EcoreGenerator<br/>(EMF model code)"]
+    EMF_GEN --> HELPERS["HelperGeneratorWorkflow<br/>(utility classes)"]
+    HELPERS --> BUILDERS["BuilderGeneratorWorkflow<br/>(fluent API)"]
+    BUILDERS --> RUNTIME["RuntimeModelGenerator<br/>(JUDO runtime support)"]
+    RUNTIME --> SRCGEN["src-gen/ output"]
+```
 
-**OSGI wrapper:**
+The MWE2 workflow at `model/src/workflow/generateModel.mwe2` processes four GenModels:
 
-* `/osgi`: OSGi bundle. It repackages the model and adds extra information / services for consumers to be able to use it in transformation pipelines in other platforms.
-* `/osgi-itest`: Wrapper module tests
+1. `rdbms.genmodel` — main RDBMS model
+2. `rdbms-datatypes.genmodel` — data type mappings
+3. `rdbms-namemapping.genmodel` — name mappings
+4. `rdbms-tablemappingrules.genmodel` — table mapping rules
+
+Then it generates Helper classes, Builder classes (fluent API), and JUDO RuntimeModel support classes.
+
+> **Warning:** Never manually edit files in `src-gen/` — they are regenerated from Ecore models by the MWE2 workflow.
+
+### Running Code Generation in Eclipse
+
+Required Eclipse features:
+
+- XTend, XText, MWE, MWE2
+
+Use the predefined launcher `Generate JSL.launch`, or run as MWE2 Workflow:
+
+```
+hu.blackbelt.judo.meta.rdbms.model project src/workflow/generateModel.mwe2
+```
 
 ## Working with Eclipse
 
-### Plugin requirements
+### Plugin Requirements
 
 - m2e
-- epsilon
-- modeling tools
+- Epsilon
+- Modeling Tools
 
 ### Installation
 
-In Eclipse, we can install the plugin via P2 sites.
+Go to "Install new software" and add the URL of the P2 site listed on GitHub (or an uncompressed ZIP folder). The plugin contains the metamodel and default editor UI.
 
-Go to "Install new software" and add the URL of the site listed on github or the uncompressed ZIP folder. The plugin contains the metamodel and UI provided for the default editor.
+## Build Lifecycle
 
-### Code generation in Eclipse
-
-Required features to be installed:
-
-* XTend
-* XText
-* MWE
-* MWE2
-
-There are predefined launchers which can be used to regenerate the language model and corresponding model helpers.
-
-Execute the following command in Eclipse:
-
-```
-Generate JSL.launch
+```mermaid
+flowchart LR
+    validate --> compile --> test --> package --> verify --> install
+    package -->|"profile: sign-artifacts"| SIGN["GPG signing"]
+    install -->|"profile: release-central"| CENTRAL["Maven Central"]
+    install -->|"profile: release-judong"| NEXUS["JUDO Nexus"]
+    install -->|"profile: release-dummy"| LOCAL["Local /tmp/"]
 ```
 
-Alternatively, run as MWE2 Workflow: `hu.blackbelt.judo.meta.rdbms.model project src/workflow/generateModel.mwe2`
+### Maven Profiles
+
+| Profile | Purpose |
+|---------|---------|
+| `modules` | Activates all submodules (active by default unless `-DskipModules=true`) |
+| `sign-artifacts` | GPG-signs built artifacts for release |
+| `release-dummy` | Deploys to local `/tmp/` directory for testing |
+| `release-judong` | Deploys to internal JUDO Nexus repository |
+| `release-central` | Deploys to Maven Central via Sonatype OSSRH |
+| `generate-github-asciidoc-diagrams` | Generates documentation diagrams with PlantUML |
+| `update-source-code-license` | Updates EPL-2.0 license headers in source files |
 
 ## Troubleshooting
 
-### Running JUnit tests in Eclipse
+### JUnit Tests in Eclipse
 
-There is a problem with Eclipse and Tycho. The classpath does not contain JUnit.
+Eclipse + Tycho has a classpath issue where JUnit is not included. A `Required-Bundle` entry has been added to the OSGi Manifest as a workaround (not the Tycho-recommended approach). See [Eclipse Bug 534587](https://bugs.eclipse.org/bugs/show_bug.cgi?id=534587).
 
-```xml
-<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-```
+### Lombok
 
-Now a `Required-Bundle` has been added to the OSGi Manifest which is not the Tycho recommended way.
+Tycho does not support Lombok generation directly ([lombok#285](https://github.com/rzwitserloot/lombok/issues/285)). No Lombok is used in Eclipse projects — all source code in those modules is generated.
 
-https://bugs.eclipse.org/bugs/show_bug.cgi?id=534587
+### Tycho Version Compatibility
 
-### Problems with Lombok
-
-Tycho does not support Lombok generation directly as mentioned in https://github.com/rzwitserloot/lombok/issues/285. This will be fixed in a later version. No lombok is used in the eclipse projects, every source code file is generated.
-
-### Problems with Tycho
-
-Tycho 1.4.0 and below does not handle repository references inside site definitions, so all the referenced plugin sites have to be added manually. https://bugs.eclipse.org/bugs/show_bug.cgi?id=453708
+Tycho 1.4.0 and below does not handle repository references inside site definitions. All referenced plugin sites must be added manually. See [Eclipse Bug 453708](https://bugs.eclipse.org/bugs/show_bug.cgi?id=453708).
 
 ## Version Policy
 
-Two worlds collide in this project. Maven and Eclipse have a different view about versions. While Maven is using `SNAPSHOT` versions, Eclipse is using `.qualifier` in the qualifier part of semantic version.
+Maven and Eclipse handle versions differently:
 
-Which means that: `1.0.0.qualifier` is the equivalent of Maven's `1.0.0-SNAPSHOT` notation.
+| System | Snapshot Format | Example |
+|--------|----------------|---------|
+| Maven | `-SNAPSHOT` suffix | `1.0.0-SNAPSHOT` |
+| Eclipse | `.qualifier` suffix | `1.0.0.qualifier` |
 
-To address this, the Tycho Versions Plugin is used to replace the qualifier and Maven versions for a technical version number in every build.
+The Tycho Versions Plugin converts between these formats, replacing the qualifier with a technical version number at build time.
 
-## Submission Guidelines
+## Submitting an Issue
 
-### Submitting an Issue
+Before filing a new issue, search the [issue tracker](https://github.com/BlackBeltTechnology/judo-meta-rdbms/issues) for existing reports. When reporting a bug, include:
 
-Before you submit an issue, please search the issue tracker. An issue for your problem may already exist and has been resolved, or the discussion might inform you of workarounds readily available.
-
-We want to fix all the issues as soon as possible, but before fixing a bug we need to reproduce and confirm it. Having a reproducible scenario gives us wealth of important information without going back and forth with you requiring additional information, such as:
-
-- the output of `java -version`, `mvn -version`
+- Output of `java -version` and `mvn -version`
 - `pom.xml` or `.flattened-pom.xml` (when applicable)
-- and most importantly - a use-case that fails
+- A minimal reproduction scenario
 
-A minimal reproduction allows us to quickly confirm a bug (or point out a coding problem) as well as confirm that we are fixing the right problem.
+File new issues via the [issue form](https://github.com/BlackBeltTechnology/judo-meta-rdbms/issues/new/choose).
 
-We will be insisting on a minimal reproduction in order to save maintainers' time and ultimately be able to fix more bugs. We understand that sometimes it might be hard to extract essentials bits of code from a larger codebase, but we really need to isolate the problem before we can fix it.
+## Submitting a PR
 
-You can file new issues by filling out our [issue form](https://github.com/BlackBeltTechnology/judo-meta-rdbms/issues/new/choose).
-
-### Submitting a PR
-
-This project follows [GitHub's standard forking model](https://guides.github.com/activities/forking/). Please fork the project to submit pull requests.
+This project follows [GitHub's standard forking model](https://guides.github.com/activities/forking/). Fork the project and submit pull requests against the `develop` branch.
 
 ## Commands
 
-### Run Tests
-
 ```sh
-mvn clean test
-```
-
-### Run Full build
-
-```sh
-mvn clean install
+mvn clean test             # Run tests
+mvn clean install          # Full build
+mvn clean install -DskipTests  # Build without tests
 ```

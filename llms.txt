@@ -1,0 +1,54 @@
+# JUDO Meta RDBMS
+
+> EMF metamodel for relational database schemas with incremental schema evolution tracking, Epsilon-based validation, and Eclipse/OSGi packaging.
+
+Key facts:
+- Java 21, Maven 3.9.4+ with Tycho 4.0.13
+- 6 modules (model, test, OSGi bundle, OSGi integration test, Eclipse feature, update site)
+- EMF (Ecore) metamodel with Epsilon ETL/EVL transformations and MWE2 code generation
+- Eclipse plugin and standalone OSGi bundle packaging
+- License: Eclipse Public License 2.0 (EPL-2.0)
+
+## Docs
+
+- [README.md](README.md): Project overview with metamodel and runtime flow diagrams
+- [AGENTS.md](AGENTS.md): Developer guide with build commands, architecture, and coding conventions
+- [CONTRIBUTING.md](CONTRIBUTING.md): Development setup, code generation, build lifecycle, and submission guidelines
+- [.github/CIFLOW.md](.github/CIFLOW.md): Git branching strategy, version numbering, and CI/CD workflow diagrams
+
+## Modules — Core
+
+- [model/pom.xml](model/pom.xml): Eclipse plugin containing the Ecore metamodel definitions, EMF-generated code, Epsilon validation/transformation scripts, and hand-written runtime support
+- [model-test/pom.xml](model-test/pom.xml): JUnit 5 tests for EVL validation, utility functions, incremental transformation, and execution context
+
+## Modules — OSGi
+
+- [osgi/pom.xml](osgi/pom.xml): Repackages the model as an OSGi bundle with dynamic model loading via bundle tracker
+- [osgi-itest/pom.xml](osgi-itest/pom.xml): Karaf/Pax Exam integration tests verifying OSGi service registration and bundle lifecycle
+
+## Modules — Eclipse Packaging
+
+- [feature/feature.xml](feature/feature.xml): Eclipse feature definition for P2 installation
+- [site/category.xml](site/category.xml): Eclipse update site compiling all versions for distribution
+
+## Depends on
+
+- [judo-cli-api](../judo-cli-api): CLI API contracts and caching layer decoupling CLI from metamodels
+- [osgi-utils](../../runtime/osgi-utils): OSGi utility library — lifecycle tracking, config monitoring, ranked services
+- [epsilon-runtime](../../tools/epsilon-runtime): Eclipse Epsilon runtime for Maven and OSGi environments
+
+## Used by
+
+- [judo-model-cli](../../runtime/judo-model-cli): CLI for querying and transforming JUDO models via GraphQL
+- [judo-platform](../../runtime/judo-platform): Model-driven OSGi runtime platform with REST APIs and Karaf deployment
+- [judo-rdbms-schema](../../runtime/judo-rdbms-schema): Incremental database schema migration via RDBMS model comparison
+- [judo-runtime-core](../../runtime/judo-runtime-core): Multi-module runtime engine — data access, business logic, REST, and security
+- [judo-runtime-core-esm-itest](../../runtime/judo-runtime-core-esm-itest): Integration tests for ESM-to-RDBMS transformation pipeline
+- [judo-services](../../runtime/judo-services): OSGi runtime services enabling multiple data models in a single Karaf container
+- [judo-tatami](../../runtime/judo-tatami): Model transformation pipeline — ESM/PSM to deployable application artifacts
+- [judo-tatami-base](../../runtime/judo-tatami-base): PSM transformation pipeline — models to schemas, expressions, and configurations
+- [judo-tatami-jsl](../../runtime/judo-tatami-jsl): JSL-to-runtime model transformation engine (PSM, ASM, UI, RDBMS, etc.)
+
+## Optional
+
+- [.github/workflows/build.yml](.github/workflows/build.yml): CI/CD build pipeline
