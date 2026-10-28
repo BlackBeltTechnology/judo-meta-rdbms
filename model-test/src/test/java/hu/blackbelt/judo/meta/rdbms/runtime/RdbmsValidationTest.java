@@ -2,9 +2,9 @@ package hu.blackbelt.judo.meta.rdbms.runtime;
 
 /*-
  * #%L
- * JUDO :: Rdbms :: Model
+ * JUDO :: Rdbms :: Model :: Test
  * %%
- * Copyright (C) 2018 - 2022 BlackBelt Technology
+ * Copyright (C) 2018 - 2024 BlackBelt Technology
  * %%
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
@@ -20,59 +20,58 @@ package hu.blackbelt.judo.meta.rdbms.runtime;
  * #L%
  */
 
-import org.slf4j.Logger;
-import hu.blackbelt.epsilon.runtime.execution.exceptions.EvlScriptExecutionException;
-import hu.blackbelt.epsilon.runtime.execution.impl.BufferedSlf4jLogger;
-import hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport;
-import lombok.extern.slf4j.Slf4j;
-import org.eclipse.emf.common.util.URI;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import com.google.common.collect.ImmutableList;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
-import java.util.Collection;
+/**
+ * Validation tests for RDBMS metamodel using dual EVL/Java validation.
+ *
+ * <p>This test class runs the same test cases against both EVL (Epsilon Validation Language)
+ * and Java (Zeta framework) validators to ensure parity between implementations.</p>
+ *
+ * <p>Currently, the RDBMS metamodel has no validation rules defined in rdbms.evl,
+ * so these tests verify that an empty/valid model passes validation with both engines.</p>
+ *
+ * @see AbstractRdbmsValidationTest
+ * @see ValidatorType
+ */
+@DisplayName("RDBMS Validation Tests")
+public class RdbmsValidationTest extends AbstractRdbmsValidationTest {
 
-import static hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport.rdbmsModelResourceSupportBuilder;
+    @ParameterizedTest(name = "testEmptyModelPassesValidation [{0}]")
+    @EnumSource(ValidatorType.class)
+    @DisplayName("Empty model passes validation")
+    void testEmptyModelPassesValidation(ValidatorType type) throws Exception {
+        this.validatorType = type;
+        initModel();
 
-@Slf4j
-public class RdbmsValidationTest {
-
-    private final String createdSourceModelName = "urn:Rdbms.model";
-    RdbmsModelResourceSupport rdbmsModelSupport;
-
-    private RdbmsModel rdbmsModel;
-
-    @BeforeEach
-    void setUp() {
-
-        rdbmsModelSupport = rdbmsModelResourceSupportBuilder()
-                .uri(URI.createFileURI(createdSourceModelName))
-                .build();
-
-        rdbmsModel = RdbmsModel.buildRdbmsModel()
-                .rdbmsModelResourceSupport(rdbmsModelSupport)
-                .build();
+        // Empty model should pass validation (no rules defined in rdbms.evl)
+        runValidation(
+                ImmutableList.of(),  // No expected errors
+                ImmutableList.of()   // No expected warnings
+        );
     }
 
-    @AfterEach
-    void tearDown() {
-    }
-
-    private void runEpsilon (Collection<String> expectedErrors, Collection<String> expectedWarnings) throws Exception {
-        try (BufferedSlf4jLogger bufferedLog = new BufferedSlf4jLogger(log)) {
-            RdbmsEpsilonValidator.validateRdbms(bufferedLog,
-                    rdbmsModel,
-                    RdbmsEpsilonValidator.calculateRdbmsValidationScriptURI(),
-                    expectedErrors,
-                    expectedWarnings);
-        } catch (EvlScriptExecutionException ex) {
-            log.error("EVL failed", ex);
-            log.error("\u001B[31m - expected errors: {}\u001B[0m", expectedErrors);
-            log.error("\u001B[31m - unexpected errors: {}\u001B[0m", ex.getUnexpectedErrors());
-            log.error("\u001B[31m - errors not found: {}\u001B[0m", ex.getErrorsNotFound());
-            log.error("\u001B[33m - expected warnings: {}\u001B[0m", expectedWarnings);
-            log.error("\u001B[33m - unexpected warnings: {}\u001B[0m", ex.getUnexpectedWarnings());
-            log.error("\u001B[33m - warnings not found: {}\u001B[0m", ex.getWarningsNotFound());
-            throw ex;
-        }
-    }
+    // Future test methods can be added here following this pattern:
+    //
+    // @ParameterizedTest(name = "testConstraintName [{0}]")
+    // @EnumSource(ValidatorType.class)
+    // @DisplayName("Description of what is being tested")
+    // void testConstraintName(ValidatorType type) throws Exception {
+    //     this.validatorType = type;
+    //     initModel();
+    //
+    //     // Build model that triggers the constraint
+    //     RdbmsTable table = newRdbmsTableBuilderInit()
+    //             .withName("TestTable")
+    //             .build();
+    //     rdbmsModel.addContent(table);
+    //
+    //     runValidation(
+    //             ImmutableList.of("ExpectedConstraintName"),
+    //             ImmutableList.of()
+    //     );
+    // }
 }
