@@ -37,6 +37,13 @@ import static hu.blackbelt.epsilon.runtime.execution.contexts.EtlExecutionContex
 import static hu.blackbelt.epsilon.runtime.execution.model.emf.WrappedEmfModelContext.wrappedEmfModelContextBuilder;
 import static java.util.Arrays.asList;
 
+/**
+ * ETL based incremental model transformation.
+ *
+ * @deprecated use {@link RdbmsIncrementalTransformation}, which produces the same incremental model without Epsilon.
+ * This class is kept as the equivalence oracle of the Java implementation.
+ */
+@Deprecated
 public class RdbmsIncremental {
 
     public static void transformRdbmsIncrementalModel(RdbmsModel originalModel,
@@ -67,7 +74,7 @@ public class RdbmsIncremental {
                                                       String dialect,
                                                       boolean mergeModels,
                                                       boolean ignoreReview) throws Exception {
-        transformRdbmsIncrementalModel(originalModel, newModel, incrementalRdbmsModel, log, calculateRdbmsTransformationScriptURI(), dialect, mergeModels, false);
+        transformRdbmsIncrementalModel(originalModel, newModel, incrementalRdbmsModel, log, calculateRdbmsTransformationScriptURI(), dialect, mergeModels, ignoreReview);
     }
 
     public static void transformRdbmsIncrementalModel(RdbmsModel originalModel,
@@ -119,21 +126,23 @@ public class RdbmsIncremental {
                         .build())
                 .build();
 
-        // run the model / metadata loading
-        executionContext.load();
+        try {
+            // run the model / metadata loading
+            executionContext.load();
 
-        // Transformation script
-        executionContext.executeProgram(
-                etlExecutionContextBuilder()
-                        .source(UriUtil.resolve("createIncrementalOperationModel.etl", scriptUri))
-                        .parameters(Arrays.asList(
-                                ProgramParameter.programParameterBuilder().name("dialect").value(dialect).build(),
-                                ProgramParameter.programParameterBuilder().name("mergeModels").value(Boolean.toString(mergeModels)).build()))
-                        .build());
+            // Transformation script
+            executionContext.executeProgram(
+                    etlExecutionContextBuilder()
+                            .source(UriUtil.resolve("createIncrementalOperationModel.etl", scriptUri))
+                            .parameters(Arrays.asList(
+                                    ProgramParameter.programParameterBuilder().name("dialect").value(dialect).build(),
+                                    ProgramParameter.programParameterBuilder().name("mergeModels").value(Boolean.toString(mergeModels)).build()))
+                            .build());
 
-        executionContext.commit();
-        executionContext.close();
-
+            executionContext.commit();
+        } finally {
+            executionContext.close();
+        }
     }
 
     public static URI calculateRdbmsTransformationScriptURI() throws URISyntaxException {

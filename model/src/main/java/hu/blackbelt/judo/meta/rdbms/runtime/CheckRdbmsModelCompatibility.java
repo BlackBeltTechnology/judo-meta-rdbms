@@ -30,7 +30,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import static hu.blackbelt.judo.meta.rdbms.runtime.RdbmsCloneUtil.cloneRdbms;
-import static hu.blackbelt.judo.meta.rdbms.runtime.RdbmsIncremental.transformRdbmsIncrementalModel;
+import static hu.blackbelt.judo.meta.rdbms.runtime.RdbmsIncrementalTransformation.transform;
 import static hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel.buildRdbmsModel;
 import static hu.blackbelt.judo.meta.rdbms.support.RdbmsModelResourceSupport.rdbmsModelResourceSupportBuilder;
 
@@ -44,12 +44,8 @@ public class CheckRdbmsModelCompatibility {
         RdbmsModel incrementalRdbmsModel = buildRdbmsModel().build();
 
         try {
-            transformRdbmsIncrementalModel(cloneRdbms(current, "base", useXmiId),
+            transform(cloneRdbms(current, "base", useXmiId),
                     cloneRdbms(candidate, "new", useXmiId), incrementalRdbmsModel, dialect, false);
-        } catch (IOException e) {
-            throw new IllegalStateException("Could not load RDBMS model", e);
-        } catch (RdbmsModel.RdbmsValidationException e) {
-            throw new IllegalStateException("Invalid RDBMS model", e);
         } catch (Exception e) {
             throw new IllegalStateException("Error on execution", e);
         }
@@ -71,7 +67,7 @@ public class CheckRdbmsModelCompatibility {
                     sb.append("\nCreate table operation: " +
                             rdbmsCreateTableOperation.getTable().getName() + " - " +
                             rdbmsCreateTableOperation.getTable().getSqlName());
-                } else if (operation instanceof RdbmsDeleteFieldOperation) {
+                } else if (operation instanceof RdbmsDeleteTableOperation) {
                     RdbmsDeleteTableOperation rdbmsDeleteTableOperation = (RdbmsDeleteTableOperation) operation;
                     sb.append("\nDelete table operation: " +
                             rdbmsDeleteTableOperation.getTable().getName() + " - " +
