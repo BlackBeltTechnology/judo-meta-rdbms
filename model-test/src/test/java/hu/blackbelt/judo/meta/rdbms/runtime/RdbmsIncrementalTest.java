@@ -23,16 +23,20 @@ package hu.blackbelt.judo.meta.rdbms.runtime;
 import com.google.common.collect.ImmutableList;
 import hu.blackbelt.epsilon.runtime.execution.ExecutionContext;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import hu.blackbelt.epsilon.runtime.execution.impl.BufferedSlf4jLogger;
 import hu.blackbelt.judo.meta.rdbms.runtime.RdbmsModel.RdbmsValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.epsilon.common.util.UriUtil;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.stream.Stream;
 
 import static hu.blackbelt.epsilon.runtime.execution.ExecutionContext.executionContextBuilder;
 import static hu.blackbelt.epsilon.runtime.execution.contexts.EtlExecutionContext.etlExecutionContextBuilder;
@@ -52,50 +56,14 @@ public class RdbmsIncrementalTest {
     public static final String NEW_MODEL_NAME = "NewModel";
     public static final String INCREMENTAL_MODEL_NAME = "Incremental";
 
-    @Test
-    public void executeExcel2RdbmsModel() throws Exception {
-
-        RdbmsModel originalModel = buildRdbmsModel().build();
-        RdbmsModel newModel = buildRdbmsModel().build();
-
-        // Execution context
-        ExecutionContext excelToRdbmsEtlContext;
-        try (BufferedSlf4jLogger bufferedLog = new BufferedSlf4jLogger(log)) {
-            excelToRdbmsEtlContext = executionContextBuilder()
-                    .log(bufferedLog)
-                    .modelContexts(ImmutableList.of(
-                            excelModelContextBuilder()
-                                    .name("EXCEL")
-                                    .aliases(singletonList("XLS"))
-                                    .excel(getUri(this.getClass(), "RdbmsIncrementalTests.xlsx").toString())
-                                    .excelConfiguration(getUri(this.getClass(), "mapping.xml").toString())
-                                    .build(),
-                            wrappedEmfModelContextBuilder()
-                                    .name("ORIGINAL_MODEL")
-                                    .aliases(singletonList("ORIGINAL"))
-                                    .resource(originalModel.getResource())
-                                    .useCache(true)
-                                    .build(),
-                            wrappedEmfModelContextBuilder()
-                                    .name("NEW_MODEL")
-                                    .aliases(singletonList("NEW"))
-                                    .resource(newModel.getResource())
-                                    .useCache(true)
-                                    .build()))
-                    .build();
-        }
-
-        excelToRdbmsEtlContext.load();
-
+    /** The Excel matrix of the incremental tests, transformed by both engines (the ETL one is the oracle). */
+    @ParameterizedTest(name = "executeExcel2RdbmsModel [{0}]")
+    @EnumSource(IncrementalEngine.class)
+    public void executeExcel2RdbmsModel(IncrementalEngine engine) throws Exception {
+        RdbmsModel[] models = loadExcelModels();
+        RdbmsModel originalModel = models[0];
+        RdbmsModel newModel = models[1];
         URI root = getUri(RdbmsIncrementalTest.class, "/");
-
-        excelToRdbmsEtlContext.executeProgram(etlExecutionContextBuilder()
-                .parallel(true)
-                .source(UriUtil.resolve("createRdbmsModelsFromExcel.etl", root)).build());
-
-        excelToRdbmsEtlContext.commit();
-        excelToRdbmsEtlContext.close();
-
 
         originalModel.getRdbmsModelResourceSupport().getStreamOfRdbmsRdbmsModel()
                 .findFirst().get().setName(ORIGINAL_MODEL_NAME);
@@ -109,7 +77,7 @@ public class RdbmsIncrementalTest {
 
         RdbmsModel incrementalRdbmsModel = buildRdbmsModel().build();
 
-        RdbmsIncremental.transformRdbmsIncrementalModel(originalModel, newModel, incrementalRdbmsModel, "hsqldb", true);
+        engine.transform(originalModel, newModel, incrementalRdbmsModel, "hsqldb", false);
 
         incrementalRdbmsModel.getRdbmsModelResourceSupport().getStreamOfRdbmsRdbmsModel()
                 .findFirst().get().setName(INCREMENTAL_MODEL_NAME);
@@ -146,7 +114,88 @@ public class RdbmsIncrementalTest {
 
     }
 
-    private URI getUri(Class<?> clazz, String file) throws URISyntaxException {
+    /** TP-13: the Logger overload of the ETL passes ignoreReview through (it used to force false). */
+    @Test
+    public void loggerOverloadHonoursIgnoreReview() throws Exception {
+        long reviewRequiredWithReview = reviewRequiredOperations(false);
+        long reviewRequiredIgnored = reviewRequiredOperations(true);
+        // the fixture pair needs review, so the test can see the difference
+        org.junit.jupiter.api.Assertions.assertTrue(reviewRequiredWithReview > 0, "the pair needs a review");
+        org.junit.jupiter.api.Assertions.assertEquals(0, reviewRequiredIgnored,
+                "ignoreReview=true must reach the ETL through the Logger overload");
+    }
+
+    @SuppressWarnings("deprecation")
+    private long reviewRequiredOperations(boolean ignoreReview) throws Exception {
+        RdbmsModel incremental = buildRdbmsModel().build();
+        // a pair whose modification needs review: the size of a field decreases
+        RdbmsModel reviewable = RdbmsIncrementalEquivalenceTest.base("2");
+        ((hu.blackbelt.judo.meta.rdbms.RdbmsValueField) RdbmsIncrementalTestSupport.fieldOf(
+                RdbmsIncrementalTestSupport.tableOf(reviewable, "A"), "A#name")).setSize(10);
+        RdbmsIncremental.transformRdbmsIncrementalModel(RdbmsIncrementalEquivalenceTest.base("1"), reviewable,
+                incremental, log, "hsqldb", true, ignoreReview);
+        hu.blackbelt.judo.meta.rdbms.RdbmsModel operationModel = (hu.blackbelt.judo.meta.rdbms.RdbmsModel)
+                incremental.getResource().getContents().get(0);
+        // only the modify field operations follow the ignoreReview flag (a created mandatory field always needs review)
+        return operationModel.getTableOperations().stream()
+                .filter(op -> op instanceof hu.blackbelt.judo.meta.rdbms.RdbmsModifyTableOperation)
+                .flatMap(op -> ((hu.blackbelt.judo.meta.rdbms.RdbmsModifyTableOperation) op).getModifyFieldOperations().stream()
+                        .map(hu.blackbelt.judo.meta.rdbms.RdbmsFieldOperation::isReviewRequired))
+                .filter(Boolean::booleanValue).count();
+    }
+
+    /**
+     * Builds the original and the new model from {@code RdbmsIncrementalTests.xlsx}. A transformation moves the
+     * models into the incremental resource, so every engine run needs its own pair.
+     *
+     * @return {@code [originalModel, newModel]}
+     */
+    static RdbmsModel[] loadExcelModels() throws Exception {
+        RdbmsModel originalModel = buildRdbmsModel().build();
+        RdbmsModel newModel = buildRdbmsModel().build();
+
+        // Execution context
+        ExecutionContext excelToRdbmsEtlContext;
+        try (BufferedSlf4jLogger bufferedLog = new BufferedSlf4jLogger(LoggerFactory.getLogger(RdbmsIncrementalTest.class))) {
+            excelToRdbmsEtlContext = executionContextBuilder()
+                    .log(bufferedLog)
+                    .modelContexts(ImmutableList.of(
+                            excelModelContextBuilder()
+                                    .name("EXCEL")
+                                    .aliases(singletonList("XLS"))
+                                    .excel(getUri(RdbmsIncrementalTest.class, "RdbmsIncrementalTests.xlsx").toString())
+                                    .excelConfiguration(getUri(RdbmsIncrementalTest.class, "mapping.xml").toString())
+                                    .build(),
+                            wrappedEmfModelContextBuilder()
+                                    .name("ORIGINAL_MODEL")
+                                    .aliases(singletonList("ORIGINAL"))
+                                    .resource(originalModel.getResource())
+                                    .useCache(true)
+                                    .build(),
+                            wrappedEmfModelContextBuilder()
+                                    .name("NEW_MODEL")
+                                    .aliases(singletonList("NEW"))
+                                    .resource(newModel.getResource())
+                                    .useCache(true)
+                                    .build()))
+                    .build();
+        }
+
+        excelToRdbmsEtlContext.load();
+
+        URI root = getUri(RdbmsIncrementalTest.class, "/");
+
+        excelToRdbmsEtlContext.executeProgram(etlExecutionContextBuilder()
+                .parallel(true)
+                .source(UriUtil.resolve("createRdbmsModelsFromExcel.etl", root)).build());
+
+        excelToRdbmsEtlContext.commit();
+        excelToRdbmsEtlContext.close();
+
+        return new RdbmsModel[]{originalModel, newModel};
+    }
+
+    private static URI getUri(Class<?> clazz, String file) throws URISyntaxException {
         URI psmRoot = clazz.getProtectionDomain().getCodeSource().getLocation().toURI();
         if (psmRoot.toString().endsWith(".jar")) {
             psmRoot = new URI("jar:" + psmRoot.toString() + "!/" + file);
